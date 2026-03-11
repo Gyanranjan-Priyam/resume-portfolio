@@ -1,4 +1,137 @@
 const blogs = [
+    {
+    id: 'my-journey-to-becoming-a-gfg-campus-mantri',
+    title: 'My Journey to Becoming a GFG Campus Mantri: Doubts, a Shaky Interview, and an Unexpected Yes',
+    excerpt:
+      'I applied on a whim, waited four months, stumbled through a telephonic interview, and fully convinced myself I had not made it. Then the welcome email arrived. This is the honest, unfiltered story of how I became a GFG Campus Mantri — and what the whole experience quietly taught me about showing up even when you are not sure you are ready.',
+    content: [
+      {
+        type: 'heading',
+        text: 'The Application I Almost Did Not Submit',
+      },
+      {
+        type: 'paragraph',
+        text: 'It was November. I was sitting in my hostel room, scrolling through some tech community pages when I came across the GFG Campus Mantri program. I had heard the name before in passing but never really looked into what it actually involved.',
+      },
+      {
+        type: 'paragraph',
+        text: 'I read through the description. Campus representative. Help students access learning resources. Organize technical events. Connect peers with opportunities.',
+      },
+      {
+        type: 'paragraph',
+        text: 'Something about it felt right. Not in a grand, life-changing way — more like a quiet instinct that said this is worth trying. So I filled out the application, submitted it, and then almost immediately started wondering if I was even qualified enough to have applied in the first place.',
+      },
+      {
+        type: 'paragraph',
+        text: 'That self-doubt after submitting an application is something I think a lot of people feel but rarely talk about. You put yourself forward for something and the moment you hit submit, your brain starts listing all the reasons it probably will not work out.',
+      },
+      {
+        type: 'heading',
+        text: 'Ten to Fifteen Days of Silence',
+      },
+      {
+        type: 'paragraph',
+        text: 'Days passed. Then more weeks. No email, no update, nothing. At some point I genuinely forgot I had applied. Life moved on — college assignments, club activities, learning new things. The GFG application faded to the back of my mind.',
+      },
+      {
+        type: 'paragraph',
+        text: 'And then, out of nowhere, an email landed in my inbox. I had been selected as the GFG Campus Mantri.',
+      },
+      {
+        type: 'paragraph',
+        text: 'I re-read it twice. I sat with it for a moment. Then the nerves showed up immediately, as if they had been waiting just offscreen this whole time.',
+      },
+      {
+        type: 'heading',
+        text: 'The Email That Changed Everything',
+      },
+      {
+        type: 'paragraph',
+        text: 'A few days later — I think it was a Monday — I opened my inbox to a welcome letter from GeeksforGeeks. I had been selected as a Campus Mantri.',
+      },
+      {
+        type: 'paragraph',
+        text: 'I read it once. Then again. Then I put my phone down and just sat there for a second.',
+      },
+      {
+        type: 'paragraph',
+        text: 'The feeling was not immediate celebration. It was more like the slow unwinding of something I had been holding tightly without realizing it. Relief first. Then disbelief. Then this quiet, spreading happiness that kept growing the more it sank in.',
+      },
+      {
+        type: 'paragraph',
+        text: 'I texted my friend immediately. Their reply was something like "I told you." And honestly, they had.',
+      },
+      {
+        type: 'heading',
+        text: 'What Being a Campus Mantri Actually Means to Me',
+      },
+      {
+        type: 'paragraph',
+        text: 'Once the initial excitement settled, I started thinking more seriously about what this role actually meant. It is not just a title. It comes with real things to do — organizing events, sharing learning paths, being a visible and approachable point of contact for students who are trying to figure out where to start with tech.',
+      },
+      {
+        type: 'paragraph',
+        text: 'And the reason that matters to me personally is straightforward: I was that confused student not too long ago. I was the kid from Electrical Engineering who wandered into a coding club induction session and did not fully understand what he was walking into. Nobody handed me a roadmap. I figured things out slowly, by reading docs, breaking projects, and asking questions.',
+      },
+      {
+        type: 'paragraph',
+        text: 'If I can be the person who shortens that learning curve for even a few students — who says here is a resource, here is where to start, here is why it is worth continuing even when it feels hard — then this role has real meaning.',
+      },
+      {
+        type: 'heading',
+        text: 'Things I Carried Away From This Experience',
+      },
+      {
+        type: 'paragraph',
+        text: 'Not everything you learn comes from a course or a tutorial. Some of it comes from just going through a process and paying attention to what it shows you about yourself.',
+      },
+      {
+        type: 'list',
+        items: [
+          'Apply anyway, even when you are not sure you are ready. The worst that happens is you do not get it and you try again. The best is you get an email that makes you stop and sit quietly for a moment.',
+          'Stumbling in an interview is not the same as failing it. I stumbled. I still got selected. What you say matters, but how honestly you say it might matter more.',
+          'Talking to someone you trust before something stressful is not weakness. It is just smart. My friend did not prepare me. They reminded me of what I had already done.',
+          'The wait can be the hardest part. Four months is a long time to hold onto something uncertain. Learning to keep moving forward while something is unresolved is its own kind of skill.',
+          'Confidence is not the absence of doubt. It is continuing even with the doubt sitting right there next to you.',
+        ],
+      },
+      {
+        type: 'heading',
+        text: 'To Anyone Reading This Who Is Thinking About Applying',
+      },
+      {
+        type: 'paragraph',
+        text: 'If you are sitting on an application right now — for the Campus Mantri program, or anything else — and wondering if you are qualified enough or experienced enough or ready enough, I just want to say: probably just apply.',
+      },
+      {
+        type: 'paragraph',
+        text: 'You are not going to feel perfectly ready. The interview might not go the way you rehearsed it. You might hang up the call convinced it did not work. And then a few days later, an email might show up that changes the whole story.',
+      },
+      {
+        type: 'paragraph',
+        text: 'Or it might not. But at least you will have tried. And trying, even imperfectly, is what gets you somewhere.',
+      },
+      {
+        type: 'heading',
+        text: 'What Comes Next',
+      },
+      {
+        type: 'paragraph',
+        text: 'I am genuinely excited about this. Not in an overwhelming way, but in the steady way that comes when something aligns with what you actually care about.',
+      },
+      {
+        type: 'paragraph',
+        text: 'There are students at my college who are smart, curious, and just looking for a starting point. I want to be part of creating those starting points — through events, conversations, shared resources, or just being someone who is openly figuring things out and willing to talk about it.',
+      },
+      {
+        type: 'paragraph',
+        text: 'This whole journey — from that November application to the welcome email — has been one of the more unexpected and meaningful things that has happened to me in college. And I think it is really just beginning.',
+      },
+    ],
+    date: '2026-03-10',
+    updatedAt: '2026-03-10',
+    tags: ['Personal', 'GFG', 'Career', 'Learning', 'Campus', 'GeeksforGeeks'],
+  },
   {
     id: 'from-electrical-engineering-to-web-development',
     title:
@@ -412,6 +545,247 @@ const blogs = [
     date: '2025-12-18',
     updatedAt: '2025-12-18',
     tags: ['React', 'RSC', 'Next.js', 'CVE', 'Security'],
+  },
+  {
+    id: 'nextjs-csr-vs-ssr-rendering-strategies-2025',
+    title: 'CSR vs SSR in Next.js: What I Wish Someone Had Told Me Earlier',
+    excerpt:
+      'When I first started learning Next.js, the whole CSR vs SSR thing genuinely confused me. Here is what I actually learned after spending way too many hours on the docs and breaking things.',
+    content: [
+      {
+        type: 'heading',
+        text: 'How I Got Confused (And Then Understood)',
+      },
+      {
+        type: 'paragraph',
+        text: 'Honestly, when I first started with Next.js, I kept seeing terms like CSR, SSR, ISR, and SSG thrown around everywhere. I had no idea what they meant or why they even mattered. My first few projects were a mess because I was just randomly adding "use client" everywhere and wondering why things were slow.',
+      },
+      {
+        type: 'paragraph',
+        text: 'After spending a lot of time reading docs, breaking things, and Googling errors at 2am, things finally started clicking. So I figured I would write down what I learned in a way that actually makes sense to someone just starting out.',
+      },
+      {
+        type: 'heading',
+        text: 'What Is CSR (Client-Side Rendering)?',
+      },
+      {
+        type: 'paragraph',
+        text: 'CSR is basically how regular React apps work by default. The server just sends a mostly empty HTML file, and then the browser downloads a JavaScript bundle and does all the rendering work itself. Data gets fetched after the page loads.',
+      },
+      {
+        type: 'paragraph',
+        text: 'The first time I built something with pure CSR, I thought it was great. The interactions felt smooth and snappy. But then I noticed something annoying — every time you first load the page, you see a blank screen or a loading spinner for a second. That is because the browser is still downloading JavaScript and fetching data.',
+      },
+      {
+        type: 'paragraph',
+        text: 'In Next.js App Router, you activate CSR by adding "use client" at the top of your component file. Then you fetch data using useEffect like this:',
+      },
+      {
+        type: 'code',
+        text: '"use client";\n\nimport { useEffect, useState } from "react";\n\nexport default function Dashboard() {\n  const [stats, setStats] = useState(null);\n\n  useEffect(() => {\n    fetch("/api/stats").then(res => res.json()).then(setStats);\n  }, []);\n\n  if (!stats) return <p>Loading...</p>;\n\n  return <p>Views: {stats.views}</p>;\n}',
+      },
+      {
+        type: 'paragraph',
+        text: 'That loading state you see at the end? That is exactly the CSR experience. The page renders blank until the data arrives.',
+      },
+      {
+        type: 'heading',
+        text: 'What Is SSR (Server-Side Rendering)?',
+      },
+      {
+        type: 'paragraph',
+        text: 'SSR is the opposite. Instead of the browser doing all the work, the server does it. The server fetches the data, builds the full HTML, and sends it to the browser already complete. The browser basically just displays it instantly.',
+      },
+      {
+        type: 'paragraph',
+        text: 'This was a bit of a mind shift for me because I was so used to React doing everything client-side. In Next.js App Router, SSR is actually the default. Any component that does not have "use client" at the top is automatically a Server Component, which means it runs on the server.',
+      },
+      {
+        type: 'code',
+        text: 'export default async function ProductPage({ params }) {\n  const product = await fetch(\n    `https://api.example.com/products/${params.id}`,\n    { cache: "no-store" }\n  ).then(r => r.json());\n\n  return <h1>{product.name}</h1>;\n}',
+      },
+      {
+        type: 'paragraph',
+        text: 'No useEffect. No loading state. The data is already there when the page hits the browser. I remember seeing this for the first time and thinking it felt almost like magic.',
+      },
+      {
+        type: 'heading',
+        text: 'So What Is Actually the Difference?',
+      },
+      {
+        type: 'paragraph',
+        text: 'The core difference is just where the HTML gets built — in the browser (CSR) or on the server (SSR). But that one difference leads to a bunch of other differences that matter in real apps.',
+      },
+      {
+        type: 'paragraph',
+        text: 'With CSR, your initial HTML is almost empty. Search engines and social media link preview bots often struggle to read the content because it has not been rendered yet when they crawl the page. I learned this the hard way when I shared a link to something I built and the preview was completely blank.',
+      },
+      {
+        type: 'paragraph',
+        text: 'With SSR, the full HTML is there immediately. Google can read it, social previews work perfectly, and users see content right away instead of a spinner. But your server has to do more work on every request, which can add up at scale.',
+      },
+      {
+        type: 'heading',
+        text: 'Performance: What You Actually Feel',
+      },
+      {
+        type: 'paragraph',
+        text: 'CSR feels great once everything is loaded. Navigation between pages is super fast, transitions are smooth, and it feels like using a native app. But that first load? It can feel sluggish, especially if your JavaScript bundle is big or the user is on a slower connection.',
+      },
+      {
+        type: 'paragraph',
+        text: 'SSR flips that experience. The first load is noticeably fast because the HTML is already rendered. But when React hydrates the page (basically attaching JavaScript event listeners to the server-rendered HTML), there can be a brief moment where the page looks interactive but is not quite ready yet.',
+      },
+      {
+        type: 'paragraph',
+        text: 'The good news is that Next.js has been doing a lot of work on streaming SSR, which sends content to the browser progressively instead of waiting for everything to be ready. It makes SSR feel much closer to CSR in terms of perceived interactivity.',
+      },
+      {
+        type: 'heading',
+        text: 'SEO and Why It Actually Matters',
+      },
+      {
+        type: 'paragraph',
+        text: 'I did not care much about SEO when I first started. I was just building stuff for fun. But once I started working on projects that were meant to be found by people, it suddenly became very important.',
+      },
+      {
+        type: 'paragraph',
+        text: 'CSR is rough for SEO. Googlebot can sometimes render JavaScript and index CSR pages, but it is not reliable and can take a long time. Meta tags, descriptions, and Open Graph data for social sharing often just do not work properly.',
+      },
+      {
+        type: 'paragraph',
+        text: 'SSR solves this completely. The HTML that the crawler sees is the same HTML the user sees. Your page titles, descriptions, and content are all there immediately. If you are building anything that needs to show up in search results or share properly on social media, SSR is the way to go.',
+      },
+      {
+        type: 'heading',
+        text: 'Security Stuff I Did Not Think About at First',
+      },
+      {
+        type: 'paragraph',
+        text: 'This one surprised me. When you use CSR and fetch data from an API, all of that data travels through the browser. Anyone can open DevTools and see exactly what your API returns. If you are accidentally sending sensitive information in API responses, it is just sitting there visible to anyone.',
+      },
+      {
+        type: 'paragraph',
+        text: 'With SSR and Server Components, your data fetching happens on the server. The browser only ever sees the rendered HTML output. You can even query your database directly inside a Server Component without exposing any credentials or sensitive logic to the client.',
+      },
+      {
+        type: 'paragraph',
+        text: 'I started using SSR for anything that touches user data or sensitive business logic after realizing this. It just feels cleaner and safer.',
+      },
+      {
+        type: 'heading',
+        text: 'The App Router Changed Everything',
+      },
+      {
+        type: 'paragraph',
+        text: 'When Next.js introduced the App Router in version 13, it basically flipped the defaults. Before that, everything was client-side React by default and you had to explicitly opt into server rendering using getServerSideProps. Now it is the opposite.',
+      },
+      {
+        type: 'paragraph',
+        text: 'Server Components are the default in the App Router. You have to explicitly add "use client" to opt into CSR. This shift felt a bit strange at first because I kept getting errors about using hooks inside Server Components. But once I understood the mental model, it made a lot of sense.',
+      },
+      {
+        type: 'paragraph',
+        text: 'A few things the App Router brought that I genuinely appreciate now:',
+      },
+      {
+        type: 'list',
+        items: [
+          'Server Components by default — less JavaScript sent to the browser',
+          'Streaming SSR — content loads progressively instead of all at once',
+          'Server Actions — you can call server functions directly from UI components without building a separate API route',
+          'Better built-in caching controls with cache options on fetch calls',
+        ],
+      },
+      {
+        type: 'heading',
+        text: 'When Should You Use CSR?',
+      },
+      {
+        type: 'paragraph',
+        text: 'CSR is still the right choice in a lot of situations. If you are building something that is behind a login and does not need to be indexed by search engines, CSR is totally fine.',
+      },
+      {
+        type: 'paragraph',
+        text: 'I use CSR for things like:',
+      },
+      {
+        type: 'list',
+        items: [
+          'Admin dashboards and internal tools',
+          'User-specific pages that show personalized data',
+          'Real-time features like live chat or notifications',
+          'Anything that needs a lot of client-side interactivity, like drag and drop',
+          'Data visualization components that update frequently',
+        ],
+      },
+      {
+        type: 'paragraph',
+        text: 'The key question is: does this page need to be discovered by search engines or load fast for anonymous users? If the answer is no, CSR is probably fine.',
+      },
+      {
+        type: 'heading',
+        text: 'When Should You Use SSR?',
+      },
+      {
+        type: 'paragraph',
+        text: 'SSR is the better choice for anything public-facing that you want people to actually find and see quickly.',
+      },
+      {
+        type: 'paragraph',
+        text: 'Some situations where I now default to SSR:',
+      },
+      {
+        type: 'list',
+        items: [
+          'Landing pages and marketing sites',
+          'Product pages and e-commerce listings',
+          'Blog posts and articles (like this one)',
+          'Public profile pages',
+          'Any page you want to share on social media with a proper link preview',
+          'Pages that need to show content to users as quickly as possible',
+        ],
+      },
+      {
+        type: 'heading',
+        text: 'You Do Not Have to Pick Just One',
+      },
+      {
+        type: 'paragraph',
+        text: 'One thing I really like about Next.js is that you do not have to make a single choice for your whole app. You can mix SSR and CSR at the component level.',
+      },
+      {
+        type: 'paragraph',
+        text: 'A product page could be a Server Component that fetches the product data on the server, but include a reviews section that is a Client Component fetching and displaying user reviews interactively. The static product information loads instantly and gets indexed, while the dynamic reviews section loads in on the client.',
+      },
+      {
+        type: 'code',
+        text: '// page.jsx (server component by default)\nimport Reviews from "./Reviews"; // this is a "use client" component\n\nexport default async function Product() {\n  const product = await getProduct();\n  return (\n    <>\n      <h1>{product.name}</h1>\n      <Reviews /> {/* loads interactively on the client */}\n    </>\n  );\n}',
+      },
+      {
+        type: 'paragraph',
+        text: 'This hybrid approach is what Next.js is really designed for, and it is honestly one of the things that makes it so powerful once you get used to it.',
+      },
+      {
+        type: 'heading',
+        text: 'My Personal Takeaway',
+      },
+      {
+        type: 'paragraph',
+        text: 'If I had to summarize what I learned in a few sentences: SSR gives you fast loads, great SEO, and better security out of the box. CSR gives you smooth interactions and is simpler to reason about for highly interactive features. Next.js App Router makes SSR the sensible default and lets you add CSR exactly where you need it.',
+      },
+      {
+        type: 'paragraph',
+        text: 'The mistake I kept making early on was treating it as an either-or decision. It is not. The real skill is knowing when to reach for each one and how to combine them in the same page. That is something that just comes with building more things and paying attention to what feels slow or broken.',
+      },
+      {
+        type: 'paragraph',
+        text: 'If you are just getting started with Next.js, my honest advice is to lean into Server Components by default, only add "use client" when you genuinely need interactivity or browser APIs, and pay attention to what your pages look like before JavaScript loads. That habit alone will make your apps noticeably better.',
+      },
+    ],
+    date: '2025-12-04',
+    updatedAt: '2026-02-25',
+    tags: ['Next.js', 'CSR', 'SSR', 'React', 'Web Development', 'Learning'],
   },
 ];
 

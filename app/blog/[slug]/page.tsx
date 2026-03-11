@@ -3,6 +3,8 @@ import { notFound } from "next/navigation";
 import blogs from "@/data/blogsData";
 import { BlogPostClient } from "@/components/sections/blog-post-client";
 
+const SITE_URL = "https://www.gyanranjanpriyam.tech";
+
 type Props = {
   params: Promise<{ slug: string }>;
 };
@@ -45,10 +47,40 @@ export default async function BlogPostPage({ params }: Props) {
   const blog = blogs[blogIndex];
   const nextBlog = blogs[(blogIndex + 1) % blogs.length];
 
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    headline: blog.title,
+    description: blog.excerpt,
+    datePublished: blog.date,
+    dateModified: blog.updatedAt ?? blog.date,
+    author: {
+      "@type": "Person",
+      name: "Gyanranjan Priyam",
+      url: SITE_URL,
+    },
+    publisher: {
+      "@type": "Person",
+      name: "Gyanranjan Priyam",
+      url: SITE_URL,
+    },
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": `${SITE_URL}/blog/${blog.id}`,
+    },
+    keywords: blog.tags.join(", "),
+  };
+
   return (
-    <BlogPostClient
-      blog={blog}
-      nextBlog={{ id: nextBlog.id, title: nextBlog.title, date: nextBlog.date }}
-    />
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <BlogPostClient
+        blog={blog}
+        nextBlog={{ id: nextBlog.id, title: nextBlog.title, date: nextBlog.date }}
+      />
+    </>
   );
 }

@@ -24,6 +24,7 @@
     "rough-notation": "^0.5.1",
     "sass": "^1.98.0",
     "shadcn": "^4.0.2",
+    "shiki": "^4.0.2",
     "split-type": "^0.3.4",
     "tailwind-merge": "^3.5.0",
     "three": "^0.167.1",

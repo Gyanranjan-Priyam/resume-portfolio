@@ -5,12 +5,14 @@ import Link from "next/link";
 import { ChevronRight } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { BlurFade } from "@/components/ui/blur-fade";
+import { MonacoCodeBlock } from "@/components/ui/monaco-code-block";
 
 /* ── Types ── */
 type ContentBlock =
   | { type: "heading"; text: string }
   | { type: "paragraph"; text: string }
-  | { type: "list"; items: string[] };
+  | { type: "list"; items: string[] }
+  | { type: "code"; text: string };
 
 type Blog = {
   id: string;
@@ -329,6 +331,9 @@ export function BlogPostClient({
                       {block.text}
                     </h2>
                   );
+                }
+                if (block.type === "code") {
+                  return <MonacoCodeBlock key={index} code={block.text} />;
                 }
                 if (block.type === "list") {
                   return (
