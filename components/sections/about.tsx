@@ -1,18 +1,26 @@
 import { Tooltip } from "@/components/ui/tooltip";
+import { BlurFade } from "@/components/ui/blur-fade";
 
 export function AboutSection() {
   return (
     <section id="about" className="py-8">
+      <BlurFade delay={0.04} inView>
       <h2 className="mb-4 text-3xl font-bold">About</h2>
+      </BlurFade>
+      <BlurFade delay={0.08} inView>
       <p className="text-[15px] leading-relaxed text-muted-foreground">
         I&apos;m an electrical engineering student with a passion for technology
         and web development. Alongside my core studies I am also a software
         developer focused on building seamless, efficient, and user-centric
         digital experiences across both front-end and back-end technologies.
       </p>
+      </BlurFade>
 
 
+      <BlurFade delay={0.12} inView>
       <h2 className="mt-4 mb-2 text-2xl font-semibold">Hobbies &amp; Interests</h2>
+      </BlurFade>
+      <BlurFade delay={0.16} inView>
       <p className="text-[15px] leading-relaxed text-muted-foreground">
         My hobbies include{" "}
         <Tooltip content="I enjoy reading a wide range of books that help me expand my imagination, improve my thinking, and gain new perspectives.">
@@ -29,6 +37,7 @@ export function AboutSection() {
         across various fields, which helps me stay updated with advancements and
         continuously gain knowledge.
       </p>
+      </BlurFade>
 
 
     </section>

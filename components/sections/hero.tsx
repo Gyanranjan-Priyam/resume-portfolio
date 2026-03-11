@@ -6,6 +6,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Image from "next/image";
 import { Tooltip } from "../ui/tooltip";
 import { Highlighter } from "../ui/highlighter";
+import { BlurFade } from "@/components/ui/blur-fade";
 
 const socials: { label: string; href: string; icon: ReactNode; download?: boolean }[] = [
   {
@@ -90,6 +91,7 @@ export function HeroSection() {
   return (
     <section className="pb-8 pt-6">
       {/* Cover image */}
+      <BlurFade delay={0.04} direction="down">
       <div className="relative h-32 w-full overflow-hidden rounded-xl bg-linear-to-br from-neutral-200 via-neutral-300 to-neutral-400 dark:from-neutral-700 dark:via-neutral-800 dark:to-neutral-900 sm:h-40">
         <Image
           src="/profile/cover.png"
@@ -102,17 +104,21 @@ export function HeroSection() {
           }}
         />
       </div>
+      </BlurFade>
 
       {/* Avatar row */}
+      <BlurFade delay={0.1} direction="up">
       <div className="flex items-end px-2 -mt-16 sm:-mt-20">
         <Avatar className="size-32 border-4 border-background shadow-md ring-1 ring-border sm:size-36">
           <AvatarImage src="/profile/profile.png" alt="Gyanranjan Priyam" />
           <AvatarFallback className="text-3xl font-semibold">GP</AvatarFallback>
         </Avatar>
       </div>
+      </BlurFade>
 
       {/* Info */}
       <div className="mt-3 space-y-1.5 px-1">
+        <BlurFade delay={0.16} direction="up">
         <h1 className="text-2xl font-bold tracking-widest sm:text-4xl" style={{ fontFamily: "var(--font-mokoto)" }}>
           Hi I&apos;m  {" "}
           <Tooltip content="Hey I'm Gyanranjan Priyam, a Full-Stack Developer. You can call me Priyam!">
@@ -128,15 +134,21 @@ export function HeroSection() {
             👋
           </button>
         </h1>
+        </BlurFade>
+        <BlurFade delay={0.22} direction="up">
         <p className="text-lg mt-3 font-medium text-muted-foreground">
           Full-Stack Developer · Electrical Engineering @GCE Kalahandi
         </p>
+        </BlurFade>
+        <BlurFade delay={0.28} direction="up">
         <p className="text-[15px] leading-relaxed text-muted-foreground">
           Electrical Engineer by degree, Full-Stack Developer by passion. I
           build scalable products and mentor the next generation of developers.
         </p>
+        </BlurFade>
 
         {/* Social icons + Resume button */}
+        <BlurFade delay={0.34} direction="up">
         <div className="flex flex-wrap items-center gap-3 pt-2">
           {socials.map((s) => (
             <a
@@ -151,7 +163,7 @@ export function HeroSection() {
             </a>
           ))}
           <a
-            href="/resume.pdf"
+            href="/resume/resume.pdf"
             download
             className="inline-flex items-center gap-1.5 rounded-full border px-4 py-1.5 text-xs font-semibold transition-colors hover:bg-muted"
           >
@@ -163,6 +175,7 @@ export function HeroSection() {
             Resume
           </a>
         </div>
+        </BlurFade>
       </div>
     </section>
   );

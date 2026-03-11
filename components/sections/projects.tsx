@@ -7,6 +7,7 @@ import { ArrowRight, Globe, Github } from "lucide-react";
 import Link from "next/link";
 import projects from "@/data/projectsData";
 import { Badge } from "@/components/ui/badge";
+import { BlurFade } from "@/components/ui/blur-fade";
 
 const CloseIcon = () => (
   <motion.svg
@@ -50,7 +51,9 @@ export function ProjectsSection() {
 
   return (
     <section id="projects" className="py-8">
+      <BlurFade delay={0.04} inView>
       <h2 className="mb-6 text-3xl font-bold">Projects</h2>
+      </BlurFade>
 
       <AnimatePresence>
         {active && (
@@ -167,10 +170,10 @@ export function ProjectsSection() {
       </AnimatePresence>
 
       <ul className="max-w-2xl mx-auto w-full gap-4">
-        {displayProjects.map((project) => (
+        {displayProjects.map((project, i) => (
+          <BlurFade key={`card-${project.title}-${id}`} delay={0.04 + i * 0.05} inView>
           <motion.div
             layoutId={`card-${project.title}-${id}`}
-            key={`card-${project.title}-${id}`}
             onClick={() => setActive(project)}
             className="cursor-pointer"
           >
@@ -233,15 +236,18 @@ export function ProjectsSection() {
               </motion.button>
             </div>
           </motion.div>
+          </BlurFade>
         ))}
       </ul>
 
+      <BlurFade delay={0.3} inView>
       <Link
         href="/projects"
         className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
       >
         View All <ArrowRight className="size-3.5" />
       </Link>
+      </BlurFade>
     </section>
   );
 }

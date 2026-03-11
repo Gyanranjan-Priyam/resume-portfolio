@@ -1,34 +1,65 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowLeft } from "lucide-react";
+import { Home } from "lucide-react";
 import projects from "@/data/projectsData";
+import { BlurFade } from "@/components/ui/blur-fade";
 
 export const metadata: Metadata = {
-  title: "Projects — Gyanranjan Priyam",
+  title: "Projects",
   description:
-    "A collection of projects I've built — from full-stack platforms to open-source tools.",
+    "Explore my portfolio to see a range of full stack projects, from responsive websites to web applications. Discover my work with React, Next.js, Node.js, and more.",
+  keywords: [
+    "Priyam Projects",
+    "Portfolio Showcase",
+    "Frontend Development Examples",
+    "Web Design Portfolio",
+    "Responsive Web Projects",
+    "Web Applications Portfolio",
+    "JavaScript Development",
+    "React Work",
+    "Next.js Projects",
+    "Professional Web Development",
+    "Gyanranjan Priyam Projects",
+  ],
+  alternates: { canonical: "/projects" },
+  openGraph: {
+    title: "Projects — Gyanranjan Priyam",
+    description:
+      "Explore my portfolio to see a range of full stack projects, from responsive websites to web applications.",
+  },
+  twitter: {
+    title: "Projects — Gyanranjan Priyam",
+    description:
+      "Explore my portfolio to see a range of full stack projects, from responsive websites to web applications.",
+  },
 };
 
 export default function ProjectsPage() {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <div className="mx-auto max-w-2xl px-4 sm:px-6 py-8 sm:py-12">
-        <Link
-          href="/"
-          className="mb-8 inline-flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground"
-        >
-          <ArrowLeft className="size-3.5" />
-          Back
-        </Link>
-
-        <h1 className="mb-2 text-2xl sm:text-3xl font-bold tracking-tight">Projects</h1>
-        <p className="mb-10 text-muted-foreground">
-          Things I&apos;ve built — from full-stack platforms to community tools.
-        </p>
+        <BlurFade delay={0.04}>
+        <div className="flex items-start justify-between mb-10">
+          <div>
+            <h1 className="mb-2 text-2xl sm:text-3xl font-bold tracking-tight">Projects</h1>
+            <p className="text-muted-foreground">
+              Things I&apos;ve built — from full-stack platforms to community tools.
+            </p>
+          </div>
+          <Link
+            href="/"
+            aria-label="Home"
+            className="shrink-0 ml-4 mt-1 rounded-full border p-2 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+          >
+            <Home className="size-4" />
+          </Link>
+        </div>
+        </BlurFade>
 
         <div className="grid gap-4 sm:grid-cols-2">
-          {projects.map((project) => (
+          {projects.map((project, i) => (
+            <BlurFade key={project.id} delay={0.12 + i * 0.05} inView>
             <Link
               key={project.id}
               href={`/projects/${project.id}`}
@@ -57,6 +88,7 @@ export default function ProjectsPage() {
                 </p>
               </div>
             </Link>
+            </BlurFade>
           ))}
         </div>
       </div>

@@ -27,4 +27,5 @@ export const education = [
 
 export const certifications = [
   { name: "MongoDB Certified Developer, Associate (C100DEV)", issuer: "MongoDB", year: "2026" },
+  { name: "Introduction to Programming Using Python", issuer: "Coursera", year: "2025" },
 ];

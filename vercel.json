@@ -1,0 +1,10 @@
+{
+  "redirects": [
+    {
+      "source": "/:path*",
+      "has": [{ "type": "host", "value": "gyanranjanpriyam.tech" }],
+      "destination": "https://www.gyanranjanpriyam.tech/:path*",
+      "permanent": true
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "name": "Gyanranjan Priyam - Full Stack Developer Portfolio",
+  "short_name": "Gyanranjan Priyam",
+  "description": "Full Stack Developer working at the intersection of web development, app development, and AI/ML to build scalable digital products people actually use.",
+  "icons": [
+    {
+      "src": "/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ],
+  "theme_color": "#28282b",
+  "background_color": "#f0f4f1",
+  "start_url": "/",
+  "scope": ".",
+  "display": "standalone",
+  "orientation": "portrait"
+}

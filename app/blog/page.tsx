@@ -1,12 +1,34 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowLeft } from "lucide-react";
+import { Home } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import blogs from "@/data/blogsData";
+import { BlurFade } from "@/components/ui/blur-fade";
 
 export const metadata: Metadata = {
-  title: "Blog — Gyanranjan Priyam",
-  description: "Thoughts on web development, engineering, and the journey of building things.",
+  title: "Blog",
+  description:
+    "Read articles and insights on web development, React, Next.js, performance optimization, and modern frontend techniques by Gyanranjan Priyam.",
+  keywords: [
+    "Priyam Blog",
+    "Web Development Blog",
+    "React Articles",
+    "Next.js Tutorials",
+    "Frontend Development",
+    "JavaScript Tips",
+    "Gyanranjan Priyam Blog",
+  ],
+  alternates: { canonical: "/blog" },
+  openGraph: {
+    title: "Blog — Gyanranjan Priyam",
+    description:
+      "Read articles and insights on web development, React, Next.js, performance optimization, and modern frontend techniques by Gyanranjan Priyam.",
+  },
+  twitter: {
+    title: "Blog — Gyanranjan Priyam",
+    description:
+      "Read articles and insights on web development, React, Next.js, performance optimization, and modern frontend techniques by Gyanranjan Priyam.",
+  },
 };
 
 function formatDate(dateStr: string) {
@@ -21,21 +43,27 @@ export default function BlogPage() {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <div className="mx-auto max-w-2xl px-4 sm:px-6 py-8 sm:py-12">
-        <Link
-          href="/"
-          className="inline-flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground mb-8"
-        >
-          <ArrowLeft className="size-3.5" />
-          Back
-        </Link>
-
-        <h1 className="text-2xl sm:text-3xl font-bold tracking-tight mb-2">Blog</h1>
-        <p className="text-muted-foreground mb-10">
-          Thoughts on web development, engineering, and the journey of building things.
-        </p>
+        <BlurFade delay={0.04}>
+        <div className="flex items-start justify-between mb-10">
+          <div>
+            <h1 className="text-2xl sm:text-3xl font-bold tracking-tight mb-2">Blog</h1>
+            <p className="text-muted-foreground">
+              Thoughts on web development, engineering, and the journey of building things.
+            </p>
+          </div>
+          <Link
+            href="/"
+            aria-label="Home"
+            className="shrink-0 ml-4 mt-1 rounded-full border p-2 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+          >
+            <Home className="size-4" />
+          </Link>
+        </div>
+        </BlurFade>
 
         <div className="space-y-4">
-          {blogs.map((blog) => (
+          {blogs.map((blog, i) => (
+            <BlurFade key={blog.id} delay={0.12 + i * 0.05} inView>
             <Link
               key={blog.id}
               href={`/blog/${blog.id}`}
@@ -64,6 +92,7 @@ export default function BlogPage() {
                 ))}
               </div>
             </Link>
+            </BlurFade>
           ))}
         </div>
       </div>

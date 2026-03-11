@@ -9,7 +9,11 @@ import { Footer } from "@/components/sections/footer";
 import { Separator } from "@/components/ui/separator";
 import localFont from "next/font/local";
 import ClickSpark from "@/components/ClickSpark";
+import { FlickeringGrid } from "@/components/ui/flickering-grid";
 
+const SITE_URL = "https://www.gyanranjanpriyam.tech";
+const OG_IMAGE =
+  "https://res.cloudinary.com/dw47ib0sh/image/upload/v1766402986/ls67mu0pkqalizjmvuyf.png";
 
 const dmSans = DM_Sans({
   variable: "--font-sans",
@@ -32,9 +36,84 @@ const gta = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Gyanranjan Priyam — Full-Stack Developer",
+  metadataBase: new URL(SITE_URL),
+  title: {
+    default: "Gyanranjan Priyam — Full Stack Developer Portfolio",
+    template: "%s — Gyanranjan Priyam",
+  },
   description:
-    "Portfolio & resume of Gyanranjan Priyam, a full-stack developer specializing in modern web technologies.",
+    "Full Stack Developer working at the intersection of web development, app development, and AI/ML to build scalable digital products people actually use.",
+  keywords: [
+    "Gyanranjan Priyam",
+    "Full Stack Developer",
+    "Web Developer",
+    "Next.js Developer",
+    "React Developer",
+    "Frontend Developer",
+    "Software Engineer",
+    "Portfolio",
+    "JavaScript",
+    "TypeScript",
+    "Tailwind CSS",
+    "GSAP Animation",
+    "Web Applications",
+    "Responsive Design",
+    "AI/ML",
+    "Next.js",
+    "React",
+    "Node.js",
+  ],
+  authors: [{ name: "Gyanranjan Priyam", url: SITE_URL }],
+  creator: "Gyanranjan Priyam",
+  publisher: "Gyanranjan Priyam",
+  formatDetection: { telephone: false },
+  alternates: { canonical: "/" },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: { index: true, follow: true },
+  },
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: SITE_URL,
+    siteName: "Gyanranjan Priyam",
+    title: "Gyanranjan Priyam — Full Stack Developer Portfolio",
+    description:
+      "Full Stack Developer working at the intersection of web development, app development, and AI/ML to build scalable digital products people actually use.",
+    images: [
+      {
+        url: OG_IMAGE,
+        width: 1200,
+        height: 630,
+        alt: "Gyanranjan Priyam",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Gyanranjan Priyam — Full Stack Developer Portfolio",
+    description:
+      "Full Stack Developer working at the intersection of web development, app development, and AI/ML to build scalable digital products people actually use.",
+    creator: "@gr_priyam",
+    images: [OG_IMAGE],
+  },
+  icons: {
+    icon: [
+      { url: "/favicon.ico" },
+      { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
+      { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+    ],
+    apple: [{ url: "/apple-touch-icon.png", sizes: "180x180" }],
+    other: [
+      { rel: "mask-icon", url: "/safari-pinned-tab.svg", color: "#333333" },
+    ],
+  },
+  manifest: "/site.webmanifest",
+  other: {
+    "msapplication-TileColor": "#f0f4f1",
+    "geo.region": "IN",
+  },
 };
 
 export default function RootLayout({
@@ -45,6 +124,12 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
+        <meta name="theme-color" content="#f0f4f1" />
+        <script
+          src="https://analytics.ahrefs.com/analytics.js"
+          data-key="HFM9ucf4ebY4chd5hRuhqA"
+          async
+        />
         <script
           dangerouslySetInnerHTML={{
             __html: `(function(){if(window.matchMedia('(prefers-color-scheme: dark)').matches){document.documentElement.classList.add('dark');}else{document.documentElement.classList.remove('dark');}if(window.location.pathname==='/'&&!sessionStorage.getItem('loader-intro-shown')){document.documentElement.classList.add('loader-active');}})();`,
@@ -64,6 +149,8 @@ export default function RootLayout({
           <LoaderWrapper />
           <ClickSpark>
           <main id="layout">
+            <div className="absolute inset-0 top-0 left-0 right-0 h-[100px] overflow-hidden z-0">
+            </div>
             {children}
             <Separator />
             <div className="mx-auto max-w-2xl px-4 sm:px-6">

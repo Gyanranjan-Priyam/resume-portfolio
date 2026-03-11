@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://www.gyanranjanpriyam.tech
+
+# Sitemaps
+Sitemap: https://www.gyanranjanpriyam.tech/sitemap.xml

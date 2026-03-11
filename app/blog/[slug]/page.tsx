@@ -16,8 +16,23 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const blog = blogs.find((b) => b.id === slug);
   if (!blog) return {};
   return {
-    title: `${blog.title} — Gyanranjan Priyam`,
+    title: blog.title,
     description: blog.excerpt,
+    keywords: blog.tags,
+    alternates: { canonical: `/blog/${blog.id}` },
+    openGraph: {
+      title: `${blog.title} — Gyanranjan Priyam`,
+      description: blog.excerpt,
+      type: "article",
+      publishedTime: blog.date,
+      modifiedTime: blog.updatedAt,
+      authors: ["Gyanranjan Priyam"],
+      tags: blog.tags,
+    },
+    twitter: {
+      title: `${blog.title} — Gyanranjan Priyam`,
+      description: blog.excerpt,
+    },
   };
 }
 

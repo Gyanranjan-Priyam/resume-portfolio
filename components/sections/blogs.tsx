@@ -1,6 +1,7 @@
 import { ArrowRight } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import blogs from "@/data/blogsData";
+import { BlurFade } from "@/components/ui/blur-fade";
 
 function formatDate(dateStr: string) {
   return new Date(dateStr).toLocaleDateString("en-US", {
@@ -13,9 +14,12 @@ function formatDate(dateStr: string) {
 export function BlogsSection() {
   return (
     <section id="blogs" className="py-8">
+      <BlurFade delay={0.04} inView>
       <h2 className="mb-6 text-2xl font-bold">Blog</h2>
+      </BlurFade>
       <div className="space-y-4">
-        {blogs.slice(0, 3).map((blog) => (
+        {blogs.slice(0, 3).map((blog, i) => (
+          <BlurFade key={blog.id} delay={0.04 + i * 0.05} inView>
           <a
             key={blog.id}
             href={`/blog/${blog.id}`}
@@ -44,14 +48,17 @@ export function BlogsSection() {
               ))}
             </div>
           </a>
+          </BlurFade>
         ))}
       </div>
+      <BlurFade delay={0.25} inView>
       <a
         href="/blog"
         className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
       >
         View All <ArrowRight className="size-3.5" />
       </a>
+      </BlurFade>
     </section>
   );
 }

@@ -1,13 +1,17 @@
 import { Badge } from "@/components/ui/badge";
 import { skillCategories } from "@/data/skillCategories";
+import { BlurFade } from "@/components/ui/blur-fade";
 
 export function SkillsSection() {
   return (
     <section id="skills" className="py-8">
+      <BlurFade delay={0.04} inView>
       <h2 className="mb-6 text-3xl font-bold">Skills</h2>
+      </BlurFade>
       <div className="flex flex-wrap gap-2">
         {skillCategories.flatMap((cat) =>
-          cat.skills.map((skill) => (
+          cat.skills.map((skill, i) => (
+            <BlurFade key={skill.name} delay={0.04 + i * 0.02} inView>
             <Badge
               key={skill.name}
               variant="secondary"
@@ -16,6 +20,7 @@ export function SkillsSection() {
               {skill.icon}
               {skill.name}
             </Badge>
+            </BlurFade>
           ))
         )}
       </div>

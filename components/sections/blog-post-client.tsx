@@ -2,8 +2,9 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
-import { ArrowLeft } from "lucide-react";
+import { ChevronRight } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import { BlurFade } from "@/components/ui/blur-fade";
 
 /* ── Types ── */
 type ContentBlock =
@@ -219,26 +220,33 @@ export function BlogPostClient({
 
           {/* ── Main Content ── */}
           <article className="mx-auto w-full max-w-2xl">
-            {/* Back link */}
-            <Link
-              href="/blog"
-              className="inline-flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground mb-8"
-            >
-              <ArrowLeft className="size-3.5" />
-              All posts
-            </Link>
+            {/* Breadcrumb */}
+            <BlurFade delay={0.04}>
+            <nav aria-label="Breadcrumb" className="mb-8 flex items-center gap-1 text-sm text-muted-foreground">
+              <Link href="/" className="transition-colors hover:text-foreground">Home</Link>
+              <ChevronRight className="size-3.5" />
+              <Link href="/blog" className="transition-colors hover:text-foreground">Blog</Link>
+              <ChevronRight className="size-3.5" />
+              <span className="truncate text-foreground font-medium">{blog.title}</span>
+            </nav>
+            </BlurFade>
 
             {/* Title */}
-            <h1 className="text-2xl font-bold tracking-tight leading-snug mb-4">
+            <BlurFade delay={0.08}>
+            <h1 className="text-4xl font-bold tracking-tight leading-snug mb-4">
               {blog.title}
             </h1>
+            </BlurFade>
 
             {/* Excerpt */}
+            <BlurFade delay={0.12}>
             <p className="text-base leading-relaxed text-muted-foreground mb-5">
               {blog.excerpt}
             </p>
+            </BlurFade>
 
             {/* Meta row */}
+            <BlurFade delay={0.16}>
             <div className="flex flex-wrap items-center gap-2 text-xs text-muted-foreground mb-2">
               <time dateTime={blog.date}>{formatDate(blog.date)}</time>
               {blog.updatedAt && blog.updatedAt !== blog.date && (
@@ -261,6 +269,7 @@ export function BlogPostClient({
                 </Badge>
               ))}
             </div>
+            </BlurFade>
 
             {/* Mobile actions row */}
             <div className="flex items-center gap-2 mb-6 lg:hidden">
@@ -307,6 +316,7 @@ export function BlogPostClient({
             <div className="h-px w-full bg-border mb-8" />
 
             {/* Content */}
+            <BlurFade delay={0.24}>
             <div>
               {(blog.content as ContentBlock[]).map((block, index) => {
                 if (block.type === "heading") {
@@ -347,16 +357,17 @@ export function BlogPostClient({
                 );
               })}
             </div>
+            </BlurFade>
 
             {/* Footer divider + back */}
             <div className="h-px w-full bg-border mt-12 mb-8" />
-            <Link
-              href="/blog"
-              className="inline-flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground"
-            >
-              <ArrowLeft className="size-3.5" />
-              Back to all posts
-            </Link>
+            <nav aria-label="Breadcrumb" className="flex items-center gap-1 text-sm text-muted-foreground">
+              <Link href="/" className="transition-colors hover:text-foreground">Home</Link>
+              <ChevronRight className="size-3.5" />
+              <Link href="/blog" className="transition-colors hover:text-foreground">Blog</Link>
+              <ChevronRight className="size-3.5" />
+              <span className="truncate text-foreground font-medium">{blog.title}</span>
+            </nav>
           </article>
 
           {/* ── Right Sidebar: Next Blog + Actions ── */}

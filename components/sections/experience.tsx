@@ -5,6 +5,7 @@ import { AnimatePresence, motion } from "motion/react";
 import { useOutsideClick } from "@/hooks/use-outside-click";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { experiences } from "@/data/experienceData";
+import { BlurFade } from "@/components/ui/blur-fade";
 
 
 function CloseIcon() {
@@ -55,7 +56,9 @@ export function ExperienceSection() {
 
   return (
     <section id="experience" className="py-8">
+      <BlurFade delay={0.04} inView>
       <h2 className="mb-6 text-3xl font-bold">Work Experience</h2>
+      </BlurFade>
 
       {/* Overlay */}
       <AnimatePresence>
@@ -146,7 +149,8 @@ export function ExperienceSection() {
 
       {/* List */}
       <div className="space-y-1">
-        {experiences.map((exp) => (
+        {experiences.map((exp, i) => (
+          <BlurFade key={exp.company} delay={0.04 + i * 0.05} inView>
           <motion.div
             layoutId={`card-${exp.company}-${id}`}
             key={exp.company}
@@ -182,6 +186,7 @@ export function ExperienceSection() {
               {exp.period}
             </motion.span>
           </motion.div>
+          </BlurFade>
         ))}
       </div>
     </section>

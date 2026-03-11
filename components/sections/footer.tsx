@@ -3,6 +3,7 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { BlurFade } from "@/components/ui/blur-fade";
 
 const navLinks = [
   { label: "About", href: "#about" },
@@ -66,13 +67,16 @@ export function Footer() {
   return (
     <footer className="py-10">
       {/* Logo / Name */}
+      <BlurFade delay={0.04} inView>
       <div className="flex justify-center">
         <Link href="/" className="text-lg font-bold tracking-tight">
           Gyanranjan Priyam
         </Link>
       </div>
+      </BlurFade>
 
       {/* Nav links */}
+      <BlurFade delay={0.08} inView>
       <nav className="mt-4 flex flex-wrap items-center justify-center gap-x-6 gap-y-2">
         {navLinks.map((link) => (
           <Link
@@ -84,11 +88,13 @@ export function Footer() {
           </Link>
         ))}
       </nav>
+      </BlurFade>
 
       {/* Divider */}
       <div className="mx-auto mt-8 max-w-md border-t border-dashed" />
 
       {/* Bottom row */}
+      <BlurFade delay={0.12} inView>
       <div className="mt-6 flex flex-wrap items-center justify-between gap-y-3">
         <p className="text-xs text-muted-foreground">
           &copy; {new Date().getFullYear()} Gyanranjan Priyam
@@ -131,6 +137,7 @@ export function Footer() {
           </button>
         </div>
       </div>
+      </BlurFade>
     </footer>
   );
 }
