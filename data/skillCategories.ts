@@ -1,8 +1,9 @@
 import type { ReactNode } from "react";
 import { createElement } from "react";
 
-function svg(props: { viewBox: string; className?: string; children: ReactNode }) {
-  return createElement("svg", { viewBox: props.viewBox, className: props.className ?? "size-4" }, props.children);
+function svg(props: { viewBox: string; className?: string; children: ReactNode | ReactNode[] }) {
+  const kids = Array.isArray(props.children) ? props.children : [props.children];
+  return createElement("svg", { viewBox: props.viewBox, className: props.className ?? "size-4" }, ...kids);
 }
 
 function path(props: Record<string, string>) {
@@ -17,8 +18,9 @@ function rect(props: Record<string, string>) {
   return createElement("rect", props);
 }
 
-function g(props: { children: ReactNode }) {
-  return createElement("g", props);
+function g(props: { children: ReactNode | ReactNode[] }) {
+  const kids = Array.isArray(props.children) ? props.children : [props.children];
+  return createElement("g", null, ...kids);
 }
 
 export type Skill = {

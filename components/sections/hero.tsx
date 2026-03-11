@@ -121,9 +121,7 @@ export function HeroSection() {
         <BlurFade delay={0.16} direction="up">
         <h1 className="text-2xl font-bold tracking-widest sm:text-4xl" style={{ fontFamily: "var(--font-mokoto)" }}>
           Hi I&apos;m  {" "}
-          <Tooltip content="Hey I'm Gyanranjan Priyam, a Full-Stack Developer. You can call me Priyam!">
             <span className="cursor-pointer" ><Highlighter action="underline" color="#FF9800">Priyam</Highlighter> </span>
-          </Tooltip>
           {" "}
           <button
             onClick={toggleTheme}

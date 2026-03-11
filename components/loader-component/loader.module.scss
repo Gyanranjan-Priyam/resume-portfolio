@@ -1,4 +1,4 @@
-@import './styles/functions.scss';
+@use './styles/functions.scss' as *;
 
 .root {
   position: fixed;

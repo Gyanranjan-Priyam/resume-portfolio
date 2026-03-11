@@ -12,7 +12,7 @@ export const education = [
     school: "Divine Higher Secondary School, Nayagarh",
     period: "2021 - 2023",
     marks: "Percentage: 85%",
-    logo: "/logos/ucb.svg",
+    logo: "/education/divine.png",
     initials: "DH",
   },
   {

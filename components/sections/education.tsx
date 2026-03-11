@@ -12,8 +12,8 @@ export function EducationSection() {
         {education.map((edu, i) => (
           <BlurFade key={i} delay={0.04 + i * 0.05} inView>
           <div className="flex items-center gap-4">
-            <Avatar className="size-12   border">
-              <AvatarImage src={edu.logo} alt={edu.school} />
+            <Avatar className="size-14 border bg-white p-1.5">
+              <AvatarImage src={edu.logo} alt={edu.school} className="object-contain" />
               <AvatarFallback className="text-xs font-bold">
                 {edu.initials}
               </AvatarFallback>

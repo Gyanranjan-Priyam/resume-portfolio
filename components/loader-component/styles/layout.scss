@@ -1,5 +1,6 @@
 @use 'sass:map';
-@import './functions.scss';
+@use 'sass:list';
+@use './functions.scss' as *;
 
 /* Layout system - provides .layout-block-inner and CSS custom properties */
 
@@ -19,16 +20,16 @@ $layout: (
 );
 
 :root {
-  --layout-columns-count: #{nth(map.get($layout, 'columns-count'), 1)};
-  --layout-columns-gap: #{mobile-vw(nth(map.get($layout, 'columns-gap'), 1))};
-  --layout-margin: #{mobile-vw(nth(map.get($layout, 'margin'), 1))};
+  --layout-columns-count: #{list.nth(map.get($layout, 'columns-count'), 1)};
+  --layout-columns-gap: #{mobile-vw(list.nth(map.get($layout, 'columns-gap'), 1))};
+  --layout-margin: #{mobile-vw(list.nth(map.get($layout, 'margin'), 1))};
 
   @include desktop {
-    --layout-columns-count: #{nth(map.get($layout, 'columns-count'), 2)};
+    --layout-columns-count: #{list.nth(map.get($layout, 'columns-count'), 2)};
     --layout-columns-gap: #{desktop-vw(
-        nth(map.get($layout, 'columns-gap'), 2)
+        list.nth(map.get($layout, 'columns-gap'), 2)
       )};
-    --layout-margin: #{desktop-vw(nth(map.get($layout, 'margin'), 2))};
+    --layout-margin: #{desktop-vw(list.nth(map.get($layout, 'margin'), 2))};
   }
 
   --layout-width: calc(100vw - (2 * var(--layout-margin)));

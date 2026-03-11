@@ -4,7 +4,7 @@ export function ContactSection() {
   return (
     <section id="contact" className="py-8">
       <BlurFade delay={0.04} inView>
-      <h2 className="mb-4 text-2xl font-bold">Contact</h2>
+      <h2 className="mb-4 text-3xl font-bold">Contact</h2>
       </BlurFade>
       <BlurFade delay={0.08} inView>
       <p className="text-sm leading-relaxed text-muted-foreground">

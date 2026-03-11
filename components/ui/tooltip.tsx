@@ -48,7 +48,8 @@ export const Tooltip = ({
     const absoluteY = containerRect.top + mouseY;
 
     let finalX = mouseX + 12;
-    let finalY = mouseY + 12;
+    // Default to showing ABOVE the cursor
+    let finalY = mouseY - tooltipHeight - 12;
 
     // Check if tooltip goes beyond right edge
     if (absoluteX + 12 + tooltipWidth > viewportWidth) {
@@ -60,14 +61,9 @@ export const Tooltip = ({
       finalX = -containerRect.left + 12;
     }
 
-    // Check if tooltip goes beyond bottom edge
-    if (absoluteY + 12 + tooltipHeight > viewportHeight) {
-      finalY = mouseY - tooltipHeight - 12;
-    }
-
-    // Check if tooltip goes beyond top edge
-    if (absoluteY + finalY < 0) {
-      finalY = -containerRect.top + 12;
+    // Check if tooltip goes beyond top edge — flip below
+    if (absoluteY - tooltipHeight - 12 < 0) {
+      finalY = mouseY + 12;
     }
 
     return { x: finalX, y: finalY };
@@ -169,7 +165,7 @@ export const Tooltip = ({
               stiffness: 200,
               damping: 20,
             }}
-            className="pointer-events-none absolute z-50 min-w-[15rem] overflow-hidden rounded-md border border-transparent bg-white shadow-sm ring-1 shadow-black/5 ring-black/5 dark:bg-neutral-900 dark:shadow-white/10 dark:ring-white/5"
+            className="pointer-events-none absolute z-50 min-w-[15rem] overflow-hidden rounded-md border border-transparent bg-white shadow-sm ring-1 shadow-black/5 ring-black/5 dark:bg-neutral-900 dark:shadow-white/10 dark:ring-white/5 font-sans tracking-normal"
             style={{
               top: position.y,
               left: position.x,
