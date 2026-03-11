@@ -1,36 +1,106 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+<div align="center">
+
+# Gyanranjan Priyam — Portfolio
+
+A modern, performant personal portfolio built with **Next.js 16**, **React 19**, and **Tailwind CSS 4**.
+
+🔗 **[gyanranjanpriyam.tech](https://www.gyanranjanpriyam.tech)** 
+🔗 **[priyam.tech](https://www.priyam.tech)**
+
+</div>
+
+## Preview
+
+| Dark Mode | Light Mode |
+|:---------:|:----------:|
+| ![Dark Mode](public/github/dark.png) | ![Light Mode](public/github/light.png) |
+
+## Tech Stack
+
+| Category | Technologies |
+|----------|-------------|
+| **Framework** | Next.js 16 (App Router, Turbopack) |
+| **UI** | React 19, Tailwind CSS 4, Radix UI, shadcn/ui |
+| **Animations** | Framer Motion, GSAP, Lenis (smooth scroll) |
+| **3D** | Three.js, Postprocessing |
+| **Styling** | Sass, tw-animate-css |
+| **Code Highlighting** | Shiki |
+| **State Management** | Zustand |
+| **Package Manager** | Bun |
+| **Deployment** | Vercel |
+
+## Features
+
+- **Dark / Light Theme** with system preference detection and smooth toggle
+- **Custom Intro Loader** with animated typography
+- **Interactive Hero** with profile carousel and click-spark effects
+- **Sections** — About, Education, Experience, Skills, Projects, Blog, GitHub Calendar, Contact
+- **Blog Engine** with syntax-highlighted code blocks (Shiki), table of contents, read-aloud, and share buttons
+- **Project Showcase** with image galleries and live/source links
+- **GitHub Contribution Calendar** integrated via `react-github-calendar`
+- **SEO Optimized** — dynamic sitemap, JSON-LD structured data (`Person`, `BlogPosting`, `CreativeWork`), OpenGraph & Twitter cards
+- **Smooth Scroll** powered by Lenis
+- **Fully Responsive** — mobile-first design
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+
+- [Node.js](https://nodejs.org/) 18+ or [Bun](https://bun.sh/) 1.0+
+
+### Installation
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
+# Clone the repository
+git clone https://github.com/Gyanranjan-Priyam/resume-portfolio.git
+cd resume-portfolio
+
+# Install dependencies
+bun install
+```
+
+### Development
+
+```bash
 bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) to view the site.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Build
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+bun run build
+bun start
+```
 
-## Learn More
+## Project Structure
 
-To learn more about Next.js, take a look at the following resources:
+```
+app/                  # Next.js App Router pages & layouts
+  blog/               # Blog listing & dynamic [slug] pages
+  projects/           # Projects listing & dynamic [id] pages
+  sitemap.ts          # Dynamic sitemap generation
+components/
+  sections/           # Page sections (hero, about, skills, etc.)
+  ui/                 # Reusable UI components (badge, card, tooltip, etc.)
+  loader-component/   # Animated intro loader
+data/                 # Static data (blogs, projects, education, skills)
+hooks/                # Custom React hooks
+lib/                  # Utilities
+public/               # Static assets (fonts, images, resume)
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Deployment
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Deployed on [Vercel](https://vercel.com). Push to `main` triggers automatic deployment.
 
-## Deploy on Vercel
+## License
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+This project is open source and available under the [MIT License](LICENSE).
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+<div align="center">
+  Built by <a href="https://www.gyanranjanpriyam.tech">Gyanranjan Priyam</a>
+</div>
