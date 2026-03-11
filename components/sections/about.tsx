@@ -1,0 +1,36 @@
+import { Tooltip } from "@/components/ui/tooltip";
+
+export function AboutSection() {
+  return (
+    <section id="about" className="py-8">
+      <h2 className="mb-4 text-3xl font-bold">About</h2>
+      <p className="text-[15px] leading-relaxed text-muted-foreground">
+        I&apos;m an electrical engineering student with a passion for technology
+        and web development. Alongside my core studies I am also a software
+        developer focused on building seamless, efficient, and user-centric
+        digital experiences across both front-end and back-end technologies.
+      </p>
+
+
+      <h2 className="mt-4 mb-2 text-2xl font-semibold">Hobbies &amp; Interests</h2>
+      <p className="text-[15px] leading-relaxed text-muted-foreground">
+        My hobbies include{" "}
+        <Tooltip content="I enjoy reading a wide range of books that help me expand my imagination, improve my thinking, and gain new perspectives.">
+          <span className="font-semibold text-foreground cursor-pointer">reading books</span>
+        </Tooltip>{" "}
+        and{" "}
+        <Tooltip content="I love building websites, learning new web technologies, and improving my skills through hands-on projects.">
+          <span className="font-semibold text-foreground cursor-pointer">web development</span>
+        </Tooltip>.
+        I also have a strong interest in{" "}
+        <Tooltip content="I am passionate about exploring new topics, learning about emerging fields, and conducting research to expand my understanding.">
+          <span className="font-semibold text-foreground cursor-pointer">research</span>
+        </Tooltip>{" "}
+        across various fields, which helps me stay updated with advancements and
+        continuously gain knowledge.
+      </p>
+
+
+    </section>
+  );
+}
