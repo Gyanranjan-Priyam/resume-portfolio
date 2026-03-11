@@ -50,7 +50,7 @@ export function ProjectsSection() {
 
   return (
     <section id="projects" className="py-8">
-      <h2 className="mb-6 text-2xl font-bold">Projects</h2>
+      <h2 className="mb-6 text-3xl font-bold">Projects</h2>
 
       <AnimatePresence>
         {active && (

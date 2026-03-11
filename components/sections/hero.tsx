@@ -5,6 +5,7 @@ import { useCallback, useEffect, useState, type ReactNode } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Image from "next/image";
 import { Tooltip } from "../ui/tooltip";
+import { Highlighter } from "../ui/highlighter";
 
 const socials: { label: string; href: string; icon: ReactNode; download?: boolean }[] = [
   {
@@ -112,9 +113,10 @@ export function HeroSection() {
 
       {/* Info */}
       <div className="mt-3 space-y-1.5 px-1">
-        <h1 className="text-2xl font-bold tracking-tight sm:text-4xl">
+        <h1 className="text-2xl font-bold tracking-widest sm:text-4xl" style={{ fontFamily: "var(--font-mokoto)" }}>
+          Hi I&apos;m  {" "}
           <Tooltip content="Hey I'm Gyanranjan Priyam, a Full-Stack Developer. You can call me Priyam!">
-            <span className="cursor-pointer">Hi I&apos;m Priyam</span>
+            <span className="cursor-pointer" ><Highlighter action="underline" color="#FF9800">Priyam</Highlighter> </span>
           </Tooltip>
           {" "}
           <button
@@ -126,8 +128,8 @@ export function HeroSection() {
             👋
           </button>
         </h1>
-        <p className="text-lg font-medium text-muted-foreground">
-          Full-Stack Developer · Electrical Engineering @ GCE Kalahandi
+        <p className="text-lg mt-3 font-medium text-muted-foreground">
+          Full-Stack Developer · Electrical Engineering @GCE Kalahandi
         </p>
         <p className="text-[15px] leading-relaxed text-muted-foreground">
           Electrical Engineer by degree, Full-Stack Developer by passion. I

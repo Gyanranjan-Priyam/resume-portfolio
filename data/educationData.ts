@@ -4,7 +4,7 @@ export const education = [
     school: "Government College of Engineering Kalahandi, Bhawanipatna",
     period: "2024 - present",
     marks: "CGPA: 8.2",
-    logo: "/logos/ucb.svg",
+    logo: "/education/gcek.png",
     initials: "GK",
   },
   {

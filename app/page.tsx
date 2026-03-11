@@ -8,7 +8,6 @@ import { ContactSection } from "@/components/sections/contact";
 import { GitHubCalendarSection } from "@/components/sections/github-calendar";
 import { Separator } from "@/components/ui/separator";
 import { ExperienceSection } from "@/components/sections/experience";
-import { ProgressiveBlur } from "@/components/ui/progressive-blur"
 
 export default function Home() {
   return (

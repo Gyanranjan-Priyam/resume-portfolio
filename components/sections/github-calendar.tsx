@@ -20,7 +20,7 @@ export function GitHubCalendarSection() {
 
   return (
     <div className="py-8">
-      <h2 className="mb-6 text-2xl font-bold">GitHub Contributions</h2>
+      <h2 className="mb-6 text-3xl font-bold">GitHub Contributions</h2>
       <div className="overflow-x-auto">
         <Calendar username="gyanranjan-priyam" colorScheme={colorScheme} year={new Date().getFullYear()} />
       </div>

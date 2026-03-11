@@ -1,0 +1,25 @@
+@font-face {
+  font-family: 'Pricedown';
+  src: url('/fonts/pricedown.otf') format('opentype');
+  font-weight: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Mokoto';
+  src: url('/fonts/mokoto.regular.ttf') format('truetype');
+  font-weight: normal;
+  font-display: swap;
+}
+
+:root {
+  --font-heading: 'Montserrat', sans-serif;
+  --font-body: 'Open Sans', sans-serif;
+  --font-code: 'JetBrains Mono', monospace;
+  --font-name: 'Mokoto';
+  --font-loader: 'Pricedown';
+}
+
+body {
+  font-family: var(--font-body), sans-serif;
+}

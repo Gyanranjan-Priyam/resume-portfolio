@@ -4,7 +4,7 @@ import { skillCategories } from "@/data/skillCategories";
 export function SkillsSection() {
   return (
     <section id="skills" className="py-8">
-      <h2 className="mb-6 text-2xl font-bold">Skills</h2>
+      <h2 className="mb-6 text-3xl font-bold">Skills</h2>
       <div className="flex flex-wrap gap-2">
         {skillCategories.flatMap((cat) =>
           cat.skills.map((skill) => (

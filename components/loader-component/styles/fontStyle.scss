@@ -1,0 +1,33 @@
+@import './functions.scss';
+
+/* Typography classes used by the Loader */
+
+.h1 {
+  font-family: var(--font-heading), sans-serif;
+  font-size: 6.1vw;
+  line-height: 120%;
+  font-weight: normal;
+  @include mobile {
+    font-size: 9.4vw;
+    line-height: 130%;
+  }
+}
+
+.h2 {
+  font-family: var(--font-heading), sans-serif;
+  font-size: 4.7vw;
+  line-height: 120%;
+  font-weight: normal;
+  @include mobile {
+    font-size: 7.6vw;
+    line-height: 120%;
+  }
+}
+
+.name-text {
+  font-family: var(--font-name), sans-serif !important;
+}
+
+.loader-number {
+  font-family: var(--font-loader), sans-serif !important;
+}

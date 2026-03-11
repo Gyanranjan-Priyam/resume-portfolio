@@ -1,0 +1,36 @@
+@use 'sass:color';
+
+$colors-light: (
+  'white': #f0f4f1,
+  'black': #28282b,
+  'menuColor': #28282b,
+  'accentColor': #f9f9f9,
+  'fillColor': #f2ffbd,
+  'menuFontColor': #f0f4f1,
+  'footerText': #f0f4f1,
+  'sectionBorder': #f0f4f1,
+);
+
+$colors-dark: (
+  'white': #1a1a1d,
+  'black': #e8e8e8,
+  'menuColor': #e8e8e8,
+  'accentColor': #2e2e32,
+  'fillColor': #3a4a1a,
+  'menuFontColor': #1a1a1d,
+  'footerText': #e8e8e8,
+  'sectionBorder': #2e2e31,
+);
+
+html {
+  @each $name, $color in $colors-light {
+    --#{$name}: #{$color};
+  }
+}
+
+html[data-theme='dark'],
+html.dark {
+  @each $name, $color in $colors-dark {
+    --#{$name}: #{$color};
+  }
+}

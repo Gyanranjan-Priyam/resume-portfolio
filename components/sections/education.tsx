@@ -8,7 +8,7 @@ export function EducationSection() {
       <div className="space-y-6">
         {education.map((edu, i) => (
           <div key={i} className="flex items-center gap-4">
-            <Avatar className="size-12 border">
+            <Avatar className="size-12   border">
               <AvatarImage src={edu.logo} alt={edu.school} />
               <AvatarFallback className="text-xs font-bold">
                 {edu.initials}
