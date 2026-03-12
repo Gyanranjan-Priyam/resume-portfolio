@@ -1,3 +1,9 @@
+export interface FileNode {
+  name: string;
+  type: 'file' | 'folder';
+  children?: FileNode[];
+}
+
 const projects = [
   {
     id: 'project3',
@@ -62,6 +68,70 @@ const projects = [
       { layer: 'Security', value: 'Arcjet (rate limiting & bot protection)' },
       { layer: 'Deployment', value: 'Vercel' },
     ],
+    folderStructure: [
+      { name: 'app', type: 'folder', children: [
+        { name: '(auth)', type: 'folder', children: [
+          { name: 'login', type: 'folder', children: [{ name: 'page.tsx', type: 'file' }] },
+          { name: 'register', type: 'folder', children: [{ name: 'page.tsx', type: 'file' }] },
+        ]},
+        { name: '(dashboard)', type: 'folder', children: [
+          { name: 'admin', type: 'folder', children: [
+            { name: 'events', type: 'folder', children: [{ name: 'page.tsx', type: 'file' }] },
+            { name: 'payments', type: 'folder', children: [{ name: 'page.tsx', type: 'file' }] },
+            { name: 'registrations', type: 'folder', children: [{ name: 'page.tsx', type: 'file' }] },
+            { name: 'accommodation', type: 'folder', children: [{ name: 'page.tsx', type: 'file' }] },
+            { name: 'support', type: 'folder', children: [{ name: 'page.tsx', type: 'file' }] },
+            { name: 'layout.tsx', type: 'file' },
+          ]},
+          { name: 'participant', type: 'folder', children: [
+            { name: 'dashboard', type: 'folder', children: [{ name: 'page.tsx', type: 'file' }] },
+            { name: 'registrations', type: 'folder', children: [{ name: 'page.tsx', type: 'file' }] },
+            { name: 'layout.tsx', type: 'file' },
+          ]},
+        ]},
+        { name: 'api', type: 'folder', children: [
+          { name: 'auth', type: 'folder', children: [{ name: '[...all]', type: 'folder', children: [{ name: 'route.ts', type: 'file' }] }] },
+          { name: 'events', type: 'folder', children: [{ name: 'route.ts', type: 'file' }] },
+          { name: 'registrations', type: 'folder', children: [{ name: 'route.ts', type: 'file' }] },
+          { name: 'upload', type: 'folder', children: [{ name: 'route.ts', type: 'file' }] },
+          { name: 'payments', type: 'folder', children: [{ name: 'route.ts', type: 'file' }] },
+        ]},
+        { name: 'layout.tsx', type: 'file' },
+        { name: 'page.tsx', type: 'file' },
+        { name: 'globals.css', type: 'file' },
+      ]},
+      { name: 'components', type: 'folder', children: [
+        { name: 'ui', type: 'folder', children: [
+          { name: 'button.tsx', type: 'file' },
+          { name: 'card.tsx', type: 'file' },
+          { name: 'data-table.tsx', type: 'file' },
+        ]},
+        { name: 'forms', type: 'folder', children: [
+          { name: 'register-form.tsx', type: 'file' },
+          { name: 'event-form.tsx', type: 'file' },
+          { name: 'payment-form.tsx', type: 'file' },
+        ]},
+        { name: 'modals', type: 'folder', children: [
+          { name: 'verify-payment.tsx', type: 'file' },
+        ]},
+      ]},
+      { name: 'lib', type: 'folder', children: [
+        { name: 'auth.ts', type: 'file' },
+        { name: 'db.ts', type: 'file' },
+        { name: 's3.ts', type: 'file' },
+        { name: 'arcjet.ts', type: 'file' },
+        { name: 'qr.ts', type: 'file' },
+        { name: 'utils.ts', type: 'file' },
+      ]},
+      { name: 'prisma', type: 'folder', children: [
+        { name: 'schema.prisma', type: 'file' },
+      ]},
+      { name: 'middleware.ts', type: 'file' },
+      { name: 'next.config.ts', type: 'file' },
+      { name: '.env', type: 'file' },
+      { name: 'package.json', type: 'file' },
+      { name: 'tsconfig.json', type: 'file' },
+    ] as FileNode[],
   },
   {
     id: 'project4',
@@ -136,6 +206,87 @@ const projects = [
       { layer: 'Security', value: 'Arcjet (rate limiting & bot protection)' },
       { layer: 'Deployment', value: 'Vercel' },
     ],
+    folderStructure: [
+      { name: 'app', type: 'folder', children: [
+        { name: '(auth)', type: 'folder', children: [
+          { name: 'sign-in', type: 'folder', children: [{ name: 'page.tsx', type: 'file' }] },
+          { name: 'sign-up', type: 'folder', children: [{ name: 'page.tsx', type: 'file' }] },
+          { name: 'layout.tsx', type: 'file' },
+        ]},
+        { name: '(course)', type: 'folder', children: [
+          { name: 'courses', type: 'folder', children: [
+            { name: '[courseId]', type: 'folder', children: [
+              { name: 'chapters', type: 'folder', children: [
+                { name: '[chapterId]', type: 'folder', children: [{ name: 'page.tsx', type: 'file' }] },
+              ]},
+              { name: 'page.tsx', type: 'file' },
+            ]},
+          ]},
+          { name: 'layout.tsx', type: 'file' },
+        ]},
+        { name: '(dashboard)', type: 'folder', children: [
+          { name: '(routes)', type: 'folder', children: [
+            { name: 'courses', type: 'folder', children: [
+              { name: '[courseId]', type: 'folder', children: [
+                { name: 'chapters', type: 'folder', children: [{ name: '[chapterId]', type: 'folder', children: [{ name: 'page.tsx', type: 'file' }] }] },
+                { name: 'page.tsx', type: 'file' },
+              ]},
+              { name: 'page.tsx', type: 'file' },
+            ]},
+            { name: 'teacher', type: 'folder', children: [
+              { name: 'courses', type: 'folder', children: [{ name: 'page.tsx', type: 'file' }] },
+              { name: 'analytics', type: 'folder', children: [{ name: 'page.tsx', type: 'file' }] },
+            ]},
+            { name: 'page.tsx', type: 'file' },
+          ]},
+          { name: 'layout.tsx', type: 'file' },
+        ]},
+        { name: 'api', type: 'folder', children: [
+          { name: 'auth', type: 'folder', children: [{ name: '[...all]', type: 'folder', children: [{ name: 'route.ts', type: 'file' }] }] },
+          { name: 'courses', type: 'folder', children: [{ name: 'route.ts', type: 'file' }] },
+          { name: 'stripe', type: 'folder', children: [{ name: 'route.ts', type: 'file' }] },
+          { name: 'webhook', type: 'folder', children: [{ name: 'route.ts', type: 'file' }] },
+          { name: 'uploadthing', type: 'folder', children: [{ name: 'route.ts', type: 'file' }] },
+        ]},
+        { name: 'layout.tsx', type: 'file' },
+        { name: 'globals.css', type: 'file' },
+      ]},
+      { name: 'components', type: 'folder', children: [
+        { name: 'ui', type: 'folder', children: [
+          { name: 'button.tsx', type: 'file' },
+          { name: 'progress.tsx', type: 'file' },
+          { name: 'data-table.tsx', type: 'file' },
+        ]},
+        { name: 'modals', type: 'folder', children: [
+          { name: 'confirm-modal.tsx', type: 'file' },
+        ]},
+        { name: 'providers', type: 'folder', children: [
+          { name: 'confetti-provider.tsx', type: 'file' },
+        ]},
+        { name: 'editor.tsx', type: 'file' },
+        { name: 'preview.tsx', type: 'file' },
+      ]},
+      { name: 'lib', type: 'folder', children: [
+        { name: 'auth.ts', type: 'file' },
+        { name: 'db.ts', type: 'file' },
+        { name: 'stripe.ts', type: 'file' },
+        { name: 's3.ts', type: 'file' },
+        { name: 'arcjet.ts', type: 'file' },
+        { name: 'utils.ts', type: 'file' },
+      ]},
+      { name: 'hooks', type: 'folder', children: [
+        { name: 'use-debounce.ts', type: 'file' },
+        { name: 'use-confetti.ts', type: 'file' },
+      ]},
+      { name: 'prisma', type: 'folder', children: [
+        { name: 'schema.prisma', type: 'file' },
+      ]},
+      { name: 'middleware.ts', type: 'file' },
+      { name: 'next.config.ts', type: 'file' },
+      { name: '.env', type: 'file' },
+      { name: 'package.json', type: 'file' },
+      { name: 'tsconfig.json', type: 'file' },
+    ] as FileNode[],
   },
   {
     id: 'project1',
@@ -217,6 +368,84 @@ const projects = [
       { layer: 'Icons', value: 'Lucide React' },
       { layer: 'Deployment', value: 'Vercel (frontend) + Railway (backend)' },
     ],
+    folderStructure: [
+      { name: 'client', type: 'folder', children: [
+        { name: 'src', type: 'folder', children: [
+          { name: 'components', type: 'folder', children: [
+            { name: 'common', type: 'folder', children: [
+              { name: 'Sidebar.tsx', type: 'file' },
+              { name: 'Navbar.tsx', type: 'file' },
+              { name: 'ThemeToggle.tsx', type: 'file' },
+            ]},
+            { name: 'admin', type: 'folder', children: [
+              { name: 'StudentTable.tsx', type: 'file' },
+              { name: 'AttendancePanel.tsx', type: 'file' },
+              { name: 'GradeForm.tsx', type: 'file' },
+            ]},
+            { name: 'finance', type: 'folder', children: [
+              { name: 'PaymentTable.tsx', type: 'file' },
+              { name: 'QRPayment.tsx', type: 'file' },
+            ]},
+            { name: 'student', type: 'folder', children: [
+              { name: 'Dashboard.tsx', type: 'file' },
+              { name: 'PaymentHistory.tsx', type: 'file' },
+            ]},
+          ]},
+          { name: 'pages', type: 'folder', children: [
+            { name: 'admin', type: 'folder', children: [{ name: 'index.tsx', type: 'file' }] },
+            { name: 'student', type: 'folder', children: [{ name: 'index.tsx', type: 'file' }] },
+            { name: 'finance', type: 'folder', children: [{ name: 'index.tsx', type: 'file' }] },
+          ]},
+          { name: 'context', type: 'folder', children: [
+            { name: 'AuthContext.tsx', type: 'file' },
+            { name: 'ThemeContext.tsx', type: 'file' },
+          ]},
+          { name: 'hooks', type: 'folder', children: [
+            { name: 'useAuth.ts', type: 'file' },
+            { name: 'useSocket.ts', type: 'file' },
+          ]},
+          { name: 'lib', type: 'folder', children: [
+            { name: 'api.ts', type: 'file' },
+            { name: 'utils.ts', type: 'file' },
+          ]},
+          { name: 'App.tsx', type: 'file' },
+          { name: 'main.tsx', type: 'file' },
+        ]},
+        { name: 'package.json', type: 'file' },
+        { name: 'vite.config.ts', type: 'file' },
+        { name: 'tsconfig.json', type: 'file' },
+      ]},
+      { name: 'server', type: 'folder', children: [
+        { name: 'src', type: 'folder', children: [
+          { name: 'controllers', type: 'folder', children: [
+            { name: 'authController.ts', type: 'file' },
+            { name: 'studentController.ts', type: 'file' },
+            { name: 'financeController.ts', type: 'file' },
+          ]},
+          { name: 'models', type: 'folder', children: [
+            { name: 'User.ts', type: 'file' },
+            { name: 'Student.ts', type: 'file' },
+            { name: 'Payment.ts', type: 'file' },
+          ]},
+          { name: 'routes', type: 'folder', children: [
+            { name: 'auth.ts', type: 'file' },
+            { name: 'students.ts', type: 'file' },
+            { name: 'payments.ts', type: 'file' },
+          ]},
+          { name: 'middleware', type: 'folder', children: [
+            { name: 'auth.ts', type: 'file' },
+            { name: 'rbac.ts', type: 'file' },
+          ]},
+          { name: 'socket', type: 'folder', children: [
+            { name: 'index.ts', type: 'file' },
+          ]},
+          { name: 'index.ts', type: 'file' },
+        ]},
+        { name: 'package.json', type: 'file' },
+        { name: 'tsconfig.json', type: 'file' },
+        { name: '.env', type: 'file' },
+      ]},
+    ] as FileNode[],
   },
   {
     id: 'project2',
@@ -290,6 +519,84 @@ const projects = [
       { layer: 'Dates', value: 'date-fns' },
       { layer: 'Deployment', value: 'Vercel (frontend) + Railway (backend)' },
     ],
+    folderStructure: [
+      { name: 'client', type: 'folder', children: [
+        { name: 'src', type: 'folder', children: [
+          { name: 'components', type: 'folder', children: [
+            { name: 'pos', type: 'folder', children: [
+              { name: 'Cart.tsx', type: 'file' },
+              { name: 'BarcodeScanner.tsx', type: 'file' },
+              { name: 'Checkout.tsx', type: 'file' },
+              { name: 'Receipt.tsx', type: 'file' },
+            ]},
+            { name: 'inventory', type: 'folder', children: [
+              { name: 'ProductTable.tsx', type: 'file' },
+              { name: 'StockAlert.tsx', type: 'file' },
+            ]},
+            { name: 'finance', type: 'folder', children: [
+              { name: 'Ledger.tsx', type: 'file' },
+              { name: 'RevenueChart.tsx', type: 'file' },
+            ]},
+            { name: 'common', type: 'folder', children: [
+              { name: 'Sidebar.tsx', type: 'file' },
+              { name: 'Navbar.tsx', type: 'file' },
+            ]},
+          ]},
+          { name: 'pages', type: 'folder', children: [
+            { name: 'POS.tsx', type: 'file' },
+            { name: 'Inventory.tsx', type: 'file' },
+            { name: 'Finance.tsx', type: 'file' },
+            { name: 'Dashboard.tsx', type: 'file' },
+          ]},
+          { name: 'context', type: 'folder', children: [
+            { name: 'AuthContext.tsx', type: 'file' },
+            { name: 'CartContext.tsx', type: 'file' },
+          ]},
+          { name: 'hooks', type: 'folder', children: [
+            { name: 'useAuth.ts', type: 'file' },
+            { name: 'useCart.ts', type: 'file' },
+          ]},
+          { name: 'lib', type: 'folder', children: [
+            { name: 'api.ts', type: 'file' },
+            { name: 'razorpay.ts', type: 'file' },
+          ]},
+          { name: 'App.tsx', type: 'file' },
+          { name: 'main.tsx', type: 'file' },
+        ]},
+        { name: 'package.json', type: 'file' },
+        { name: 'vite.config.ts', type: 'file' },
+        { name: 'tsconfig.json', type: 'file' },
+      ]},
+      { name: 'server', type: 'folder', children: [
+        { name: 'src', type: 'folder', children: [
+          { name: 'controllers', type: 'folder', children: [
+            { name: 'authController.ts', type: 'file' },
+            { name: 'productController.ts', type: 'file' },
+            { name: 'saleController.ts', type: 'file' },
+            { name: 'paymentController.ts', type: 'file' },
+          ]},
+          { name: 'models', type: 'folder', children: [
+            { name: 'User.ts', type: 'file' },
+            { name: 'Product.ts', type: 'file' },
+            { name: 'Sale.ts', type: 'file' },
+            { name: 'Payment.ts', type: 'file' },
+          ]},
+          { name: 'routes', type: 'folder', children: [
+            { name: 'auth.ts', type: 'file' },
+            { name: 'products.ts', type: 'file' },
+            { name: 'sales.ts', type: 'file' },
+            { name: 'payments.ts', type: 'file' },
+          ]},
+          { name: 'middleware', type: 'folder', children: [
+            { name: 'auth.ts', type: 'file' },
+            { name: 'rbac.ts', type: 'file' },
+          ]},
+          { name: 'index.ts', type: 'file' },
+        ]},
+        { name: 'package.json', type: 'file' },
+        { name: '.env', type: 'file' },
+      ]},
+    ] as FileNode[],
   },
   {
     id: 'project6',
@@ -328,6 +635,32 @@ const projects = [
     desc: [
       'Official website for the CodeBreakers community, showcasing events, resources, and member achievements with a modern editorial feel.',
     ],
+    folderStructure: [
+      { name: 'app', type: 'folder', children: [
+        { name: 'page.tsx', type: 'file' },
+        { name: 'layout.tsx', type: 'file' },
+        { name: 'globals.css', type: 'file' },
+      ]},
+      { name: 'components', type: 'folder', children: [
+        { name: 'sections', type: 'folder', children: [
+          { name: 'Hero.tsx', type: 'file' },
+          { name: 'Events.tsx', type: 'file' },
+          { name: 'Team.tsx', type: 'file' },
+          { name: 'Resources.tsx', type: 'file' },
+        ]},
+        { name: 'ui', type: 'folder', children: [
+          { name: 'button.tsx', type: 'file' },
+          { name: 'card.tsx', type: 'file' },
+        ]},
+      ]},
+      { name: 'public', type: 'folder', children: [
+        { name: 'images', type: 'folder', children: [] },
+      ]},
+      { name: 'next.config.ts', type: 'file' },
+      { name: 'tailwind.config.ts', type: 'file' },
+      { name: 'package.json', type: 'file' },
+      { name: 'tsconfig.json', type: 'file' },
+    ] as FileNode[],
   },
 ];
 export default projects;

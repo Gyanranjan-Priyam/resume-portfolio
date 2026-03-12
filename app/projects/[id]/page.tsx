@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { ChevronRight, ExternalLink, Globe, Github, Layers, Shield, Users, Zap, GraduationCap, CreditCard, LayoutDashboard, ShoppingCart, Package, UserCog } from "lucide-react";
+import { ChevronRight, ExternalLink, Github, Users, Zap, Layers } from "lucide-react";
 import projects from "@/data/projectsData";
 import { BlurFade } from "@/components/ui/blur-fade";
 import { ImageCarousel } from "@/components/ui/image-carousel";
+import { FolderStructure } from "@/components/ui/folder-structure";
+import { FeaturesAccordion } from "@/components/ui/features-accordion";
 
 type Props = {
   params: Promise<{ id: string }>;
@@ -41,23 +43,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     },
   };
 }
-
-const featureIcons: Record<string, React.ReactNode> = {
-  "Public Portal": <Globe className="size-4 text-green-500" />,
-  "Admin Dashboard": <Layers className="size-4 text-blue-500" />,
-  "Auth & Security": <Shield className="size-4 text-amber-500" />,
-  "Student Experience": <GraduationCap className="size-4 text-violet-500" />,
-  "Admin / Instructor": <Layers className="size-4 text-blue-500" />,
-  "Payments": <CreditCard className="size-4 text-green-500" />,
-  "Dashboard & UI": <LayoutDashboard className="size-4 text-indigo-500" />,
-  "Student Portal": <GraduationCap className="size-4 text-violet-500" />,
-  "Admin Suite": <Layers className="size-4 text-blue-500" />,
-  "Finance Management": <CreditCard className="size-4 text-emerald-500" />,
-  "Point of Sale": <ShoppingCart className="size-4 text-orange-500" />,
-  "Inventory": <Package className="size-4 text-cyan-500" />,
-  "Finance & Payments": <CreditCard className="size-4 text-green-500" />,
-  "User Management": <UserCog className="size-4 text-purple-500" />,
-};
 
 export default async function ProjectPage({ params }: Props) {
   const { id } = await params;
@@ -201,24 +186,7 @@ export default async function ProjectPage({ params }: Props) {
           <BlurFade delay={0.2} inView>
             <div className="mb-10">
               <h2 className="mb-4 text-lg font-semibold">Features</h2>
-              <div className="space-y-4">
-                {(project as any).features.map((group: { category: string; items: string[] }, i: number) => (
-                  <div key={i} className="rounded-lg border overflow-hidden">
-                    <div className="flex items-center gap-2 border-b bg-muted/40 px-4 py-2.5">
-                      {featureIcons[group.category] ?? <Layers className="size-4 text-muted-foreground" />}
-                      <h3 className="text-sm font-semibold">{group.category}</h3>
-                    </div>
-                    <ul className="divide-y">
-                      {group.items.map((item, j) => (
-                        <li key={j} className="flex items-center gap-2.5 px-4 py-2.5">
-                          <span className="size-1.5 shrink-0 rounded-full bg-muted-foreground/40" />
-                          <span className="text-sm text-muted-foreground">{item}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                ))}
-              </div>
+              <FeaturesAccordion features={(project as any).features} />
             </div>
           </BlurFade>
         )}
@@ -246,6 +214,16 @@ export default async function ProjectPage({ params }: Props) {
                   </tbody>
                 </table>
               </div>
+            </div>
+          </BlurFade>
+        )}
+
+        {/* Folder Structure */}
+        {'folderStructure' in project && (project as any).folderStructure?.length > 0 && (
+          <BlurFade delay={hasRichContent ? 0.23 : 0.19} inView>
+            <div className="mb-10">
+              <h2 className="mb-4 text-lg font-semibold">Project Structure</h2>
+              <FolderStructure structure={(project as any).folderStructure} />
             </div>
           </BlurFade>
         )}

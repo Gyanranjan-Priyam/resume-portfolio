@@ -25,11 +25,11 @@ export function ImageCarousel({
     (index: number) => {
       const clamped = Math.max(0, Math.min(index, total - 1));
       setCurrent(clamped);
-      trackRef.current?.children[clamped]?.scrollIntoView({
-        behavior: "smooth",
-        block: "nearest",
-        inline: "center",
-      });
+      const track = trackRef.current;
+      if (track) {
+        const child = track.children[clamped] as HTMLElement;
+        if (child) track.scrollTo({ left: child.offsetLeft, behavior: "smooth" });
+      }
     },
     [total]
   );
@@ -43,11 +43,11 @@ export function ImageCarousel({
     const timer = setInterval(() => {
       setCurrent((prev) => {
         const nextIdx = prev >= total - 1 ? 0 : prev + 1;
-        trackRef.current?.children[nextIdx]?.scrollIntoView({
-          behavior: "smooth",
-          block: "nearest",
-          inline: "center",
-        });
+        const track = trackRef.current;
+        if (track) {
+          const child = track.children[nextIdx] as HTMLElement;
+          if (child) track.scrollTo({ left: child.offsetLeft, behavior: "smooth" });
+        }
         return nextIdx;
       });
     }, 4000);
@@ -84,7 +84,7 @@ export function ImageCarousel({
       {/* Scrollable track */}
       <div
         ref={trackRef}
-        className="flex snap-x snap-mandatory overflow-x-auto scrollbar-none"
+        className="flex snap-x snap-proximity overflow-x-auto overscroll-none scrollbar-none"
         style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
       >
         {images.map((img, i) => (
@@ -99,6 +99,7 @@ export function ImageCarousel({
                 muted
                 loop
                 playsInline
+                tabIndex={-1}
                 className="h-full w-full object-cover"
               />
             ) : (
