@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import Image from "next/image";
-import { ChevronRight, ExternalLink } from "lucide-react";
+import { ChevronRight, ExternalLink, Globe, Github, Layers, Shield, Users, Zap, GraduationCap, CreditCard, LayoutDashboard, ShoppingCart, Package, UserCog } from "lucide-react";
 import projects from "@/data/projectsData";
 import { BlurFade } from "@/components/ui/blur-fade";
+import { ImageCarousel } from "@/components/ui/image-carousel";
 
 type Props = {
   params: Promise<{ id: string }>;
@@ -42,6 +42,23 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
+const featureIcons: Record<string, React.ReactNode> = {
+  "Public Portal": <Globe className="size-4 text-green-500" />,
+  "Admin Dashboard": <Layers className="size-4 text-blue-500" />,
+  "Auth & Security": <Shield className="size-4 text-amber-500" />,
+  "Student Experience": <GraduationCap className="size-4 text-violet-500" />,
+  "Admin / Instructor": <Layers className="size-4 text-blue-500" />,
+  "Payments": <CreditCard className="size-4 text-green-500" />,
+  "Dashboard & UI": <LayoutDashboard className="size-4 text-indigo-500" />,
+  "Student Portal": <GraduationCap className="size-4 text-violet-500" />,
+  "Admin Suite": <Layers className="size-4 text-blue-500" />,
+  "Finance Management": <CreditCard className="size-4 text-emerald-500" />,
+  "Point of Sale": <ShoppingCart className="size-4 text-orange-500" />,
+  "Inventory": <Package className="size-4 text-cyan-500" />,
+  "Finance & Payments": <CreditCard className="size-4 text-green-500" />,
+  "User Management": <UserCog className="size-4 text-purple-500" />,
+};
+
 export default async function ProjectPage({ params }: Props) {
   const { id } = await params;
   const project = projects.find((p) => p.id === id);
@@ -64,9 +81,8 @@ export default async function ProjectPage({ params }: Props) {
     ...(project.github && { codeRepository: project.github }),
   };
 
-  const mediaItems = project.images.filter(
-    (img) => img.tag !== "video"
-  );
+  const mediaItems = project.images;
+  const hasRichContent = 'highlights' in project || 'features' in project || 'techDetailed' in project;
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -77,149 +93,206 @@ export default async function ProjectPage({ params }: Props) {
       <div className="mx-auto max-w-3xl px-6 py-12">
         {/* Breadcrumb */}
         <BlurFade delay={0.04}>
-        <nav aria-label="Breadcrumb" className="mb-8 flex items-center gap-1 text-sm text-muted-foreground">
-          <Link href="/" className="transition-colors hover:text-foreground">Home</Link>
-          <ChevronRight className="size-3.5" />
-          <Link href="/projects" className="transition-colors hover:text-foreground">Projects</Link>
-          <ChevronRight className="size-3.5" />
-          <span className="truncate text-foreground font-medium">{project.title}</span>
-        </nav>
-        </BlurFade>
-
-        {/* Hero image */}
-        <BlurFade delay={0.08}>
-        <div className="relative mb-8 aspect-video w-full overflow-hidden rounded-xl border bg-muted">
-          <Image
-            src={project.img}
-            alt={project.title}
-            fill
-            className="object-cover"
-            sizes="(max-width: 768px) 100vw, 768px"
-            priority
-          />
-        </div>
+          <nav aria-label="Breadcrumb" className="mb-8 flex items-center gap-1 text-sm text-muted-foreground">
+            <Link href="/" className="transition-colors hover:text-foreground">Home</Link>
+            <ChevronRight className="size-3.5" />
+            <Link href="/projects" className="transition-colors hover:text-foreground">Projects</Link>
+            <ChevronRight className="size-3.5" />
+            <span className="truncate text-foreground font-medium">{project.title}</span>
+          </nav>
         </BlurFade>
 
         {/* Header */}
         <BlurFade delay={0.12}>
-        <div className="mb-6 flex flex-wrap items-start justify-between gap-4">
-          <div>
-            <h1 className="text-2xl font-bold tracking-tight sm:text-3xl">
-              {project.title}
-            </h1>
-            <p className="mt-1 text-sm text-muted-foreground">
-              {project.company} &middot; {project.date}
-            </p>
-          </div>
-          <div className="flex items-center gap-3">
-            {project.liveLink && (
-              <a
-                href={project.liveLink}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 rounded-lg border px-3 py-1.5 text-sm font-medium transition-colors hover:bg-muted"
-              >
-                <ExternalLink className="size-3.5" />
-                Live Demo
-              </a>
-            )}
-            {project.github && (
-              <a
-                href={project.github}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 rounded-lg border px-3 py-1.5 text-sm font-medium transition-colors hover:bg-muted"
-              >
-                <svg viewBox="0 0 24 24" className="size-4" fill="currentColor">
-                  <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z" />
-                </svg>
-                Source
-              </a>
-            )}
-          </div>
-        </div>
-        </BlurFade>
+          <div className="mb-6">
+            <div className="flex flex-wrap items-start justify-between gap-4">
+              <div>
+                <h1 className="text-2xl font-bold tracking-tight sm:text-3xl">
+                  {project.title}
+                </h1>
+                <p className="mt-1 text-sm text-muted-foreground">
+                  {project.company} &middot; {project.date}
+                </p>
+              </div>
+              <div className="flex items-center gap-3">
+                {project.liveLink && (
+                  <a
+                    href={project.liveLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 rounded-lg border px-3 py-1.5 text-sm font-medium transition-colors hover:bg-muted"
+                  >
+                    <ExternalLink className="size-3.5" />
+                    Live Demo
+                  </a>
+                )}
+                {project.github && (
+                  <a
+                    href={project.github}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 rounded-lg border px-3 py-1.5 text-sm font-medium transition-colors hover:bg-muted"
+                  >
+                    <Github className="size-4" />
+                    Source
+                  </a>
+                )}
+              </div>
+            </div>
 
-        {/* Description */}
-        <BlurFade delay={0.16}>
-        <div className="mb-10 space-y-4">
-          {project.desc.map((paragraph, i) => (
-            <p
-              key={i}
-              className="text-sm leading-relaxed text-muted-foreground"
-            >
-              {paragraph}
-            </p>
-          ))}
-        </div>
-        </BlurFade>
-
-        {/* Gallery */}
-        {mediaItems.length > 0 && (
-          <BlurFade delay={0.2} inView>
-          <div>
-            <h2 className="mb-4 text-lg font-semibold">Screenshots</h2>
-            <div className="grid grid-cols-2 gap-4">
-              {mediaItems.map((img, i) => (
-                <div
-                  key={i}
-                  className={`relative overflow-hidden rounded-lg border bg-muted ${
-                    img.tag === "small"
-                      ? "aspect-[9/16] col-span-1"
-                      : "aspect-video col-span-2"
-                  }`}
+            {/* Tech badges */}
+            <div className="mt-4 flex flex-wrap gap-1.5">
+              {project.tech.map((t) => (
+                <span
+                  key={t}
+                  className="rounded-full border px-2.5 py-0.5 text-xs font-medium text-muted-foreground"
                 >
-                  <Image
-                    src={img.src}
-                    alt={`${project.title} screenshot ${i + 1}`}
-                    fill
-                    className={img.tag === "small" ? "object-contain" : "object-cover"}
-                    sizes={
-                      img.tag === "small"
-                        ? "(max-width: 768px) 50vw, 384px"
-                        : "(max-width: 768px) 100vw, 768px"
-                    }
-                  />
-                </div>
+                  {t}
+                </span>
               ))}
             </div>
           </div>
+        </BlurFade>
+
+        {/* Role */}
+        {'role' in project && project.role && (
+          <BlurFade delay={0.14}>
+            <div className="mb-8 flex items-start gap-3 rounded-lg border bg-muted/30 p-4">
+              <Users className="mt-0.5 size-4 shrink-0 text-muted-foreground" />
+              <p className="text-sm leading-relaxed text-muted-foreground">
+                <span className="font-semibold text-foreground">My Role: </span>
+                {project.role}
+              </p>
+            </div>
+          </BlurFade>
+        )}
+
+        {/* Description */}
+        <BlurFade delay={0.16}>
+          <div className="mb-10 space-y-4">
+            <h2 className="text-lg font-semibold">Overview</h2>
+            {project.desc.map((paragraph, i) => (
+              <p key={i} className="text-sm leading-relaxed text-muted-foreground">
+                {paragraph}
+              </p>
+            ))}
+          </div>
+        </BlurFade>
+
+        {/* Key Highlights */}
+        {'highlights' in project && (project as any).highlights?.length > 0 && (
+          <BlurFade delay={0.18} inView>
+            <div className="mb-10">
+              <h2 className="mb-4 text-lg font-semibold">Key Highlights</h2>
+              <div className="grid gap-2.5 sm:grid-cols-2">
+                {(project as any).highlights.map((item: string, i: number) => (
+                  <div key={i} className="flex items-start gap-2.5 rounded-lg border p-3">
+                    <Zap className="mt-0.5 size-3.5 shrink-0 text-amber-500" />
+                    <p className="text-sm leading-relaxed text-muted-foreground">{item}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </BlurFade>
+        )}
+
+        {/* Features by category */}
+        {'features' in project && (project as any).features?.length > 0 && (
+          <BlurFade delay={0.2} inView>
+            <div className="mb-10">
+              <h2 className="mb-4 text-lg font-semibold">Features</h2>
+              <div className="space-y-4">
+                {(project as any).features.map((group: { category: string; items: string[] }, i: number) => (
+                  <div key={i} className="rounded-lg border overflow-hidden">
+                    <div className="flex items-center gap-2 border-b bg-muted/40 px-4 py-2.5">
+                      {featureIcons[group.category] ?? <Layers className="size-4 text-muted-foreground" />}
+                      <h3 className="text-sm font-semibold">{group.category}</h3>
+                    </div>
+                    <ul className="divide-y">
+                      {group.items.map((item, j) => (
+                        <li key={j} className="flex items-center gap-2.5 px-4 py-2.5">
+                          <span className="size-1.5 shrink-0 rounded-full bg-muted-foreground/40" />
+                          <span className="text-sm text-muted-foreground">{item}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </BlurFade>
+        )}
+
+        {/* Tech stack table */}
+        {'techDetailed' in project && (project as any).techDetailed?.length > 0 && (
+          <BlurFade delay={0.22} inView>
+            <div className="mb-10">
+              <h2 className="mb-4 text-lg font-semibold">Tech Stack</h2>
+              <div className="overflow-hidden rounded-lg border">
+                <table className="w-full text-sm">
+                  <thead>
+                    <tr className="border-b bg-muted/40">
+                      <th className="px-4 py-2.5 text-left font-semibold">Layer</th>
+                      <th className="px-4 py-2.5 text-left font-semibold">Technology</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y">
+                    {(project as any).techDetailed.map((row: { layer: string; value: string }, i: number) => (
+                      <tr key={i} className="transition-colors hover:bg-muted/20">
+                        <td className="px-4 py-2.5 font-medium text-foreground whitespace-nowrap">{row.layer}</td>
+                        <td className="px-4 py-2.5 text-muted-foreground">{row.value}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </BlurFade>
+        )}
+
+        {/* Gallery */}
+        {mediaItems.length > 0 && (
+          <BlurFade delay={hasRichContent ? 0.24 : 0.2} inView>
+            <div className="mb-10">
+              <h2 className="mb-4 text-lg font-semibold">Screenshots</h2>
+              <ImageCarousel images={mediaItems} title={project.title} />
+            </div>
           </BlurFade>
         )}
 
         {/* Next project */}
-        <BlurFade delay={0.24} inView>
-        <div className="mt-12 border-t pt-8">
-          {(() => {
-            const idx = projects.findIndex((p) => p.id === project.id);
-            const next = projects[(idx + 1) % projects.length];
-            return (
-              <Link
-                href={`/projects/${next.id}`}
-                className="group flex items-center justify-between rounded-lg border p-4 transition-colors hover:bg-muted/50"
-              >
-                <div>
-                  <p className="text-xs text-muted-foreground">Next Project</p>
-                  <p className="text-sm font-semibold group-hover:underline">
-                    {next.title}
-                  </p>
-                </div>
-                <svg
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="size-5 text-muted-foreground transition-transform group-hover:translate-x-1"
+        <BlurFade delay={hasRichContent ? 0.28 : 0.24} inView>
+          <div className="border-t pt-8">
+            {(() => {
+              const idx = projects.findIndex((p) => p.id === project.id);
+              const next = projects[(idx + 1) % projects.length];
+              return (
+                <Link
+                  href={`/projects/${next.id}`}
+                  className="group flex items-center justify-between rounded-lg border p-4 transition-colors hover:bg-muted/50"
                 >
-                  <path d="M5 12h14" />
-                  <path d="m12 5 7 7-7 7" />
-                </svg>
-              </Link>
-            );
-          })()}
-        </div>
+                  <div>
+                    <p className="text-xs text-muted-foreground">Next Project</p>
+                    <p className="text-sm font-semibold group-hover:underline">
+                      {next.title}
+                    </p>
+                  </div>
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="size-5 text-muted-foreground transition-transform group-hover:translate-x-1"
+                  >
+                    <path d="M5 12h14" />
+                    <path d="m12 5 7 7-7 7" />
+                  </svg>
+                </Link>
+              );
+            })()}
+          </div>
         </BlurFade>
       </div>
     </div>
