@@ -12,6 +12,7 @@ import ClickSpark from "@/components/ClickSpark";
 import { FlickeringGrid } from "@/components/ui/flickering-grid";
 import { PwaRegister } from "@/components/pwa-register";
 import { ScrollIndicator } from "@/components/ui/scroll-indicator";
+import { ScrollToTopButton } from "@/components/ui/scroll-to-top-button";
 
 const SITE_URL = "https://www.gyanranjanpriyam.tech";
 const OG_IMAGE =
@@ -149,6 +150,7 @@ export default function RootLayout({
         <ThemeSync />
         <PwaRegister />
         <ScrollIndicator />
+        <ScrollToTopButton />
         <SmoothScroll>
           <LoaderWrapper />
           <ClickSpark>
