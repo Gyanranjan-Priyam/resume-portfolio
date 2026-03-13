@@ -39,13 +39,13 @@ export function ScrollToTopButton() {
           aria-label="Scroll to top"
           onClick={handleScrollTop}
           style={{ position: "fixed", bottom: "2rem", right: "2rem", zIndex: 9999 }}
-          className="cursor-pointer inline-flex h-20 w-20 items-center justify-center rounded-full border border-white bg-background/85 text-foreground shadow-sm backdrop-blur-md transition-colors hover:bg-background"
+          className="cursor-pointer inline-flex h-12 w-12 items-center justify-center rounded-full border border-white bg-background/85 text-foreground shadow-sm backdrop-blur-md transition-colors hover:bg-background"
           initial={{ opacity: 0, y: 14, scale: 0.92 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
           exit={{ opacity: 0, y: 10, scale: 0.94 }}
           transition={{ duration: 0.22, ease: "easeOut" }}
         >
-          <ArrowUp className="h-7 w-7" />
+          <ArrowUp className="h-5 w-5" />
         </motion.button>
       )}
     </AnimatePresence>,
