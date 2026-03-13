@@ -151,6 +151,20 @@ html:not(.dark) * {
     @apply font-sans;
     scroll-behavior: smooth;
   }
+
+  html,
+  body {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  html::-webkit-scrollbar,
+  body::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+    display: none;
+  }
+
   .font-comic {
     font-family: "Comic Sans MS", "Comic Sans", cursive;
   }

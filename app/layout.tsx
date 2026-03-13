@@ -11,6 +11,7 @@ import localFont from "next/font/local";
 import ClickSpark from "@/components/ClickSpark";
 import { FlickeringGrid } from "@/components/ui/flickering-grid";
 import { PwaRegister } from "@/components/pwa-register";
+import { ScrollIndicator } from "@/components/ui/scroll-indicator";
 
 const SITE_URL = "https://www.gyanranjanpriyam.tech";
 const OG_IMAGE =
@@ -147,6 +148,7 @@ export default function RootLayout({
       >
         <ThemeSync />
         <PwaRegister />
+        <ScrollIndicator />
         <SmoothScroll>
           <LoaderWrapper />
           <ClickSpark>
