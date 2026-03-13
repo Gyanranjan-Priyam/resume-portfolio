@@ -10,6 +10,7 @@ import { Separator } from "@/components/ui/separator";
 import localFont from "next/font/local";
 import ClickSpark from "@/components/ClickSpark";
 import { FlickeringGrid } from "@/components/ui/flickering-grid";
+import { PwaRegister } from "@/components/pwa-register";
 
 const SITE_URL = "https://www.gyanranjanpriyam.tech";
 const OG_IMAGE =
@@ -145,6 +146,7 @@ export default function RootLayout({
         className={`${dmSans.variable} ${jetbrainsMono.variable} ${mokoto.variable} ${gta.variable} font-sans antialiased`}
       >
         <ThemeSync />
+        <PwaRegister />
         <SmoothScroll>
           <LoaderWrapper />
           <ClickSpark>
