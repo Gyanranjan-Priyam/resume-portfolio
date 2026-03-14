@@ -20,7 +20,7 @@ export const education = [
     school: "Basanta Kumar Bidyapitha, Badabanapur",
     period: "2019 - 2021",
     marks: "Percentage: 73.5%",
-    logo: "/logos/ucb.svg",
+    logo: "/education/bkp.png",
     initials: "BK",
   },
 ];
