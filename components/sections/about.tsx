@@ -26,9 +26,13 @@ export function AboutSection() {
         <Tooltip content="I enjoy reading a wide range of books that help me expand my imagination, improve my thinking, and gain new perspectives.">
           <span className="font-semibold text-foreground cursor-pointer">reading books</span>
         </Tooltip>{" "}
-        and{" "}
+        ,{" "}
         <Tooltip content="I love building websites, learning new web technologies, and improving my skills through hands-on projects.">
           <span className="font-semibold text-foreground cursor-pointer">web development</span>
+        </Tooltip>
+        , and{" "}
+        <Tooltip content="I actively contribute to open source projects, collaborating with other developers to improve software and share knowledge. Currently I have 10+ contributions on Google Gemini CLI project.">
+          <span className="font-semibold text-foreground cursor-pointer">open source contributions</span>
         </Tooltip>.
         I also have a strong interest in{" "}
         <Tooltip content="I am passionate about exploring new topics, learning about emerging fields, and conducting research to expand my understanding.">
