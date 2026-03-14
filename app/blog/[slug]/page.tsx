@@ -79,7 +79,11 @@ export default async function BlogPostPage({ params }: Props) {
       />
       <BlogPostClient
         blog={blog}
-        nextBlog={{ id: nextBlog.id, title: nextBlog.title, date: nextBlog.date }}
+        nextBlog={{
+          id: nextBlog.id,
+          title: nextBlog.title,
+          date: nextBlog.date,
+        }}
       />
     </>
   );

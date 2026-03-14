@@ -8,7 +8,6 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { experiences } from "@/data/experienceData";
 import { BlurFade } from "@/components/ui/blur-fade";
 
-
 function CloseIcon() {
   return (
     <motion.svg
@@ -58,7 +57,8 @@ function ExpandedExperienceCard({
         <motion.div
           layoutId={`card-${active.company}-${id}`}
           ref={ref}
-          className="pointer-events-auto w-full max-w-md overflow-hidden rounded-2xl border bg-card shadow-lg"
+          className="pointer-events-auto text-sm w-full max-w-md overflow-hidden rounded-2xl border bg-card shadow-lg"
+          style={{ fontFamily: "var(--font-jetbrains-mono)" }}
         >
           <div className="flex items-start justify-between p-5">
             <div className="flex items-center gap-4">
@@ -74,12 +74,14 @@ function ExpandedExperienceCard({
                 <motion.h3
                   layoutId={`company-${active.company}-${id}`}
                   className="text-md font-semibold"
+                  style={{ fontFamily: "var(--font-jetbrains-mono)" }}
                 >
                   {active.company}
                 </motion.h3>
                 <motion.p
                   layoutId={`title-${active.company}-${id}`}
                   className="text-md text-muted-foreground"
+                  style={{ fontFamily: "var(--font-jetbrains-mono)" }}
                 >
                   {active.title}
                 </motion.p>
@@ -97,6 +99,7 @@ function ExpandedExperienceCard({
             <motion.p
               layoutId={`period-${active.company}-${id}`}
               className="mb-3 text-sm font-medium text-muted-foreground"
+              style={{ fontFamily: "var(--font-jetbrains-mono)" }}
             >
               {active.period}
             </motion.p>
@@ -106,6 +109,7 @@ function ExpandedExperienceCard({
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               className="text-md leading-relaxed text-muted-foreground"
+              style={{ fontFamily: "var(--font-jetbrains-mono)" }}
             >
               {Array.isArray(active.content) ? (
                 <ul className="space-y-2 list-none">
@@ -124,14 +128,14 @@ function ExpandedExperienceCard({
         </motion.div>
       </div>
     </>,
-    document.body
+    document.body,
   );
 }
 
 export function ExperienceSection() {
-  const [active, setActive] = useState<
-    (typeof experiences)[number] | null
-  >(null);
+  const [active, setActive] = useState<(typeof experiences)[number] | null>(
+    null,
+  );
   const id = useId();
 
   useEffect(() => {
@@ -146,12 +150,21 @@ export function ExperienceSection() {
   return (
     <section id="experience" className="py-8">
       <BlurFade delay={0.04} inView>
-      <h2 className="mb-6 text-3xl font-bold">Work Experience</h2>
+        <h2
+          className="mb-6 text-3xl font-bold"
+          style={{ fontFamily: "var(--font-ibm)" }}
+        >
+          Work Experience
+        </h2>
       </BlurFade>
 
       <AnimatePresence>
         {active && (
-          <ExpandedExperienceCard active={active} id={id} onClose={() => setActive(null)} />
+          <ExpandedExperienceCard
+            active={active}
+            id={id}
+            onClose={() => setActive(null)}
+          />
         )}
       </AnimatePresence>
 
@@ -159,41 +172,44 @@ export function ExperienceSection() {
       <div className="space-y-1">
         {experiences.map((exp, i) => (
           <BlurFade key={exp.company} delay={0.04 + i * 0.05} inView>
-          <motion.div
-            layoutId={`card-${exp.company}-${id}`}
-            key={exp.company}
-            onClick={() => setActive(exp)}
-            className="flex cursor-pointer items-center gap-4 rounded-xl p-3 transition-colors hover:bg-muted/50"
-          >
-            <motion.div layoutId={`avatar-${exp.company}-${id}`}>
-              <Avatar className="size-10 border">
-                <AvatarImage src={exp.logo} alt={exp.company} />
-                <AvatarFallback className="text-[10px] font-bold">
-                  {exp.initials}
-                </AvatarFallback>
-              </Avatar>
-            </motion.div>
-            <div className="flex-1 min-w-0">
-              <motion.p
-                layoutId={`company-${exp.company}-${id}`}
-                className="text-sm font-semibold leading-tight"
-              >
-                {exp.company}
-              </motion.p>
-              <motion.p
-                layoutId={`title-${exp.company}-${id}`}
-                className="text-xs text-muted-foreground"
-              >
-                {exp.title}
-              </motion.p>
-            </div>
-            <motion.span
-              layoutId={`period-${exp.company}-${id}`}
-              className="shrink-0 text-xs text-muted-foreground text-right"
+            <motion.div
+              layoutId={`card-${exp.company}-${id}`}
+              key={exp.company}
+              onClick={() => setActive(exp)}
+              className="flex cursor-pointer items-center gap-4 rounded-xl p-3 transition-colors hover:bg-muted/50"
             >
-              {exp.period}
-            </motion.span>
-          </motion.div>
+              <motion.div layoutId={`avatar-${exp.company}-${id}`}>
+                <Avatar className="size-10 border">
+                  <AvatarImage src={exp.logo} alt={exp.company} />
+                  <AvatarFallback className="text-[10px] font-bold">
+                    {exp.initials}
+                  </AvatarFallback>
+                </Avatar>
+              </motion.div>
+              <div className="flex-1 min-w-0">
+                <motion.p
+                  layoutId={`company-${exp.company}-${id}`}
+                  className="text-md font-semibold leading-tight"
+                  style={{ fontFamily: "var(--font-jetbrains-mono)" }}
+                >
+                  {exp.company}
+                </motion.p>
+                <motion.p
+                  layoutId={`title-${exp.company}-${id}`}
+                  className="text-xs text-muted-foreground"
+                  style={{ fontFamily: "var(--font-jetbrains-mono)" }}
+                >
+                  {exp.title}
+                </motion.p>
+              </div>
+              <motion.span
+                layoutId={`period-${exp.company}-${id}`}
+                className="shrink-0 text-xs text-muted-foreground text-right"
+                style={{ fontFamily: "var(--font-jetbrains-mono)" }}
+              >
+                {exp.period}
+              </motion.span>
+            </motion.div>
           </BlurFade>
         ))}
       </div>

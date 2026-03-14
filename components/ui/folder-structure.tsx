@@ -46,7 +46,10 @@ function FileIcon({ name }: { name: string }) {
   return (
     <span
       className="inline-flex size-3.5 shrink-0 items-center justify-center rounded-xs"
-      style={{ backgroundColor: getExtColor(name) + "30", border: `1px solid ${getExtColor(name)}60` }}
+      style={{
+        backgroundColor: getExtColor(name) + "30",
+        border: `1px solid ${getExtColor(name)}60`,
+      }}
     >
       <span
         className="size-1.5 rounded-[1px]"
@@ -99,7 +102,11 @@ function TreeNode({ node, depth }: { node: FileNode; depth: number }) {
             style={{ left: `${depth * 14 + 10}px` }}
           />
           {node.children.map((child) => (
-            <TreeNode key={child.name + child.type} node={child} depth={depth + 1} />
+            <TreeNode
+              key={child.name + child.type}
+              node={child}
+              depth={depth + 1}
+            />
           ))}
         </div>
       )}
@@ -125,11 +132,7 @@ function buildAscii(nodes: FileNode[], prefix = ""): string {
 }
 
 // ── Main export ────────────────────────────────────────────────────────────────
-export function FolderStructure({
-  structure,
-}: {
-  structure: FileNode[];
-}) {
+export function FolderStructure({ structure }: { structure: FileNode[] }) {
   const [tab, setTab] = useState<"tree" | "md">("tree");
   const [copied, setCopied] = useState(false);
 
@@ -145,7 +148,10 @@ export function FolderStructure({
     <div className="overflow-hidden rounded-lg border">
       {/* Tab bar */}
       <div className="flex items-center justify-between border-b bg-muted/30 px-1">
-        <div className="flex">
+        <div
+          className="flex cursor-pointer"
+          style={{ fontFamily: "var(--font-jetbrains-mono)" }}
+        >
           {(["tree", "md"] as const).map((t) => (
             <button
               key={t}
@@ -157,13 +163,21 @@ export function FolderStructure({
               }`}
             >
               {t === "tree" ? (
-                <span className="flex items-center gap-1.5">
+                <span
+                  className="flex items-center gap-1.5 font-medium cursor-pointer"
+                  style={{ fontFamily: "var(--font-jetbrains-mono)" }}
+                >
                   <Folder className="size-3" />
                   Explorer
                 </span>
               ) : (
-                <span className="flex items-center gap-1.5">
-                  <span className="text-[10px] font-bold leading-none text-green-500">MD</span>
+                <span
+                  className="flex items-center gap-1.5 font-medium cursor-pointer"
+                  style={{ fontFamily: "var(--font-jetbrains-mono)" }}
+                >
+                  <span className="text-[10px] font-bold leading-none text-green-500">
+                    MD
+                  </span>
                   README.md
                 </span>
               )}

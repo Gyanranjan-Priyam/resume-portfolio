@@ -12,10 +12,16 @@ export default function OfflinePage() {
     <main className="flex min-h-screen flex-col items-center justify-center px-4 text-center">
       <div className="max-w-md space-y-6">
         <div className="text-8xl">📡</div>
-        <h1 className="font-mono text-4xl font-bold tracking-tight">
+        <h1
+          className="text-4xl font-bold tracking-tight"
+          style={{ fontFamily: "var(--font-ibm)" }}
+        >
           You&apos;re offline
         </h1>
-        <p className="text-muted-foreground text-lg">
+        <p
+          className="text-muted-foreground text-lg"
+          style={{ fontFamily: "var(--font-jetbrains-mono)" }}
+        >
           It looks like you&apos;ve lost your internet connection. Previously
           visited pages are still available from the cache.
         </p>
@@ -24,4 +30,3 @@ export default function OfflinePage() {
     </main>
   );
 }
-

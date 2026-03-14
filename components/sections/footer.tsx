@@ -4,6 +4,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { BlurFade } from "@/components/ui/blur-fade";
+import Image from "next/image";
 
 const navLinks = [
   { label: "About", href: "#about" },
@@ -68,75 +69,98 @@ export function Footer() {
     <footer className="py-10">
       {/* Logo / Name */}
       <BlurFade delay={0.04} inView>
-      <div className="flex justify-center">
-        <Link href="/" className="text-lg font-bold tracking-tight">
-          Gyanranjan Priyam
-        </Link>
-      </div>
+        <div className="flex justify-center">
+          <Link
+            href="/"
+            className="text-lg flex flex-col items-center justify-center gap-2 font-bold tracking-widest"
+          >
+            <Image src="/logo.png" alt="Logo" width={40} height={40} />
+            <span style={{ fontFamily: "var(--font-mokoto)" }}>
+              Gyanranjan Priyam
+            </span>
+          </Link>
+        </div>
       </BlurFade>
 
       {/* Nav links */}
       <BlurFade delay={0.08} inView>
-      <nav className="mt-4 flex flex-wrap items-center justify-center gap-x-6 gap-y-2">
-        {navLinks.map((link) => (
-          <Link
-            key={link.label}
-            href={link.href}
-            className="text-sm text-muted-foreground transition-colors hover:text-foreground"
-          >
-            {link.label}
-          </Link>
-        ))}
-      </nav>
+        <nav className="mt-4 flex flex-wrap items-center justify-center gap-x-6 gap-y-2">
+          {navLinks.map((link) => (
+            <Link
+              key={link.label}
+              href={link.href}
+              className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+              style={{ fontFamily: "var(--font-jetbrains-mono)" }}
+            >
+              {link.label}
+            </Link>
+          ))}
+        </nav>
       </BlurFade>
 
       {/* Divider */}
-      <div className="mx-auto mt-8 max-w-md border-t border-dashed" />
+      <div className="mx-auto mt-8 max-w-lg border-t border-dashed" />
 
       {/* Bottom row */}
       <BlurFade delay={0.12} inView>
-      <div className="mt-6 flex flex-wrap items-center justify-between gap-y-3">
-        <p className="text-xs text-muted-foreground">
-          &copy; {new Date().getFullYear()} Gyanranjan Priyam
-        </p>
-        <div className="flex items-center gap-3">
-          {socials.map((s) => (
-            <a
-              key={s.label}
-              href={s.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label={s.label}
-              className="text-muted-foreground transition-colors hover:text-foreground"
+        <div className="mt-6 flex flex-wrap items-center justify-between gap-y-3">
+          <p className="text-xs text-muted-foreground">
+            &copy; {new Date().getFullYear()} Gyanranjan Priyam
+          </p>
+          <div className="flex items-center gap-3">
+            {socials.map((s) => (
+              <a
+                key={s.label}
+                href={s.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={s.label}
+                className="text-muted-foreground transition-colors hover:text-foreground"
+              >
+                {s.icon}
+              </a>
+            ))}
+            <button
+              onClick={toggleTheme}
+              aria-label="Toggle dark mode"
+              className="cursor-pointer text-muted-foreground transition-colors hover:text-foreground"
             >
-              {s.icon}
-            </a>
-          ))}
-          <button
-            onClick={toggleTheme}
-            aria-label="Toggle dark mode"
-            className="cursor-pointer text-muted-foreground transition-colors hover:text-foreground"
-          >
-            {isDark ? (
-              <svg viewBox="0 0 24 24" className="size-5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <circle cx="12" cy="12" r="5" />
-                <line x1="12" y1="1" x2="12" y2="3" />
-                <line x1="12" y1="21" x2="12" y2="23" />
-                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
-                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
-                <line x1="1" y1="12" x2="3" y2="12" />
-                <line x1="21" y1="12" x2="23" y2="12" />
-                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
-                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
-              </svg>
-            ) : (
-              <svg viewBox="0 0 24 24" className="size-5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
-              </svg>
-            )}
-          </button>
+              {isDark ? (
+                <svg
+                  viewBox="0 0 24 24"
+                  className="size-5"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <circle cx="12" cy="12" r="5" />
+                  <line x1="12" y1="1" x2="12" y2="3" />
+                  <line x1="12" y1="21" x2="12" y2="23" />
+                  <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+                  <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+                  <line x1="1" y1="12" x2="3" y2="12" />
+                  <line x1="21" y1="12" x2="23" y2="12" />
+                  <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+                  <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+                </svg>
+              ) : (
+                <svg
+                  viewBox="0 0 24 24"
+                  className="size-5"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+                </svg>
+              )}
+            </button>
+          </div>
         </div>
-      </div>
       </BlurFade>
     </footer>
   );

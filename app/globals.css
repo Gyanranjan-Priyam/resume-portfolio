@@ -165,7 +165,7 @@ html:not(.dark) * {
     display: none;
   }
 
-  .font-comic {
-    font-family: "Comic Sans MS", "Comic Sans", cursive;
+  .font-jakarta-sans {
+    font-family: "Plus Jakarta Sans";
   }
 }

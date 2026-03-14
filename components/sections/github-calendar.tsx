@@ -22,12 +22,21 @@ export function GitHubCalendarSection() {
   return (
     <div className="py-8">
       <BlurFade delay={0.04} inView>
-      <h2 className="mb-6 text-3xl font-bold">GitHub Contributions</h2>
+        <h2
+          className="mb-6 text-3xl font-bold"
+          style={{ fontFamily: "var(--font-ibm)" }}
+        >
+          GitHub Contributions
+        </h2>
       </BlurFade>
       <BlurFade delay={0.08} inView>
-      <div className="overflow-x-auto">
-        <Calendar username="gyanranjan-priyam" colorScheme={colorScheme} year={new Date().getFullYear()} />
-      </div>
+        <div className="overflow-x-auto">
+          <Calendar
+            username="gyanranjan-priyam"
+            colorScheme={colorScheme}
+            year={new Date().getFullYear()}
+          />
+        </div>
       </BlurFade>
     </div>
   );

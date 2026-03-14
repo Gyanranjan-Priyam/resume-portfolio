@@ -61,12 +61,14 @@ function ExpandedCard({
                 <motion.h3
                   layoutId={`title-${active.title}-${id}`}
                   className="font-bold text-neutral-700 dark:text-neutral-200"
+                  style={{ fontFamily: "var(--font-jetbrains-mono)" }}
                 >
                   {active.title}
                 </motion.h3>
                 <motion.p
                   layoutId={`description-${active.title}-${id}`}
                   className="text-neutral-600 dark:text-neutral-400"
+                  style={{ fontFamily: "var(--font-jetbrains-mono)" }}
                 >
                   {active.company} · {active.date}
                 </motion.p>
@@ -75,6 +77,7 @@ function ExpandedCard({
                 layoutId={`button-${active.title}-${id}`}
                 href={active.link}
                 className="px-4 py-3 text-sm rounded-full font-bold bg-green-500 text-white"
+                style={{ fontFamily: "var(--font-jetbrains-mono)" }}
               >
                 Details
               </motion.a>
@@ -87,6 +90,7 @@ function ExpandedCard({
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 className="text-neutral-600 text-xs md:text-sm lg:text-base h-40 md:h-fit pb-10 flex flex-col items-start gap-4 overflow-auto dark:text-neutral-400 [mask:linear-gradient(to_bottom,white,white,transparent)] [scrollbar-width:none] [-ms-overflow-style:none] [-webkit-overflow-scrolling:touch]"
+                style={{ fontFamily: "var(--font-jetbrains-mono)" }}
               >
                 <p>{active.desc[0]}</p>
                 {active.tech && active.tech.length > 0 && (
@@ -94,6 +98,7 @@ function ExpandedCard({
                     {active.tech.map((t: string) => (
                       <span
                         key={t}
+                        style={{ fontFamily: "var(--font-jetbrains-mono)" }}
                         className="rounded-full border border-neutral-300 dark:border-neutral-600 px-2.5 py-0.5 text-[11px] font-medium"
                       >
                         {t}
@@ -109,7 +114,8 @@ function ExpandedCard({
                       rel="noopener noreferrer"
                       className="inline-flex items-center gap-1.5 px-4 py-2 text-sm font-bold rounded-full bg-green-500 hover:bg-green-600 text-white transition-colors"
                     >
-                      <Globe className="size-3.5" /> <span className="text-white">Live Demo</span>
+                      <Globe className="size-3.5" />{" "}
+                      <span className="text-white">Live Demo</span>
                     </a>
                   )}
                   {active.github && (
@@ -129,7 +135,7 @@ function ExpandedCard({
         </motion.div>
       </div>
     </>,
-    document.body
+    document.body,
   );
 }
 
@@ -151,30 +157,52 @@ export function ProjectsSection() {
   return (
     <section id="projects" className="py-8">
       <BlurFade delay={0.04} inView>
-      <h2 className="mb-6 text-3xl font-bold">Projects</h2>
+        <h2
+          className="mb-6 text-3xl font-bold"
+          style={{ fontFamily: "var(--font-ibm)" }}
+        >
+          Projects
+        </h2>
       </BlurFade>
 
       <AnimatePresence>
         {active && (
-          <ExpandedCard active={active} id={id} onClose={() => setActive(null)} />
+          <ExpandedCard
+            active={active}
+            id={id}
+            onClose={() => setActive(null)}
+          />
         )}
       </AnimatePresence>
 
       <ul className="max-w-2xl mx-auto w-full gap-4">
         {displayProjects.map((project, i) => (
-          <BlurFade key={`card-${project.title}-${id}`} delay={0.04 + i * 0.05} inView>
+          <BlurFade
+            key={`card-${project.title}-${id}`}
+            delay={0.04 + i * 0.05}
+            inView
+          >
             {/* Mobile layout – links directly to project page */}
             <Link href={project.link} className="block md:hidden">
               <div className="group rounded-lg border bg-card p-4 mb-4 transition-colors hover:bg-muted/50">
                 <div className="flex items-start justify-between gap-4">
-                  <h3 className="text-sm font-semibold group-hover:underline">
+                  <h3
+                    className="text-sm font-semibold group-hover:underline"
+                    style={{ fontFamily: "var(--font-jetbrains-mono)" }}
+                  >
                     {project.title}
                   </h3>
-                  <span className="shrink-0 text-sm text-muted-foreground whitespace-nowrap">
+                  <span
+                    className="shrink-0 text-sm text-muted-foreground whitespace-nowrap"
+                    style={{ fontFamily: "var(--font-jetbrains-mono)" }}
+                  >
                     {project.date}
                   </span>
                 </div>
-                <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground line-clamp-2">
+                <p
+                  className="mt-1.5 text-sm leading-relaxed text-muted-foreground line-clamp-2"
+                  style={{ fontFamily: "var(--font-jetbrains-mono)" }}
+                >
                   {project.desc[0]}
                 </p>
                 <div className="mt-2 flex flex-wrap gap-1">
@@ -183,6 +211,7 @@ export function ProjectsSection() {
                       key={t}
                       variant="secondary"
                       className="rounded-sm px-1.5 py-0.5 text-xs font-normal"
+                      style={{ fontFamily: "var(--font-jetbrains-mono)" }}
                     >
                       {t}
                     </Badge>
@@ -210,12 +239,14 @@ export function ProjectsSection() {
                     <motion.h3
                       layoutId={`title-${project.title}-${id}`}
                       className="font-medium text-neutral-800 dark:text-neutral-200 text-left"
+                      style={{ fontFamily: "var(--font-jetbrains-mono)" }}
                     >
                       {project.title}
                     </motion.h3>
                     <motion.p
                       layoutId={`description-${project.title}-${id}`}
                       className="text-neutral-600 dark:text-neutral-400 text-left"
+                      style={{ fontFamily: "var(--font-jetbrains-mono)" }}
                     >
                       {project.company}
                     </motion.p>
@@ -224,6 +255,7 @@ export function ProjectsSection() {
                 <motion.button
                   layoutId={`button-${project.title}-${id}`}
                   className="px-4 py-2 text-sm rounded-full font-bold bg-gray-100 hover:bg-green-500 hover:text-white text-black"
+                  style={{ fontFamily: "var(--font-jetbrains-mono)" }}
                 >
                   Details
                 </motion.button>
@@ -234,12 +266,13 @@ export function ProjectsSection() {
       </ul>
 
       <BlurFade delay={0.3} inView>
-      <Link
-        href="/projects"
-        className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
-      >
-        View All <ArrowRight className="size-3.5" />
-      </Link>
+        <Link
+          href="/projects"
+          className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+          style={{ fontFamily: "var(--font-jetbrains-mono)" }}
+        >
+          View All <ArrowRight className="size-3.5" />
+        </Link>
       </BlurFade>
     </section>
   );

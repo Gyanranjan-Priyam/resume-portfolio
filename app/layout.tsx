@@ -1,5 +1,10 @@
 import type { Metadata } from "next";
-import { DM_Sans, JetBrains_Mono } from "next/font/google";
+import {
+  DM_Sans,
+  IBM_Plex_Mono,
+  JetBrains_Mono,
+  Josefin_Sans,
+} from "next/font/google";
 import { SmoothScroll } from "@/components/smooth-scroll";
 import { ThemeSync } from "@/components/theme-sync";
 import { LoaderWrapper } from "@/components/loader-wrapper";
@@ -9,7 +14,6 @@ import { Footer } from "@/components/sections/footer";
 import { Separator } from "@/components/ui/separator";
 import localFont from "next/font/local";
 import ClickSpark from "@/components/ClickSpark";
-import { FlickeringGrid } from "@/components/ui/flickering-grid";
 import { PwaRegister } from "@/components/pwa-register";
 import { ScrollIndicator } from "@/components/ui/scroll-indicator";
 import { ScrollToTopButton } from "@/components/ui/scroll-to-top-button";
@@ -23,8 +27,19 @@ const dmSans = DM_Sans({
   subsets: ["latin"],
 });
 
+const josefinSans = Josefin_Sans({
+  variable: "--font-js",
+  subsets: ["latin"],
+});
+
+const ibmMono = IBM_Plex_Mono({
+  variable: "--font-ibm",
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+});
+
 const jetbrainsMono = JetBrains_Mono({
-  variable: "--font-mono",
+  variable: "--font-jetbrains-mono",
   subsets: ["latin"],
 });
 
@@ -145,7 +160,7 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${dmSans.variable} ${jetbrainsMono.variable} ${mokoto.variable} ${gta.variable} font-sans antialiased`}
+        className={`${dmSans.variable} ${josefinSans.variable} ${ibmMono.variable} ${jetbrainsMono.variable} ${mokoto.variable} ${gta.variable} font-sans antialiased`}
       >
         <ThemeSync />
         <PwaRegister />
@@ -154,15 +169,14 @@ export default function RootLayout({
         <SmoothScroll>
           <LoaderWrapper />
           <ClickSpark>
-          <main id="layout">
-            <div className="absolute inset-0 top-0 left-0 right-0 h-[100px] overflow-hidden z-0">
-            </div>
-            {children}
-            <Separator />
-            <div className="mx-auto max-w-2xl px-4 sm:px-6">
-            <Footer />
-            </div>
-          </main>
+            <main id="layout">
+              <div className="absolute inset-0 top-0 left-0 right-0 h-[100px] overflow-hidden z-0"></div>
+              {children}
+              <Separator />
+              <div className="mx-auto max-w-2xl px-4 sm:px-6">
+                <Footer />
+              </div>
+            </main>
           </ClickSpark>
         </SmoothScroll>
       </body>

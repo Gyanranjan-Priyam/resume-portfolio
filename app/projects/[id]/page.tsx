@@ -1,7 +1,15 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { ChevronRight, ExternalLink, Github, Users, Zap, Layers } from "lucide-react";
+import {
+  ChevronRight,
+  ExternalLink,
+  Github,
+  Users,
+  Zap,
+  Layers,
+} from "lucide-react";
 import projects from "@/data/projectsData";
 import { BlurFade } from "@/components/ui/blur-fade";
 import { ImageCarousel } from "@/components/ui/image-carousel";
@@ -67,7 +75,10 @@ export default async function ProjectPage({ params }: Props) {
   };
 
   const mediaItems = project.images;
-  const hasRichContent = 'highlights' in project || 'features' in project || 'techDetailed' in project;
+  const hasRichContent =
+    "highlights" in project ||
+    "features" in project ||
+    "techDetailed" in project;
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -78,12 +89,24 @@ export default async function ProjectPage({ params }: Props) {
       <div className="mx-auto max-w-3xl px-6 py-12">
         {/* Breadcrumb */}
         <BlurFade delay={0.04}>
-          <nav aria-label="Breadcrumb" className="mb-8 flex items-center gap-1 text-sm text-muted-foreground">
-            <Link href="/" className="transition-colors hover:text-foreground">Home</Link>
+          <nav
+            aria-label="Breadcrumb"
+            className="mb-8 flex items-center gap-1 text-sm text-muted-foreground"
+          >
+            <Link href="/" className="transition-colors hover:text-foreground">
+              Home
+            </Link>
             <ChevronRight className="size-3.5" />
-            <Link href="/projects" className="transition-colors hover:text-foreground">Projects</Link>
+            <Link
+              href="/projects"
+              className="transition-colors hover:text-foreground"
+            >
+              Projects
+            </Link>
             <ChevronRight className="size-3.5" />
-            <span className="truncate text-foreground font-medium">{project.title}</span>
+            <span className="truncate text-foreground font-medium">
+              {project.title}
+            </span>
           </nav>
         </BlurFade>
 
@@ -92,10 +115,16 @@ export default async function ProjectPage({ params }: Props) {
           <div className="mb-6">
             <div className="flex flex-wrap items-start justify-between gap-4">
               <div>
-                <h1 className="text-2xl font-bold tracking-tight sm:text-3xl">
+                <h1
+                  className="text-3xl font-bold tracking-tight sm:text-4xl"
+                  style={{ fontFamily: "var(--font-ibm)" }}
+                >
                   {project.title}
                 </h1>
-                <p className="mt-1 text-sm text-muted-foreground">
+                <p
+                  className="mt-1 text-sm text-muted-foreground"
+                  style={{ fontFamily: "var(--font-ibm)" }}
+                >
                   {project.company} &middot; {project.date}
                 </p>
               </div>
@@ -106,6 +135,7 @@ export default async function ProjectPage({ params }: Props) {
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-1.5 rounded-lg border px-3 py-1.5 text-sm font-medium transition-colors hover:bg-muted"
+                    style={{ fontFamily: "var(--font-jetbrains-mono)" }}
                   >
                     <ExternalLink className="size-3.5" />
                     Live Demo
@@ -117,6 +147,7 @@ export default async function ProjectPage({ params }: Props) {
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-1.5 rounded-lg border px-3 py-1.5 text-sm font-medium transition-colors hover:bg-muted"
+                    style={{ fontFamily: "var(--font-jetbrains-mono)" }}
                   >
                     <Github className="size-4" />
                     Source
@@ -131,6 +162,7 @@ export default async function ProjectPage({ params }: Props) {
                 <span
                   key={t}
                   className="rounded-full border px-2.5 py-0.5 text-xs font-medium text-muted-foreground"
+                  style={{ fontFamily: "var(--font-jetbrains-mono)" }}
                 >
                   {t}
                 </span>
@@ -140,11 +172,14 @@ export default async function ProjectPage({ params }: Props) {
         </BlurFade>
 
         {/* Role */}
-        {'role' in project && project.role && (
+        {"role" in project && project.role && (
           <BlurFade delay={0.14}>
             <div className="mb-8 flex items-start gap-3 rounded-lg border bg-muted/30 p-4">
               <Users className="mt-0.5 size-4 shrink-0 text-muted-foreground" />
-              <p className="text-sm leading-relaxed text-muted-foreground">
+              <p
+                className="text-sm tracking-tight leading-relaxed text-muted-foreground"
+                style={{ fontFamily: "var(--font-jetbrains-mono)" }}
+              >
                 <span className="font-semibold text-foreground">My Role: </span>
                 {project.role}
               </p>
@@ -155,9 +190,18 @@ export default async function ProjectPage({ params }: Props) {
         {/* Description */}
         <BlurFade delay={0.16}>
           <div className="mb-10 space-y-4">
-            <h2 className="text-lg font-semibold">Overview</h2>
+            <h2
+              className="text-2xl font-semibold"
+              style={{ fontFamily: "var(--font-ibm)" }}
+            >
+              Overview
+            </h2>
             {project.desc.map((paragraph, i) => (
-              <p key={i} className="text-sm leading-relaxed text-muted-foreground">
+              <p
+                key={i}
+                className="text-sm font-medium leading-relaxed text-muted-foreground"
+                style={{ fontFamily: "var(--font-jetbrains-mono)" }}
+              >
                 {paragraph}
               </p>
             ))}
@@ -165,15 +209,26 @@ export default async function ProjectPage({ params }: Props) {
         </BlurFade>
 
         {/* Key Highlights */}
-        {'highlights' in project && (project as any).highlights?.length > 0 && (
+        {"highlights" in project && (project as any).highlights?.length > 0 && (
           <BlurFade delay={0.18} inView>
             <div className="mb-10">
-              <h2 className="mb-4 text-lg font-semibold">Key Highlights</h2>
+              <h2
+                className="mb-4 text-2xl font-semibold"
+                style={{ fontFamily: "var(--font-ibm)" }}
+              >
+                Key Highlights
+              </h2>
               <div className="grid gap-2.5 sm:grid-cols-2">
                 {(project as any).highlights.map((item: string, i: number) => (
-                  <div key={i} className="flex items-start gap-2.5 rounded-lg border p-3">
+                  <div
+                    key={i}
+                    className="flex items-start gap-2.5 rounded-lg border p-3 tracking-tight font-medium"
+                    style={{ fontFamily: "var(--font-jetbrains-mono)" }}
+                  >
                     <Zap className="mt-0.5 size-3.5 shrink-0 text-amber-500" />
-                    <p className="text-sm leading-relaxed text-muted-foreground">{item}</p>
+                    <p className="text-sm leading-relaxed text-muted-foreground">
+                      {item}
+                    </p>
                   </div>
                 ))}
               </div>
@@ -182,57 +237,98 @@ export default async function ProjectPage({ params }: Props) {
         )}
 
         {/* Features by category */}
-        {'features' in project && (project as any).features?.length > 0 && (
+        {"features" in project && (project as any).features?.length > 0 && (
           <BlurFade delay={0.2} inView>
             <div className="mb-10">
-              <h2 className="mb-4 text-lg font-semibold">Features</h2>
+              <h2
+                className="mb-4 text-2xl font-semibold"
+                style={{ fontFamily: "var(--font-ibm)" }}
+              >
+                Features
+              </h2>
               <FeaturesAccordion features={(project as any).features} />
             </div>
           </BlurFade>
         )}
 
         {/* Tech stack table */}
-        {'techDetailed' in project && (project as any).techDetailed?.length > 0 && (
-          <BlurFade delay={0.22} inView>
-            <div className="mb-10">
-              <h2 className="mb-4 text-lg font-semibold">Tech Stack</h2>
-              <div className="overflow-hidden rounded-lg border">
-                <table className="w-full text-sm">
-                  <thead>
-                    <tr className="border-b bg-muted/40">
-                      <th className="px-4 py-2.5 text-left font-semibold">Layer</th>
-                      <th className="px-4 py-2.5 text-left font-semibold">Technology</th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y">
-                    {(project as any).techDetailed.map((row: { layer: string; value: string }, i: number) => (
-                      <tr key={i} className="transition-colors hover:bg-muted/20">
-                        <td className="px-4 py-2.5 font-medium text-foreground whitespace-nowrap">{row.layer}</td>
-                        <td className="px-4 py-2.5 text-muted-foreground">{row.value}</td>
+        {"techDetailed" in project &&
+          (project as any).techDetailed?.length > 0 && (
+            <BlurFade delay={0.22} inView>
+              <div className="mb-10">
+                <h2
+                  className="mb-4 text-2xl font-semibold"
+                  style={{ fontFamily: "var(--font-ibm)" }}
+                >
+                  Tech Stack
+                </h2>
+                <div className="overflow-hidden rounded-lg border">
+                  <table className="w-full text-sm">
+                    <thead>
+                      <tr
+                        className="border-b bg-muted/40"
+                        style={{ fontFamily: "var(--font-jetbrains-mono)" }}
+                      >
+                        <th className="px-4 py-2.5 text-left font-semibold">
+                          Layer
+                        </th>
+                        <th className="px-4 py-2.5 text-left font-semibold">
+                          Technology
+                        </th>
                       </tr>
-                    ))}
-                  </tbody>
-                </table>
+                    </thead>
+                    <tbody
+                      className="divide-y"
+                      style={{ fontFamily: "var(--font-jetbrains-mono)" }}
+                    >
+                      {(project as any).techDetailed.map(
+                        (row: { layer: string; value: string }, i: number) => (
+                          <tr
+                            key={i}
+                            className="transition-colors hover:bg-muted/20"
+                          >
+                            <td className="px-4 py-2.5 font-medium text-foreground whitespace-nowrap">
+                              {row.layer}
+                            </td>
+                            <td className="px-4 py-2.5 text-muted-foreground">
+                              {row.value}
+                            </td>
+                          </tr>
+                        ),
+                      )}
+                    </tbody>
+                  </table>
+                </div>
               </div>
-            </div>
-          </BlurFade>
-        )}
+            </BlurFade>
+          )}
 
         {/* Folder Structure */}
-        {'folderStructure' in project && (project as any).folderStructure?.length > 0 && (
-          <BlurFade delay={hasRichContent ? 0.23 : 0.19} inView>
-            <div className="mb-10">
-              <h2 className="mb-4 text-lg font-semibold">Project Structure</h2>
-              <FolderStructure structure={(project as any).folderStructure} />
-            </div>
-          </BlurFade>
-        )}
+        {"folderStructure" in project &&
+          (project as any).folderStructure?.length > 0 && (
+            <BlurFade delay={hasRichContent ? 0.23 : 0.19} inView>
+              <div className="mb-10">
+                <h2
+                  className="mb-4 text-2xl font-semibold"
+                  style={{ fontFamily: "var(--font-ibm)" }}
+                >
+                  Project Structure
+                </h2>
+                <FolderStructure structure={(project as any).folderStructure} />
+              </div>
+            </BlurFade>
+          )}
 
         {/* Gallery */}
         {mediaItems.length > 0 && (
           <BlurFade delay={hasRichContent ? 0.24 : 0.2} inView>
             <div className="mb-10">
-              <h2 className="mb-4 text-lg font-semibold">Screenshots</h2>
+              <h2
+                className="mb-4 text-2xl font-semibold"
+                style={{ fontFamily: "var(--font-ibm)" }}
+              >
+                Screenshots
+              </h2>
               <ImageCarousel images={mediaItems} title={project.title} />
             </div>
           </BlurFade>
@@ -250,8 +346,16 @@ export default async function ProjectPage({ params }: Props) {
                   className="group flex items-center justify-between rounded-lg border p-4 transition-colors hover:bg-muted/50"
                 >
                   <div>
-                    <p className="text-xs text-muted-foreground">Next Project</p>
-                    <p className="text-sm font-semibold group-hover:underline">
+                    <p
+                      className="text-xs text-muted-foreground"
+                      style={{ fontFamily: "var(--font-jetbrains-mono)" }}
+                    >
+                      Next Project
+                    </p>
+                    <p
+                      className="text-md font-semibold group-hover:underline"
+                      style={{ fontFamily: "var(--font-jetbrains-mono)" }}
+                    >
                       {next.title}
                     </p>
                   </div>

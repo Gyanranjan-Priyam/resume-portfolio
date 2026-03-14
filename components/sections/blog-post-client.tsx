@@ -76,7 +76,15 @@ function TwitterIcon() {
 
 function ReadAloudIcon() {
   return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="size-[18px]">
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="size-[18px]"
+    >
       <path d="M11 5L6 9H2v6h4l5 4V5z" />
       <path d="M19.07 4.93a10 10 0 0 1 0 14.14" />
       <path d="M15.54 8.46a5 5 0 0 1 0 7.07" />
@@ -94,7 +102,15 @@ function StopIcon() {
 
 function ShareIcon() {
   return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="size-[18px]">
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="size-[18px]"
+    >
       <circle cx="18" cy="5" r="3" />
       <circle cx="6" cy="12" r="3" />
       <circle cx="18" cy="19" r="3" />
@@ -118,8 +134,11 @@ export function BlogPostClient({
   const shareRef = useRef<HTMLDivElement>(null);
 
   const headings = useMemo(
-    () => blog.content.filter((b) => b.type === "heading").map((b) => (b as { type: "heading"; text: string }).text),
-    [blog]
+    () =>
+      blog.content
+        .filter((b) => b.type === "heading")
+        .map((b) => (b as { type: "heading"; text: string }).text),
+    [blog],
   );
 
   const blogUrl = typeof window !== "undefined" ? window.location.href : "";
@@ -130,7 +149,7 @@ export function BlogPostClient({
       if (url) window.open(url, "_blank", "noopener,noreferrer");
       setShareOpen(false);
     },
-    [blogUrl, blog.title]
+    [blogUrl, blog.title],
   );
 
   const getArticleText = useCallback(() => {
@@ -201,16 +220,22 @@ export function BlogPostClient({
           {/* ── Left Sidebar: Table of Contents ── */}
           <aside className="hidden lg:block">
             <div className="sticky top-12">
-              <h3 className="mb-3 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+              <h3
+                className="mb-3 text-xs font-semibold uppercase tracking-wider text-muted-foreground"
+                style={{ fontFamily: "var(--font-jetbrains-mono)" }}
+              >
                 On This Page
               </h3>
-              <ul className="space-y-1.5 border-l border-border">
+              <ul
+                className="space-y-1.5 border-l border-border"
+                style={{ fontFamily: "var(--font-jetbrains-mono)" }}
+              >
                 {headings.map((h) => (
                   <li key={h}>
                     <button
                       type="button"
                       onClick={() => scrollToHeading(h)}
-                      className="block w-full pl-3 text-left text-xs leading-relaxed text-muted-foreground transition-colors hover:text-foreground hover:border-l-foreground -ml-px border-l border-transparent"
+                      className="block cursor-pointer w-full pl-3 text-left text-xs leading-relaxed text-muted-foreground transition-colors hover:text-foreground hover:border-l-foreground -ml-px border-l border-transparent"
                     >
                       {h}
                     </button>
@@ -224,53 +249,71 @@ export function BlogPostClient({
           <article className="mx-auto w-full max-w-2xl">
             {/* Breadcrumb */}
             <BlurFade delay={0.04}>
-            <nav aria-label="Breadcrumb" className="mb-8 flex items-center gap-1 text-sm text-muted-foreground">
-              <Link href="/" className="transition-colors hover:text-foreground">Home</Link>
-              <ChevronRight className="size-3.5" />
-              <Link href="/blog" className="transition-colors hover:text-foreground">Blog</Link>
-              <ChevronRight className="size-3.5" />
-              <span className="truncate text-foreground font-medium">{blog.title}</span>
-            </nav>
+              <nav
+                aria-label="Breadcrumb"
+                className="mb-8 flex items-center gap-1 text-sm text-muted-foreground"
+              >
+                <Link
+                  href="/"
+                  className="transition-colors hover:text-foreground"
+                >
+                  Home
+                </Link>
+                <ChevronRight className="size-3.5" />
+                <Link
+                  href="/blog"
+                  className="transition-colors hover:text-foreground"
+                >
+                  Blog
+                </Link>
+                <ChevronRight className="size-3.5" />
+                <span className="truncate text-foreground font-medium">
+                  {blog.title}
+                </span>
+              </nav>
             </BlurFade>
 
             {/* Title */}
             <BlurFade delay={0.08}>
-            <h1 className="text-4xl font-bold tracking-tight leading-snug mb-4">
-              {blog.title}
-            </h1>
+              <h1
+                className="text-4xl font-bold tracking-tight leading-snug mb-4"
+                style={{ fontFamily: "var(--font-js)" }}
+              >
+                {blog.title}
+              </h1>
             </BlurFade>
 
             {/* Excerpt */}
             <BlurFade delay={0.12}>
-            <p className="text-base leading-relaxed text-muted-foreground mb-5">
-              {blog.excerpt}
-            </p>
+              <p className="text-base leading-relaxed text-muted-foreground mb-5">
+                {blog.excerpt}
+              </p>
             </BlurFade>
 
             {/* Meta row */}
             <BlurFade delay={0.16}>
-            <div className="flex flex-wrap items-center gap-2 text-xs text-muted-foreground mb-2">
-              <time dateTime={blog.date}>{formatDate(blog.date)}</time>
-              {blog.updatedAt && blog.updatedAt !== blog.date && (
-                <>
-                  <span>·</span>
-                  <span>Updated {formatDate(blog.updatedAt)}</span>
-                </>
-              )}
-            </div>
+              <div className="flex flex-wrap items-center gap-2 text-xs text-muted-foreground mb-2">
+                <time dateTime={blog.date}>{formatDate(blog.date)}</time>
+                {blog.updatedAt && blog.updatedAt !== blog.date && (
+                  <>
+                    <span>·</span>
+                    <span>Updated {formatDate(blog.updatedAt)}</span>
+                  </>
+                )}
+              </div>
 
-            {/* Tags */}
-            <div className="flex flex-wrap gap-1.5 mb-4">
-              {blog.tags.map((tag) => (
-                <Badge
-                  key={tag}
-                  variant="secondary"
-                  className="rounded-sm px-1.5 py-0 text-[10px] font-normal"
-                >
-                  {tag}
-                </Badge>
-              ))}
-            </div>
+              {/* Tags */}
+              <div className="flex flex-wrap gap-1.5 mb-4">
+                {blog.tags.map((tag) => (
+                  <Badge
+                    key={tag}
+                    variant="secondary"
+                    className="rounded-sm px-1.5 py-0 text-[10px] font-normal"
+                  >
+                    {tag}
+                  </Badge>
+                ))}
+              </div>
             </BlurFade>
 
             {/* Mobile actions row */}
@@ -319,59 +362,76 @@ export function BlogPostClient({
 
             {/* Content */}
             <BlurFade delay={0.24}>
-            <div>
-              {(blog.content as ContentBlock[]).map((block, index) => {
-                if (block.type === "heading") {
+              <div>
+                {(blog.content as ContentBlock[]).map((block, index) => {
+                  if (block.type === "heading") {
+                    return (
+                      <h2
+                        key={index}
+                        data-heading={block.text}
+                        className="mt-10 mb-3 scroll-mt-16 text-2xl font-bold tracking-tight"
+                        style={{ fontFamily: "var(--font-ibm)" }}
+                      >
+                        {block.text}
+                      </h2>
+                    );
+                  }
+                  if (block.type === "code") {
+                    return <MonacoCodeBlock key={index} code={block.text} />;
+                  }
+                  if (block.type === "list") {
+                    return (
+                      <ul
+                        key={index}
+                        className="mb-4 ml-4 space-y-1.5 list-disc marker:text-muted-foreground"
+                      >
+                        {block.items.map((item, i) => (
+                          <li
+                            key={i}
+                            className="text-sm leading-7 text-foreground/90 font-jakarta-sans"
+                          >
+                            {item}
+                          </li>
+                        ))}
+                      </ul>
+                    );
+                  }
                   return (
-                    <h2
+                    <p
                       key={index}
-                      data-heading={block.text}
-                      className="mt-10 mb-3 scroll-mt-16 text-lg font-bold tracking-tight font-mono"
+                      className="mb-4 text-sm leading-7 text-foreground/90"
+                      style={{ fontFamily: "var(--font-jetbrains-mono)" }}
                     >
                       {block.text}
-                    </h2>
+                    </p>
                   );
-                }
-                if (block.type === "code") {
-                  return <MonacoCodeBlock key={index} code={block.text} />;
-                }
-                if (block.type === "list") {
-                  return (
-                    <ul
-                      key={index}
-                      className="mb-4 ml-4 space-y-1.5 list-disc marker:text-muted-foreground"
-                    >
-                      {block.items.map((item, i) => (
-                        <li
-                          key={i}
-                          className="text-sm leading-7 text-foreground/90 font-comic"
-                        >
-                          {item}
-                        </li>
-                      ))}
-                    </ul>
-                  );
-                }
-                return (
-                  <p
-                    key={index}
-                    className="mb-4 text-sm leading-7 text-foreground/90 font-comic"
-                  >
-                    {block.text}
-                  </p>
-                );
-              })}
-            </div>
+                })}
+              </div>
             </BlurFade>
 
             {/* Footer divider + back */}
             <div className="h-px w-full bg-border mt-12 mb-8" />
-            <nav aria-label="Breadcrumb" className="flex items-center gap-1 text-sm text-muted-foreground">
-              <Link href="/" className="transition-colors hover:text-foreground">Home</Link>
+            <nav
+              aria-label="Breadcrumb"
+              className="flex items-center gap-1 text-sm text-muted-foreground"
+            >
+              <Link
+                href="/"
+                className="transition-colors hover:text-foreground"
+              >
+                Home
+              </Link>
               <ChevronRight className="size-3.5" />
-              <Link href="/blog" className="transition-colors hover:text-foreground">Blog</Link>
+              <Link
+                href="/blog"
+                className="transition-colors hover:text-foreground"
+              >
+                Blog
+              </Link>
               <ChevronRight className="size-3.5" />
-              <span className="truncate text-foreground font-medium">{blog.title}</span>
+              <span className="truncate text-foreground font-medium">
+                {blog.title}
+              </span>
             </nav>
           </article>
 
@@ -380,17 +440,26 @@ export function BlogPostClient({
             <div className="sticky top-12 space-y-6">
               {/* Next blog card */}
               <div>
-                <span className="mb-2 block text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+                <span
+                  className="mb-2 block text-xs font-semibold uppercase tracking-wider text-muted-foreground"
+                  style={{ fontFamily: "var(--font-jetbrains-mono)" }}
+                >
                   Next Post
                 </span>
                 <Link
                   href={`/blog/${nextBlog.id}`}
                   className="group block rounded-lg border bg-card p-3 transition-colors hover:bg-muted/50"
                 >
-                  <h4 className="text-xs font-medium leading-snug group-hover:underline line-clamp-3">
+                  <h4
+                    className="text-sm font-medium leading-snug group-hover:underline line-clamp-3"
+                    style={{ fontFamily: "var(--font-jetbrains-mono)" }}
+                  >
                     {nextBlog.title}
                   </h4>
-                  <span className="mt-1.5 block text-[10px] text-muted-foreground">
+                  <span
+                    className="mt-1.5 block text-[10px] text-muted-foreground"
+                    style={{ fontFamily: "var(--font-jetbrains-mono)" }}
+                  >
                     {formatDate(nextBlog.date)}
                   </span>
                 </Link>
@@ -407,6 +476,7 @@ export function BlogPostClient({
                       ? "border-foreground bg-foreground text-background"
                       : "border-border text-muted-foreground hover:text-foreground hover:border-foreground"
                   }`}
+                  style={{ fontFamily: "var(--font-jetbrains-mono)" }}
                 >
                   {isReading ? <StopIcon /> : <ReadAloudIcon />}
                   {isReading ? "Stop" : "Listen"}
@@ -415,7 +485,10 @@ export function BlogPostClient({
 
               {/* Share */}
               <div>
-                <span className="mb-2 block text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+                <span
+                  className="mb-2 block text-xs font-bold uppercase tracking-wider text-muted-foreground"
+                  style={{ fontFamily: "var(--font-jetbrains-mono)" }}
+                >
                   Share
                 </span>
                 <div className="flex items-center gap-2">
