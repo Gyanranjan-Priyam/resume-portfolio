@@ -3,7 +3,7 @@ export const experiences = [
     title: "Campus Ambassador",
     company: "GeeksforGeeks",
     period: "Jan 2026 - Present",
-    logo: "/work/GFG.png",
+    logo: "/work/GfG.png",
     initials: "GfG",
     content: [
       "Promote GeeksforGeeks' educational content and coding challenges across campus, increasing student engagement by 30%.",
