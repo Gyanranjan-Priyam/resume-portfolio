@@ -169,7 +169,7 @@ export default function RootLayout({
         <SmoothScroll>
           <LoaderWrapper />
           <ClickSpark>
-            <main id="layout" className="pt-14 lg:pt-0 lg:pl-64">
+            <main id="layout" className="pt-14 lg:pt-0 lg:pl-64 lg:pr-64">
               <div className="absolute inset-0 top-0 left-0 right-0 h-[100px] overflow-hidden z-0"></div>
               {children}
               <Separator />
