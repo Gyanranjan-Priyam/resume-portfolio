@@ -8,7 +8,6 @@ import {
   Github,
   Users,
   Zap,
-  Layers,
 } from "lucide-react";
 import projects from "@/data/projectsData";
 import { BlurFade } from "@/components/ui/blur-fade";
@@ -24,10 +23,15 @@ export async function generateStaticParams() {
   return projects.map((p) => ({ id: p.id }));
 }
 
+const SITE_URL = "https://www.gyanranjanpriyam.tech";
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { id } = await params;
   const project = projects.find((p) => p.id === id);
   if (!project) return {};
+
+  const ogImageUrl = `${SITE_URL}/projects/${project.id}/opengraph-image`;
+
   return {
     title: `${project.title} Project`,
     description: `Check out my work on the ${project.title} project, collaborating with ${project.company}, where I enhanced full stack development with responsive design and optimized user interactions.`,
@@ -42,12 +46,20 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     openGraph: {
       title: `${project.title} — Gyanranjan Priyam`,
       description: project.desc[0],
-      images: [{ url: project.img, alt: project.title }],
+      images: [
+        {
+          url: ogImageUrl,
+          width: 1200,
+          height: 630,
+          alt: project.title,
+        },
+      ],
     },
     twitter: {
+      card: "summary_large_image",
       title: `${project.title} — Gyanranjan Priyam`,
       description: project.desc[0],
-      images: [project.img],
+      images: [ogImageUrl],
     },
   };
 }

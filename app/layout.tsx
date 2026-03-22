@@ -18,6 +18,7 @@ import { PwaRegister } from "@/components/pwa-register";
 import { ScrollIndicator } from "@/components/ui/scroll-indicator";
 import { ScrollToTopButton } from "@/components/ui/scroll-to-top-button";
 
+
 const SITE_URL = "https://www.gyanranjanpriyam.tech";
 const OG_IMAGE =
   "https://res.cloudinary.com/dw47ib0sh/image/upload/v1766402986/ls67mu0pkqalizjmvuyf.png";

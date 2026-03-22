@@ -17,6 +17,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const blog = blogs.find((b) => b.id === slug);
   if (!blog) return {};
+
+  const ogImageUrl = `${SITE_URL}/blog/${blog.id}/opengraph-image`;
+
   return {
     title: blog.title,
     description: blog.excerpt,
@@ -30,10 +33,20 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       modifiedTime: blog.updatedAt,
       authors: ["Gyanranjan Priyam"],
       tags: blog.tags,
+      images: [
+        {
+          url: ogImageUrl,
+          width: 1200,
+          height: 630,
+          alt: blog.title,
+        },
+      ],
     },
     twitter: {
+      card: "summary_large_image",
       title: `${blog.title} — Gyanranjan Priyam`,
       description: blog.excerpt,
+      images: [ogImageUrl],
     },
   };
 }

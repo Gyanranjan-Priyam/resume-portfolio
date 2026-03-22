@@ -449,7 +449,7 @@ const projects = [
   },
   {
     id: 'project2',
-    title: 'INVENTORY AI',
+    title: 'INVENTORY POS SYSTEM',
     img: 'https://res.cloudinary.com/dw47ib0sh/image/upload/v1763640034/o7uckf8ambkq2fcojljd.png',
     link: '/projects/project2',
     date: '2025',

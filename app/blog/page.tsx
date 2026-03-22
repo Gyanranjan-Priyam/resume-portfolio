@@ -14,7 +14,12 @@ export const metadata: Metadata = {
     "JavaScript Tips",
     "Gyanranjan Priyam Blog",
   ],
-  alternates: { canonical: "/blog" },
+  alternates: {
+    canonical: "/blog",
+    types: {
+      "application/rss+xml": "/blog/feed.xml",
+    },
+  },
   openGraph: {
     title: "Blog — Gyanranjan Priyam",
     description:

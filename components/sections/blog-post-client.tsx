@@ -2,10 +2,11 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
-import { ChevronRight } from "lucide-react";
+import { ChevronRight, Clock } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { BlurFade } from "@/components/ui/blur-fade";
 import { MonacoCodeBlock } from "@/components/ui/monaco-code-block";
+import { calculateReadingTime } from "@/lib/reading-time";
 
 /* ── Types ── */
 type ContentBlock =
@@ -100,25 +101,6 @@ function StopIcon() {
   );
 }
 
-function ShareIcon() {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className="size-[18px]"
-    >
-      <circle cx="18" cy="5" r="3" />
-      <circle cx="6" cy="12" r="3" />
-      <circle cx="18" cy="19" r="3" />
-      <line x1="8.59" y1="13.51" x2="15.42" y2="17.49" />
-      <line x1="15.41" y1="6.51" x2="8.59" y2="10.49" />
-    </svg>
-  );
-}
 
 /* ── Main Component ── */
 export function BlogPostClient({
@@ -141,7 +123,15 @@ export function BlogPostClient({
     [blog],
   );
 
-  const blogUrl = typeof window !== "undefined" ? window.location.href : "";
+  const readingTime = useMemo(
+    () => calculateReadingTime(blog.content),
+    [blog.content],
+  );
+
+  const blogUrl =
+    typeof window !== "undefined"
+      ? `${window.location.origin}/blog/${blog.id}`
+      : `https://www.priyam.tech/blog/${blog.id}`;
 
   const handleShare = useCallback(
     (platform: string) => {
@@ -300,6 +290,11 @@ export function BlogPostClient({
                     <span>Updated {formatDate(blog.updatedAt)}</span>
                   </>
                 )}
+                <span>·</span>
+                <span className="inline-flex items-center gap-1">
+                  <Clock className="size-3" />
+                  {readingTime}
+                </span>
               </div>
 
               {/* Tags */}
@@ -308,7 +303,7 @@ export function BlogPostClient({
                   <Badge
                     key={tag}
                     variant="secondary"
-                    className="rounded-sm px-1.5 py-0 text-[10px] font-normal"
+                    className="rounded-sm px-1.5 py-0 text-[14px] font-normal"
                   >
                     {tag}
                   </Badge>
@@ -322,10 +317,10 @@ export function BlogPostClient({
                 type="button"
                 onClick={handleReadAloud}
                 aria-label={isReading ? "Stop reading" : "Read article aloud"}
-                className={`inline-flex items-center gap-1.5 rounded-md border px-2.5 py-1.5 text-xs transition-colors ${
+                className={`inline-flex items-center gap-1.5 rounded-md border px-2.5 py-1.5 text-xs transition-colors cursor-pointer ${
                   isReading
-                    ? "border-foreground bg-foreground text-background"
-                    : "border-border text-muted-foreground hover:text-foreground hover:border-foreground"
+                    ? "border-foreground bg-foreground text-background cursor-pointer"
+                    : "border-border text-muted-foreground hover:text-foreground hover:border-foreground cursor-pointer"
                 }`}
               >
                 {isReading ? <StopIcon /> : <ReadAloudIcon />}
@@ -335,7 +330,7 @@ export function BlogPostClient({
                 type="button"
                 onClick={() => handleShare("whatsapp")}
                 aria-label="Share on WhatsApp"
-                className="rounded-md border border-border p-1.5 text-muted-foreground transition-colors hover:text-foreground hover:border-foreground"
+                className="rounded-md cursor-pointer border border-border p-1.5 text-muted-foreground transition-colors hover:text-foreground hover:border-foreground"
               >
                 <WhatsAppIcon />
               </button>
@@ -343,7 +338,7 @@ export function BlogPostClient({
                 type="button"
                 onClick={() => handleShare("linkedin")}
                 aria-label="Share on LinkedIn"
-                className="rounded-md border border-border p-1.5 text-muted-foreground transition-colors hover:text-foreground hover:border-foreground"
+                className="rounded-md cursor-pointer border border-border p-1.5 text-muted-foreground transition-colors hover:text-foreground hover:border-foreground"
               >
                 <LinkedInIcon />
               </button>
@@ -351,7 +346,7 @@ export function BlogPostClient({
                 type="button"
                 onClick={() => handleShare("twitter")}
                 aria-label="Share on Twitter / X"
-                className="rounded-md border border-border p-1.5 text-muted-foreground transition-colors hover:text-foreground hover:border-foreground"
+                className="rounded-md cursor-pointer border border-border p-1.5 text-muted-foreground transition-colors hover:text-foreground hover:border-foreground"
               >
                 <TwitterIcon />
               </button>

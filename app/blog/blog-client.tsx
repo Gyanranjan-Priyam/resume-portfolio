@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback, useRef, useMemo } from "react";
 import Link from "next/link";
-import { Home, Search, X } from "lucide-react";
+import { Home, Search, X, Rss } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import blogs from "@/data/blogsData";
 import { BlurFade } from "@/components/ui/blur-fade";
@@ -154,6 +154,13 @@ export default function BlogPageClient() {
               >
                 <Search className="size-4" />
               </button>
+              <Link
+                href="/blog/feed.xml"
+                aria-label="RSS Feed"
+                className="rounded-full border p-2 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+              >
+                <Rss className="size-4" />
+              </Link>
               <Link
                 href="/"
                 aria-label="Home"
