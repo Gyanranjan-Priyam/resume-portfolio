@@ -1,4 +1,5 @@
 import { BlurFade } from "@/components/ui/blur-fade";
+import Link from "next/link";
 
 export function ContactSection() {
   return (
@@ -24,7 +25,28 @@ export function ContactSection() {
           >
             info@priyam.tech
           </a>{" "}
-          and I&apos;ll get back to you as soon as possible.
+          or you can contact me through{" "}
+          <Link
+            href="https://linkedin.com/in/gyanrajanjan-priyam"
+            className="font-medium text-foreground underline underline-offset-4"
+          >
+            LinkedIn
+          </Link>
+          ,{" "}
+          <Link
+            href="https://x.com/gr_priyam"
+            className="font-medium text-foreground underline underline-offset-4"
+          >
+            Twitter
+          </Link>
+          , or{" "}
+          <Link
+            href="https://github.com/gyanrajanjan-priyam"
+            className="font-medium text-foreground underline underline-offset-4"
+          >
+            GitHub
+          </Link>
+          . I&apos;ll get back to you as soon as possible.
         </p>
       </BlurFade>
     </section>

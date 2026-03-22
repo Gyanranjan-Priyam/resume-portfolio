@@ -208,8 +208,20 @@ export function HeroSection() {
             className="text-[14px] leading-relaxed text-muted-foreground"
             style={{ fontFamily: "var(--font-jetbrains-mono)" }}
           >
-            Open to internships, freelance projects, and full-time roles. If
-            you&apos;re building something meaningful, I&apos;d love to be part of it.
+            Open to{" "}
+            <span className="font-medium text-foreground">
+              internships,
+            </span>{" "}
+            <span className="font-medium text-foreground">
+              
+              freelance projects,
+            </span>
+            and{" "}
+            <span className="font-medium text-foreground">
+              full-time roles
+            </span>
+            . If you&apos;re building something meaningful, I&apos;d love to be
+            part of it.
           </p>
         </BlurFade>
 
