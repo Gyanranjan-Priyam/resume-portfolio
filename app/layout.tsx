@@ -17,6 +17,7 @@ import ClickSpark from "@/components/ClickSpark";
 import { PwaRegister } from "@/components/pwa-register";
 import { ScrollIndicator } from "@/components/ui/scroll-indicator";
 import { ScrollToTopButton } from "@/components/ui/scroll-to-top-button";
+import { Toaster } from "@/components/ui/sonner";
 
 
 const SITE_URL = "https://www.gyanranjanpriyam.tech";
@@ -173,6 +174,7 @@ export default function RootLayout({
             <main id="layout" className="pt-14 lg:pt-0 lg:pl-64 lg:pr-64">
               <div className="absolute inset-0 top-0 left-0 right-0 h-[100px] overflow-hidden z-0"></div>
               {children}
+              <Toaster />
               <Separator />
               <div className="mx-auto max-w-2xl px-4 sm:px-6">
                 <Footer />

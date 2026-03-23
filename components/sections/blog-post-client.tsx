@@ -2,11 +2,14 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
-import { ChevronRight, Clock } from "lucide-react";
+import { Bot, ChevronRight, Clock, Copy, Download } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { BlurFade } from "@/components/ui/blur-fade";
 import { MonacoCodeBlock } from "@/components/ui/monaco-code-block";
 import { calculateReadingTime } from "@/lib/reading-time";
+import { toast } from "sonner";
+import { Document, Packer, Paragraph, TextRun } from "docx";
+import { saveAs } from "file-saver";
 
 /* ── Types ── */
 type ContentBlock =
@@ -101,7 +104,6 @@ function StopIcon() {
   );
 }
 
-
 /* ── Main Component ── */
 export function BlogPostClient({
   blog,
@@ -114,6 +116,8 @@ export function BlogPostClient({
   const [shareOpen, setShareOpen] = useState(false);
   const utteranceRef = useRef<SpeechSynthesisUtterance | null>(null);
   const shareRef = useRef<HTMLDivElement>(null);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const menuRef = useRef<HTMLDivElement>(null);
 
   const headings = useMemo(
     () =>
@@ -154,6 +158,147 @@ export function BlogPostClient({
     return parts.join(". ");
   }, [blog]);
 
+  const getMarkdown = useCallback(() => {
+    let md = `# ${blog.title}\n\n${blog.excerpt}\n\n`;
+
+    blog.content.forEach((block) => {
+      if (block.type === "heading") {
+        md += `## ${block.text}\n\n`;
+      }
+
+      if (block.type === "paragraph") {
+        md += `${block.text}\n\n`;
+      }
+
+      if (block.type === "list") {
+        block.items.forEach((item: string) => {
+          md += `- ${item}\n`;
+        });
+        md += `\n`;
+      }
+
+      if (block.type === "code") {
+        md += `\`\`\`\n${block.text}\n\`\`\`\n\n`;
+      }
+    });
+
+    return md;
+  }, [blog]);
+
+  const handleCopyMarkdown = () => {
+    const md = getMarkdown();
+    navigator.clipboard.writeText(md);
+    toast.success("Markdown copied to clipboard!");
+    setMenuOpen(false);
+  };
+
+  const handleOpenChatGPT = () => {
+    const md = encodeURIComponent(getMarkdown());
+    window.open(`https://chat.openai.com/?q=${md}`, "_blank");
+  };
+
+  const handleDownloadDocx = async () => {
+    try {
+      const children: Paragraph[] = [];
+
+      // Title
+      children.push(
+        new Paragraph({
+          children: [
+            new TextRun({
+              text: blog.title,
+              bold: true,
+              size: 32,
+            }),
+          ],
+          spacing: { after: 300 },
+        }),
+      );
+
+      // Excerpt
+      children.push(
+        new Paragraph({
+          children: [new TextRun(blog.excerpt)],
+          spacing: { after: 300 },
+        }),
+      );
+
+      // Content
+      blog.content.forEach((block: ContentBlock) => {
+        if (block.type === "heading") {
+          children.push(
+            new Paragraph({
+              children: [
+                new TextRun({
+                  text: block.text,
+                  bold: true,
+                  size: 28,
+                }),
+              ],
+              spacing: { before: 300, after: 150 },
+            }),
+          );
+        }
+
+        if (block.type === "paragraph") {
+          children.push(
+            new Paragraph({
+              children: [new TextRun(block.text)],
+              spacing: { after: 200 },
+            }),
+          );
+        }
+
+        if (block.type === "list") {
+          block.items.forEach((item: string) => {
+            children.push(
+              new Paragraph({
+                text: item,
+                bullet: {
+                  level: 0,
+                },
+              }),
+            );
+          });
+        }
+
+        if (block.type === "code") {
+          children.push(
+            new Paragraph({
+              children: [
+                new TextRun({
+                  text: block.text,
+                  font: "Courier New",
+                }),
+              ],
+              spacing: { after: 200 },
+            }),
+          );
+        }
+      });
+
+      const doc = new Document({
+        sections: [
+          {
+            children,
+          },
+        ],
+      });
+
+      const blob = await Packer.toBlob(doc);
+
+      saveAs(blob, `${blog.title}.docx`);
+
+      setMenuOpen(false);
+
+      toast.success("Downloaded as DOCX");
+    } catch (err) {
+      setMenuOpen(false);
+
+      toast.error("Failed to download DOCX");
+    }
+  };
+
   const handleReadAloud = useCallback(() => {
     if (typeof window === "undefined" || !window.speechSynthesis) return;
 
@@ -182,6 +327,17 @@ export function BlogPostClient({
       }
     };
   }, []);
+
+  useEffect(() => {
+    function handleClickOutside(e: MouseEvent) {
+      if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
+        setMenuOpen(false);
+      }
+    }
+
+    if (menuOpen) document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [menuOpen]);
 
   // Close share popover on outside click
   useEffect(() => {
@@ -312,42 +468,63 @@ export function BlogPostClient({
             </BlurFade>
 
             {/* Mobile actions row */}
-            <div className="flex items-center gap-2 mb-6 lg:hidden">
+            <div className="flex items-center gap-4 mb-6 lg:hidden">
+              {/* Listen */}
               <button
                 type="button"
                 onClick={handleReadAloud}
-                aria-label={isReading ? "Stop reading" : "Read article aloud"}
-                className={`inline-flex items-center gap-1.5 rounded-md border px-2.5 py-1.5 text-xs transition-colors cursor-pointer ${
-                  isReading
-                    ? "border-foreground bg-foreground text-background cursor-pointer"
-                    : "border-border text-muted-foreground hover:text-foreground hover:border-foreground cursor-pointer"
-                }`}
+                className="inline-flex items-center gap-1.5 rounded-md border px-2.5 py-1.5 text-xs"
               >
                 {isReading ? <StopIcon /> : <ReadAloudIcon />}
                 {isReading ? "Stop" : "Listen"}
               </button>
-              <button
-                type="button"
-                onClick={() => handleShare("whatsapp")}
-                aria-label="Share on WhatsApp"
-                className="rounded-md cursor-pointer border border-border p-1.5 text-muted-foreground transition-colors hover:text-foreground hover:border-foreground"
-              >
+
+              {/* NEW Dropdown */}
+              <div className="relative" ref={menuRef}>
+                <button
+                  onClick={() => setMenuOpen((p) => !p)}
+                  className="rounded-md border border-border px-2.5 py-1.5 text-xs"
+                >
+                  Export
+                </button>
+
+                {menuOpen && (
+                  <div className="absolute left-0 mt-2 w-44 rounded-md border bg-background shadow-md z-50">
+                    <button
+                      onClick={handleCopyMarkdown}
+                      className="flex items-center gap-2 w-full text-left px-3 py-2 text-xs hover:bg-muted"
+                    >
+                      <Copy className="size-3 mr-1" />
+                      Copy as Markdown
+                    </button>
+
+                    <button
+                      onClick={handleDownloadDocx}
+                      className="flex items-center gap-2 w-full text-left px-3 py-2 text-xs hover:bg-muted"
+                    >
+                      <Download className="size-3 mr-1" />
+                      Download as DOCX
+                    </button>
+
+                    <button
+                      onClick={handleOpenChatGPT}
+                      className="flex items-center gap-2 w-full text-left px-3 py-2 text-xs hover:bg-muted"
+                    >
+                      <Bot className="size-3 mr-1" />
+                      Open in ChatGPT
+                    </button>
+                  </div>
+                )}
+              </div>
+
+              {/* Share buttons */}
+              <button onClick={() => handleShare("whatsapp")} className="...">
                 <WhatsAppIcon />
               </button>
-              <button
-                type="button"
-                onClick={() => handleShare("linkedin")}
-                aria-label="Share on LinkedIn"
-                className="rounded-md cursor-pointer border border-border p-1.5 text-muted-foreground transition-colors hover:text-foreground hover:border-foreground"
-              >
+              <button onClick={() => handleShare("linkedin")} className="...">
                 <LinkedInIcon />
               </button>
-              <button
-                type="button"
-                onClick={() => handleShare("twitter")}
-                aria-label="Share on Twitter / X"
-                className="rounded-md cursor-pointer border border-border p-1.5 text-muted-foreground transition-colors hover:text-foreground hover:border-foreground"
-              >
+              <button onClick={() => handleShare("twitter")} className="...">
                 <TwitterIcon />
               </button>
             </div>
@@ -378,12 +555,13 @@ export function BlogPostClient({
                     return (
                       <ul
                         key={index}
-                        className="mb-4 ml-4 space-y-1.5 list-disc marker:text-muted-foreground"
+                        className="mb-4 ml-8 space-y-1.5 list-disc marker:text-muted-foreground"
                       >
                         {block.items.map((item, i) => (
                           <li
                             key={i}
-                            className="text-sm leading-7 text-foreground/90 font-jakarta-sans"
+                            className="text-sm tracking-tighter leading-7 text-foreground/90"
+                            style={{ fontFamily: "var(--font-jetbrains-mono)" }}
                           >
                             {item}
                           </li>
@@ -512,6 +690,52 @@ export function BlogPostClient({
                     <TwitterIcon />
                   </button>
                 </div>
+              </div>
+
+              {/* Export */}
+              <div ref={menuRef} className="relative">
+                <span
+                  className="mb-2 block text-xs font-bold uppercase tracking-wider text-muted-foreground"
+                  style={{ fontFamily: "var(--font-jetbrains-mono)" }}
+                >
+                  Export
+                </span>
+
+                <button
+                  onClick={() => setMenuOpen((p) => !p)}
+                  className="inline-flex w-full items-center justify-center rounded-md border border-border px-3 py-2 text-xs font-medium text-muted-foreground transition-colors hover:text-foreground hover:border-foreground cursor-pointer"
+                  style={{ fontFamily: "var(--font-jetbrains-mono)" }}
+                >
+                  Options
+                </button>
+
+                {menuOpen && (
+                  <div className="absolute right-0 mt-2 w-52 rounded-md border bg-background shadow-md z-50">
+                    <button
+                      onClick={handleCopyMarkdown}
+                      className="w-full flex items-center gap-2 text-left px-3 py-2 text-xs hover:bg-muted cursor-pointer"
+                    >
+                      <Copy className="size-3 mr-1" />
+                      Copy as Markdown
+                    </button>
+
+                    <button
+                      onClick={handleDownloadDocx}
+                      className="w-full flex items-center gap-2 text-left px-3 py-2 text-xs hover:bg-muted cursor-pointer"
+                    >
+                      <Download className="size-3 mr-1" />
+                      Download as DOCX
+                    </button>
+
+                    <button
+                      onClick={handleOpenChatGPT}
+                      className="w-full flex items-center gap-2 text-left px-3 py-2 text-xs hover:bg-muted cursor-pointer"
+                    >
+                      <Bot className="size-3 mr-1" />
+                      Open in ChatGPT
+                    </button>
+                  </div>
+                )}
               </div>
             </div>
           </aside>
