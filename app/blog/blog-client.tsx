@@ -5,9 +5,24 @@ import { useState, useEffect, useCallback, useRef, useMemo } from "react";
 import Link from "next/link";
 import { Home, Search, X, Rss } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
-import blogs from "@/data/blogsData";
 import { BlurFade } from "@/components/ui/blur-fade";
 import { motion, AnimatePresence } from "motion/react";
+
+/* ── Types ── */
+export type BlogListItem = {
+  id: string;
+  slug: string;
+  title: string;
+  shortDescription: string;
+  tags: string[];
+  createdAt: string;
+  user?: {
+    id: string;
+    name: string;
+    username?: string | null;
+    image?: string | null;
+  };
+};
 
 function formatDate(dateStr: string) {
   return new Date(dateStr).toLocaleDateString("en-US", {
@@ -51,14 +66,18 @@ function HighlightText({ text, query }: { text: string; query: string }) {
   );
 }
 
-const allTags = Array.from(new Set(blogs.flatMap((b) => b.tags))).sort();
-
-export default function BlogPageClient() {
+export default function BlogPageClient({ blogs }: { blogs: BlogListItem[] }) {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [query, setQuery] = useState("");
   const [activeTag, setActiveTag] = useState<string | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const debouncedQuery = useDebounce(query, 150);
+
+  // Extract all unique tags from blogs
+  const allTags = useMemo(
+    () => Array.from(new Set(blogs.flatMap((b) => b.tags))).sort(),
+    [blogs]
+  );
 
   // "/" to open, Escape to close
   useEffect(() => {
@@ -112,12 +131,12 @@ export default function BlogPageClient() {
       const q = debouncedQuery.toLowerCase();
       const matchesQuery =
         blog.title.toLowerCase().includes(q) ||
-        blog.excerpt.toLowerCase().includes(q) ||
+        blog.shortDescription.toLowerCase().includes(q) ||
         blog.tags.some((tag) => tag.toLowerCase().includes(q));
 
       return matchesQuery && matchesTag;
     });
-  }, [debouncedQuery, activeTag]);
+  }, [blogs, debouncedQuery, activeTag]);
 
   const hasActivity = debouncedQuery.trim().length > 0 || activeTag !== null;
 
@@ -178,7 +197,7 @@ export default function BlogPageClient() {
           {blogs.map((blog, i) => (
             <BlurFade key={blog.id} delay={0.12 + i * 0.05} inView>
               <Link
-                href={`/blog/${blog.id}`}
+                href={`/blog/${blog.slug}`}
                 className="group block rounded-lg border bg-card p-4 transition-colors hover:bg-muted/50"
               >
                 <div className="flex items-start justify-between gap-4">
@@ -192,14 +211,14 @@ export default function BlogPageClient() {
                     className="shrink-0 whitespace-nowrap text-sm text-muted-foreground"
                     style={{ fontFamily: "var(--font-jetbrains-mono)" }}
                   >
-                    {formatDate(blog.date)}
+                    {formatDate(blog.createdAt)}
                   </span>
                 </div>
                 <p
                   className="mt-1.5 line-clamp-2 text-sm font-medium leading-relaxed tracking-tight text-muted-foreground"
                   style={{ fontFamily: "var(--font-jetbrains-mono)" }}
                 >
-                  {blog.excerpt}
+                  {blog.shortDescription}
                 </p>
                 <div className="mt-2 flex flex-wrap gap-1">
                   {blog.tags.map((tag) => (
@@ -313,7 +332,7 @@ export default function BlogPageClient() {
                                 transition={{ duration: 0.15 }}
                               >
                                 <Link
-                                  href={`/blog/${blog.id}`}
+                                  href={`/blog/${blog.slug}`}
                                   onClick={() => setIsSearchOpen(false)}
                                   className="group block border-b px-4 py-3 transition-colors last:border-b-0 hover:bg-muted/50"
                                 >
@@ -333,7 +352,7 @@ export default function BlogPageClient() {
                                         fontFamily: "var(--font-jetbrains-mono)",
                                       }}
                                     >
-                                      {formatDate(blog.date)}
+                                      {formatDate(blog.createdAt)}
                                     </span>
                                   </div>
                                   <p
@@ -343,7 +362,7 @@ export default function BlogPageClient() {
                                     }}
                                   >
                                     <HighlightText
-                                      text={blog.excerpt}
+                                      text={blog.shortDescription}
                                       query={debouncedQuery}
                                     />
                                   </p>
