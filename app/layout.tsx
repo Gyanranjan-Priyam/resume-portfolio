@@ -18,6 +18,7 @@ import { PwaRegister } from "@/components/pwa-register";
 import { ScrollIndicator } from "@/components/ui/scroll-indicator";
 import { ScrollToTopButton } from "@/components/ui/scroll-to-top-button";
 import { Toaster } from "@/components/ui/sonner";
+import { NavigationDock } from "@/components/sections/NavigationDock";
 
 
 const SITE_URL = "https://www.gyanranjanpriyam.tech";
@@ -175,6 +176,7 @@ export default function RootLayout({
               <div className="absolute inset-0 top-0 left-0 right-0 h-[100px] overflow-hidden z-0"></div>
               {children}
               <Toaster />
+              <NavigationDock />
               <Separator />
               <div className="mx-auto max-w-2xl px-4 sm:px-6">
                 <Footer />

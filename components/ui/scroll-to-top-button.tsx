@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/set-state-in-effect */
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
 import { AnimatePresence, motion, useMotionValueEvent, useScroll } from "motion/react";
 import { ArrowUp } from "lucide-react";
@@ -38,7 +38,7 @@ export function ScrollToTopButton() {
           type="button"
           aria-label="Scroll to top"
           onClick={handleScrollTop}
-          style={{ position: "fixed", bottom: "2rem", right: "2rem", zIndex: 9999 }}
+          style={{ position: "fixed", bottom: "2rem", left: "2rem", zIndex: 9999 }}
           className="cursor-pointer inline-flex h-12 w-12 items-center justify-center rounded-full border border-foreground/20 bg-background/85 text-foreground shadow-sm backdrop-blur-md transition-colors hover:bg-background"
           initial={{ opacity: 0, y: 14, scale: 0.92 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}

@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @next/next/no-img-element */
 "use client";
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
@@ -10,6 +12,9 @@ import { calculateReadingTime } from "@/lib/reading-time";
 import { toast } from "sonner";
 import { Document, Packer, Paragraph, TextRun } from "docx";
 import { saveAs } from "file-saver";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import { Separator } from "../ui/separator";
+import AuthorBio from "./author-bio";
 
 /* ── Types ── */
 type ContentBlock =
@@ -21,6 +26,7 @@ type ContentBlock =
 type Blog = {
   id: string;
   title: string;
+  image: string;
   excerpt: string;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   content: any[];
@@ -320,6 +326,9 @@ export function BlogPostClient({
     setIsReading(true);
   }, [isReading, getArticleText]);
 
+
+
+  // Close speech synthesis on unmount
   useEffect(() => {
     return () => {
       if (typeof window !== "undefined" && window.speechSynthesis) {
@@ -429,6 +438,22 @@ export function BlogPostClient({
               </h1>
             </BlurFade>
 
+            {/* Image */}
+            <BlurFade delay={0.10}>
+              <img
+                src={blog.image}
+                alt={blog.title}
+                className="w-full h-auto rounded-lg"
+                style={{
+                  width: "100%",
+                  height: "auto",
+                  borderRadius: "10px",
+                  marginBottom: "20px",
+                }}
+                loading="eager"
+              />
+            </BlurFade>
+
             {/* Excerpt */}
             <BlurFade delay={0.12}>
               <p className="text-base leading-relaxed text-muted-foreground mb-5">
@@ -438,7 +463,7 @@ export function BlogPostClient({
 
             {/* Meta row */}
             <BlurFade delay={0.16}>
-              <div className="flex flex-wrap items-center gap-2 text-xs text-muted-foreground mb-2">
+              <div className="flex flex-wrap items-center gap-2 text-xs text-muted-foreground mb-4">
                 <time dateTime={blog.date}>{formatDate(blog.date)}</time>
                 {blog.updatedAt && blog.updatedAt !== blog.date && (
                   <>
@@ -581,6 +606,9 @@ export function BlogPostClient({
                 })}
               </div>
             </BlurFade>
+            <Separator />
+
+            <AuthorBio name="Gyanranjan Priyam" initials="GP" avatarSrc="/profile/profile.png" college="Government College of Engineering Kalahandi, Bhawanipatna" tagline="Full Stack Developer" bio="Full Stack Developer working at the intersection of web development, app development, and AI/ML to build scalable digital products people actually use." github="https://github.com/gyanranjan-priyam" linkedin="https://linkedin.com/in/gyanranjan-priyam" twitter="https://x.com/gr_priyam" articles={6} readers="1k" yearsActive={1} badge="GFG Campus Mantri" />
 
             {/* Footer divider + back */}
             <div className="h-px w-full bg-border mt-12 mb-8" />

@@ -1,6 +1,7 @@
 const blogs = [
   {
     id: "when-code-meets-curriculum-the-student-developer-grind",
+    image: "https://res.cloudinary.com/df2x3ampe/image/upload/v1774353158/ChatGPT_Image_Mar_24_2026_05_22_05_PM_qaz09c.png",
     title:
       "When Code Meets Curriculum: The Unspoken Grind of Being a Student and a Developer",
     excerpt:
@@ -160,6 +161,7 @@ const blogs = [
   },
   {
     id: "my-journey-to-becoming-a-gfg-campus-mantri",
+    image: "https://res.cloudinary.com/df2x3ampe/image/upload/v1774353146/ChatGPT_Image_Mar_24_2026_05_22_17_PM_nheezf.png",
     title:
       "My Journey to Becoming a GFG Campus Mantri: Doubts, a Shaky Interview, and an Unexpected Yes",
     excerpt:
@@ -294,6 +296,7 @@ const blogs = [
   },
   {
     id: "from-electrical-engineering-to-web-development",
+    image: "https://res.cloudinary.com/df2x3ampe/image/upload/v1774353154/ChatGPT_Image_Mar_24_2026_05_22_10_PM_uaq2ic.png",
     title:
       "From Electrical Engineering to Web Development: My Unexpected Journey into Coding",
     excerpt:
@@ -530,6 +533,7 @@ const blogs = [
   },
   {
     id: "cve-2025-55184-and-cve-2025-55183",
+    image: "https://res.cloudinary.com/df2x3ampe/image/upload/v1774353151/ChatGPT_Image_Mar_24_2026_05_22_12_PM_omfsk0.png",
     title:
       "CVE-2025-55184 and CVE-2025-55183: What They Are, Who's at Risk, and How to Patch Fast",
     excerpt:
@@ -708,6 +712,7 @@ const blogs = [
   },
   {
     id: "nextjs-csr-vs-ssr-rendering-strategies-2025",
+    image: "https://res.cloudinary.com/df2x3ampe/image/upload/v1774353149/ChatGPT_Image_Mar_24_2026_05_22_15_PM_azp4t3.png",
     title: "CSR vs SSR in Next.js: What I Wish Someone Had Told Me Earlier",
     excerpt:
       "When I first started learning Next.js, the whole CSR vs SSR thing genuinely confused me. Here is what I actually learned after spending way too many hours on the docs and breaking things.",
