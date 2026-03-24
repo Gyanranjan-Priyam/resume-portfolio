@@ -2,6 +2,7 @@
 
 import { FloatingDock } from "../ui/dock";
 import { useEffect, useState } from "react";
+import { useLoaderStore } from "@/components/loader-component";
 import {
   IconBrandGithub,
   IconBrandLinkedin,
@@ -74,6 +75,7 @@ const links = [
 
 export function NavigationDock() {
   const [hideDesktopDock, setHideDesktopDock] = useState(false);
+  const isLoading = useLoaderStore((s) => s.isLoading);
 
   useEffect(() => {
     const footer = document.querySelector("footer");
@@ -91,6 +93,8 @@ export function NavigationDock() {
     observer.observe(footer);
     return () => observer.disconnect();
   }, []);
+
+  if (isLoading) return null;
 
   return (
     <div className="pointer-events-none fixed inset-x-0 bottom-4 z-50 flex items-end justify-center px-3 md:bottom-5">
