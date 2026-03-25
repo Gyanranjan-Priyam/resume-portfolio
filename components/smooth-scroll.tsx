@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import { usePathname } from "next/navigation";
 import Lenis from "lenis";
 import { useLoaderStore } from "@/components/loader-component";
 
@@ -8,6 +9,7 @@ export function SmoothScroll({ children }: { children: React.ReactNode }) {
   const setLenis = useLoaderStore((s) => s.setLenis);
   const isLoading = useLoaderStore((s) => s.isLoading);
   const introOut = useLoaderStore((s) => s.introOut);
+  const pathname = usePathname();
 
   useEffect(() => {
     const lenis = new Lenis({
@@ -32,6 +34,16 @@ export function SmoothScroll({ children }: { children: React.ReactNode }) {
 
     return () => lenis.destroy();
   }, [setLenis, isLoading, introOut]);
+
+  // Scroll to top on route change
+  useEffect(() => {
+    const lenis = useLoaderStore.getState().lenis;
+    if (lenis) {
+      lenis.scrollTo(0, { force: true });
+    } else {
+      window.scrollTo(0, 0);
+    }
+  }, [pathname]);
 
   return <>{children}</>;
 }
