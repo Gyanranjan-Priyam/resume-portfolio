@@ -8,13 +8,13 @@ import { motion } from "framer-motion";
 export default function Meet() {
   useEffect(() => {
     (async function () {
-      const cal = await getCalApi({ namespace: "30min" });
+      const cal = await getCalApi({ namespace: "lets-discuss" });
       cal("ui", { hideEventTypeDetails: true, layout: "month_view" });
     })();
   }, []);
   return (
     <Button
-      data-cal-namespace="30min"
+      data-cal-namespace="lets-discuss"
       data-cal-link="gyanranjanpriyam/lets-discusss"
       data-cal-config='{"layout":"month_view","useSlotsViewOnSmallScreen":"true"}'
       className="cursor-pointer hover:bg-primary/90 inline-flex items-center gap-1.5 rounded-full bg-primary px-4 py-1.5 text-xs font-semibold text-primary-foreground hover:shadow-lg hover:shadow-primary/25"
