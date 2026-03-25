@@ -38,7 +38,7 @@ export async function BlogsSection() {
           className="mb-6 text-3xl font-bold"
           style={{ fontFamily: "var(--font-ibm)" }}
         >
-          Blog
+          Blogs
         </h2>
       </BlurFade>
       {blogs.length === 0 ? (

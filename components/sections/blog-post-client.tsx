@@ -27,13 +27,14 @@ import ListItem from "@tiptap/extension-list-item";
 import TiptapImage from "@tiptap/extension-image";
 import TiptapParagraph from "@tiptap/extension-paragraph";
 import TiptapHeading from "@tiptap/extension-heading";
+import { MonacoCodeBlock } from "@/components/ui/monaco-code-block";
 
 /* ── Types ── */
 export type BlogComponent = {
   id: string;
-  type: "richtext" | "imagetext" | "imageuploader" | "videoplayer";
+  type: "richtext" | "imagetext" | "imageuploader" | "videoplayer" | "code";
   order: number;
-  content?: unknown; // Tiptap JSON for richtext
+  content?: unknown; // Tiptap JSON for richtext, or code object for code blocks
   text?: string | null; // Text for imagetext component
   imageKey?: string | null; // S3 key for images
   alignment?: string | null; // "left" | "right" for imagetext
@@ -505,6 +506,77 @@ function getShareUrl(platform: string, url: string, title: string) {
     default:
       return null;
   }
+}
+
+/* ── Rich Content Renderer with Code Block Support ── */
+function RichContentRenderer({ html }: { html: string }) {
+  // Split HTML by code blocks and render them with MonacoCodeBlock
+  const parts = useMemo(() => {
+    const codeBlockRegex = /<pre><code(?:\s+class="language-(\w+)")?>([\s\S]*?)<\/code><\/pre>/gi;
+    const result: Array<{ type: "html" | "code"; content: string; language?: string }> = [];
+    let lastIndex = 0;
+    let match;
+
+    while ((match = codeBlockRegex.exec(html)) !== null) {
+      // Add HTML before the code block
+      if (match.index > lastIndex) {
+        result.push({ type: "html", content: html.slice(lastIndex, match.index) });
+      }
+      // Decode HTML entities in code content
+      const codeContent = match[2]
+        .replace(/&lt;/g, "<")
+        .replace(/&gt;/g, ">")
+        .replace(/&amp;/g, "&")
+        .replace(/&quot;/g, '"')
+        .replace(/&#39;/g, "'")
+        .replace(/&nbsp;/g, " ");
+      result.push({ type: "code", content: codeContent, language: match[1] });
+      lastIndex = match.index + match[0].length;
+    }
+
+    // Add remaining HTML after last code block
+    if (lastIndex < html.length) {
+      result.push({ type: "html", content: html.slice(lastIndex) });
+    }
+
+    return result;
+  }, [html]);
+
+  return (
+    <>
+      {parts.map((part, index) =>
+        part.type === "code" ? (
+          <MonacoCodeBlock key={index} code={part.content} />
+        ) : (
+          <div
+            key={index}
+            className="tiptap-content prose prose-base max-w-none dark:prose-invert [&_p]:my-4 [&_p]:leading-8 [&_li]:my-1.5 [&_li]:leading-8"
+            style={{ fontFamily: "var(--font-jetbrains-mono)" }}
+            dangerouslySetInnerHTML={{ __html: part.content }}
+          />
+        )
+      )}
+    </>
+  );
+}
+
+/* ── Code Block Renderer ── */
+function CodeBlockRenderer({ 
+  code, 
+  fileName, 
+  language 
+}: { 
+  code: string; 
+  fileName?: string; 
+  language?: string;
+}) {
+  return (
+    <MonacoCodeBlock 
+      code={code} 
+      fileName={fileName} 
+      language={language} 
+    />
+  );
 }
 
 /* ── SVG Icons ── */
@@ -1274,12 +1346,9 @@ export function BlogPostClient({
                         // Add data-heading attributes to headings for table of contents navigation
                         html = addHeadingAttributes(html);
                         return (
-                          <div
-                            key={component.id || index}
-                            className="tiptap-content prose prose-base max-w-none dark:prose-invert [&_p]:my-4 [&_p]:leading-8 [&_li]:my-1.5 [&_li]:leading-8"
-                            style={{ fontFamily: "var(--font-jetbrains-mono)" }}
-                            dangerouslySetInnerHTML={{ __html: html }}
-                          />
+                          <div key={component.id || index}>
+                            <RichContentRenderer html={html} />
+                          </div>
                         );
                       } catch (err) {
                         console.error("Failed to render richtext:", err);
@@ -1361,6 +1430,26 @@ export function BlogPostClient({
                           />
                         </div>
                       );
+                    }
+
+                    // Code block component
+                    if (component.type === "code" && component.content) {
+                      const codeContent = component.content as {
+                        code?: string;
+                        fileName?: string;
+                        language?: string;
+                        showLineNumbers?: boolean;
+                      };
+                      if (codeContent.code) {
+                        return (
+                          <CodeBlockRenderer
+                            key={component.id || index}
+                            code={codeContent.code}
+                            fileName={codeContent.fileName}
+                            language={codeContent.language}
+                          />
+                        );
+                      }
                     }
 
                     return null;

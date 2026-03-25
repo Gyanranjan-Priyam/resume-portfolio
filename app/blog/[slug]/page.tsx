@@ -121,7 +121,7 @@ export default async function BlogPostPage({ params }: Props) {
     updatedAt: blog.updatedAt.toISOString(),
     components: blog.components.map((comp) => ({
       id: comp.id,
-      type: comp.type as "richtext" | "imagetext" | "imageuploader" | "videoplayer",
+      type: comp.type as "richtext" | "imagetext" | "imageuploader" | "videoplayer" | "code",
       order: comp.order,
       content: comp.content ?? undefined,
       text: comp.text,

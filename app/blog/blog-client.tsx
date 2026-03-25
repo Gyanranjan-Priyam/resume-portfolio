@@ -156,7 +156,7 @@ export default function BlogPageClient({ blogs }: { blogs: BlogListItem[] }) {
                 className="mb-2 text-2xl font-bold tracking-tight sm:text-3xl"
                 style={{ fontFamily: "var(--font-ibm)" }}
               >
-                Blog
+                Blogs
               </h1>
               <p
                 className="font-medium tracking-tight text-muted-foreground"

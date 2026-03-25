@@ -6,7 +6,6 @@ import { useLoaderStore } from "@/components/loader-component";
 import {
   IconBrandGithub,
   IconBrandLinkedin,
-  IconBrandX,
   IconBriefcase,
   IconNotebook,
   IconHome,

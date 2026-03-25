@@ -3,13 +3,35 @@
 import { useCallback, useEffect, useState } from "react";
 import { codeToTokens, type BundledLanguage } from "shiki";
 
+const languageMap: Record<string, { id: BundledLanguage; label: string }> = {
+  typescript: { id: "tsx", label: "TYPESCRIPT" },
+  javascript: { id: "javascript", label: "JAVASCRIPT" },
+  tsx: { id: "tsx", label: "TSX" },
+  jsx: { id: "jsx", label: "JSX" },
+  python: { id: "python", label: "PYTHON" },
+  rust: { id: "rust", label: "RUST" },
+  go: { id: "go", label: "GO" },
+  java: { id: "java", label: "JAVA" },
+  c: { id: "c", label: "C" },
+  cpp: { id: "cpp", label: "C++" },
+  csharp: { id: "csharp", label: "C#" },
+  html: { id: "html", label: "HTML" },
+  css: { id: "css", label: "CSS" },
+  json: { id: "json", label: "JSON" },
+  yaml: { id: "yaml", label: "YAML" },
+  markdown: { id: "markdown", label: "MARKDOWN" },
+  sql: { id: "sql", label: "SQL" },
+  bash: { id: "bash", label: "BASH" },
+  shell: { id: "shellscript", label: "SHELL" },
+};
+
 function detectLanguage(code: string): { id: BundledLanguage; label: string } {
   if (
     /^["']use client["'];?/.test(code.trim()) ||
     /\bimport\b.*\bfrom\b/.test(code) ||
     /\bexport\s+(default\s+)?(function|async|const)\b/.test(code)
   )
-    return { id: "tsx", label: "JAVASCRIPT" };
+    return { id: "tsx", label: "TYPESCRIPT" };
   if (/\bdef\b|\bimport\b.*\bas\b|\bprint\(/.test(code))
     return { id: "python", label: "PYTHON" };
   if (/\bfn\b|\blet\s+mut\b|\b->\b/.test(code))
@@ -19,10 +41,20 @@ function detectLanguage(code: string): { id: BundledLanguage; label: string } {
 
 type Token = { content: string; color: string | undefined };
 
-export function MonacoCodeBlock({ code }: { code: string }) {
+interface MonacoCodeBlockProps {
+  code: string;
+  fileName?: string;
+  language?: string;
+}
+
+export function MonacoCodeBlock({ code, fileName, language }: MonacoCodeBlockProps) {
   const [tokens, setTokens] = useState<Token[][] | null>(null);
   const [copied, setCopied] = useState(false);
-  const lang = detectLanguage(code);
+  
+  // Use provided language or detect from code
+  const lang = language && languageMap[language.toLowerCase()] 
+    ? languageMap[language.toLowerCase()] 
+    : detectLanguage(code);
 
   useEffect(() => {
     codeToTokens(code, {
@@ -48,12 +80,15 @@ export function MonacoCodeBlock({ code }: { code: string }) {
 
   const lines = code.split("\n");
 
+  // Build header label: "LANGUAGE · filename" or just "LANGUAGE"
+  const headerLabel = fileName ? `${lang.label} · ${fileName}` : lang.label;
+
   return (
     <div className="my-4 overflow-hidden rounded-lg border border-border bg-[#0d1117] dark:bg-[#0d1117]">
       {/* Header bar */}
       <div className="flex items-center justify-between border-b border-white/10 px-4 py-2">
         <span className="text-xs font-medium tracking-wider text-neutral-400">
-          {lang.label}
+          {headerLabel}
         </span>
         <button
           type="button"
@@ -105,5 +140,4 @@ export function MonacoCodeBlock({ code }: { code: string }) {
       </div>
     </div>
   );
-  
 }

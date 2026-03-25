@@ -19,7 +19,7 @@ export async function POST(request: NextRequest) {
     }
 
     const body = await request.json();
-    const { title, slug, shortDescription, tags, thumbnail, thumbnailKey, content } = body;
+    const { title, slug, shortDescription, tags, thumbnailKey, content } = body;
 
     // Validate required fields
     if (!title || !slug || !shortDescription || !tags || !content) {
