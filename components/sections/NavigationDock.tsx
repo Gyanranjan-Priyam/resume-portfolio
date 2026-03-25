@@ -37,13 +37,6 @@ const links = [
     href: "/blog",
   },
   {
-    title: "X",
-    icon: (
-      <IconBrandX className="h-full w-full text-neutral-500 dark:text-neutral-300" />
-    ),
-    href: "https://x.com/gr_priyam",
-  },
-  {
     title: "LinkedIn",
     icon: (
       <IconBrandLinkedin className="h-full w-full text-neutral-500 dark:text-neutral-300" />

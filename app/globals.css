@@ -479,3 +479,28 @@ html:not(.dark) * {
   margin-bottom: 0.5rem;
   scroll-margin-top: 100px;
 }
+
+/* Mobile-only Blog Font Styles */
+@media (max-width: 812px) {
+  /* Headings > 20px use JetBrains Mono */
+  .blog-content h1,
+  .blog-content h2,
+  .blog-content h3,
+  .blog-content h4 {
+    font-family: var(--font-jetbrains-mono);
+  }
+
+  /* Body content uses IBM Plex Mono */
+  .blog-content p,
+  .blog-content li,
+  .blog-content blockquote,
+  .blog-content span,
+  .blog-content a,
+  .blog-content td,
+  .blog-content th,
+  .blog-content figcaption,
+  .blog-content h5,
+  .blog-content h6 {
+    font-family: var(--font-ibm);
+  }
+}

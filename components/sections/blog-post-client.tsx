@@ -1382,7 +1382,7 @@ export function BlogPostClient({
               articles={6}
               readers="1k"
               yearsActive={1}
-              badge="GFG Campus Mantri"
+              badge="Technical Lead"
             />
 
             {/* Footer divider + back */}

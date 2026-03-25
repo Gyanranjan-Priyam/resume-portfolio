@@ -128,7 +128,7 @@ export default function AuthorBio( {name, initials, avatarSrc, college, tagline,
           <p className="text-xl mb-3 font-bold" style={{ fontFamily: "var(--font-jetbrains-mono"}}>{roleLabel}</p>
 
           {/* Stats row */}
-          <div className="flex items-center gap-4 justify-center md:justify-start mb-4">
+          <div className="flex items-center gap-4 justify-center md:justify-start mb-4" style={{fontFamily: "var(--font-jetbrains-mono)"}}>
             {[
               { value: articles, label: "articles" },
               { value: readers, label: "readers" },
@@ -149,7 +149,7 @@ export default function AuthorBio( {name, initials, avatarSrc, college, tagline,
           </div>
 
           {/* Bio */}
-          <p className="text-[14px] leading-[1.75] mb-5">
+          <p className="text-[14px] leading-[1.75] mb-5" style={{fontFamily: "var(--font-ibm)"}}>
             {bio}
           </p>
 
