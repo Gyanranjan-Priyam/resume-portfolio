@@ -28,6 +28,7 @@ import TiptapImage from "@tiptap/extension-image";
 import TiptapParagraph from "@tiptap/extension-paragraph";
 import TiptapHeading from "@tiptap/extension-heading";
 import { MonacoCodeBlock } from "@/components/ui/monaco-code-block";
+import { IconFileExport, IconFileTypeDocx, IconMarkdown } from "@tabler/icons-react";
 
 /* ── Types ── */
 export type BlogComponent = {
@@ -1279,8 +1280,9 @@ export function BlogPostClient({
               <div className="relative" ref={menuRef}>
                 <button
                   onClick={() => setMenuOpen((p) => !p)}
-                  className="rounded-md border border-border px-2.5 py-1.5 text-xs"
+                  className="inline-flex items-center gap-1.5 rounded-md border px-2.5 py-1.5 text-xs"
                 >
+                  <IconFileExport size={18} />
                   Export
                 </button>
 
@@ -1288,25 +1290,25 @@ export function BlogPostClient({
                   <div className="absolute left-0 mt-2 w-44 rounded-md border bg-background shadow-md z-50">
                     <button
                       onClick={handleCopyMarkdown}
-                      className="flex items-center gap-2 w-full text-left px-3 py-2 text-xs hover:bg-muted"
+                      className="flex items-center gap-2 w-full text-left font-bold px-3 py-2 text-xs hover:bg-muted"
                     >
-                      <Copy className="size-3 mr-1" />
+                      <IconMarkdown className="size-4 mr-1" />
                       Copy as Markdown
                     </button>
 
                     <button
                       onClick={handleDownloadDocx}
-                      className="flex items-center gap-2 w-full text-left px-3 py-2 text-xs hover:bg-muted"
+                      className="flex items-center gap-2 font-bold w-full text-left px-3 py-2 text-xs hover:bg-muted"
                     >
-                      <Download className="size-3 mr-1" />
+                      <IconFileTypeDocx className="size-4 mr-1" />
                       Download as DOCX
                     </button>
 
                     <button
                       onClick={handleOpenChatGPT}
-                      className="flex items-center gap-2 w-full text-left px-3 py-2 text-xs hover:bg-muted"
+                      className="flex items-center gap-2 font-bold w-full text-left px-3 py-2 text-xs hover:bg-muted"
                     >
-                      <Bot className="size-3 mr-1" />
+                      <Bot className="size-4 mr-1" />
                       Open in ChatGPT
                     </button>
                   </div>
@@ -1605,25 +1607,25 @@ export function BlogPostClient({
                   <div className="absolute right-0 mt-2 w-52 rounded-md border bg-background shadow-md z-50">
                     <button
                       onClick={handleCopyMarkdown}
-                      className="w-full flex items-center gap-2 text-left px-3 py-2 text-xs hover:bg-muted cursor-pointer"
+                      className="w-full flex items-center gap-2 font-bold text-left px-3 py-2 text-xs hover:bg-muted cursor-pointer"
                     >
-                      <Copy className="size-3 mr-1" />
+                      <IconMarkdown className="size-5 mr-1" />
                       Copy as Markdown
                     </button>
 
                     <button
                       onClick={handleDownloadDocx}
-                      className="w-full flex items-center gap-2 text-left px-3 py-2 text-xs hover:bg-muted cursor-pointer"
+                      className="w-full flex items-center gap-2 font-bold text-left px-3 py-2 text-xs hover:bg-muted cursor-pointer"
                     >
-                      <Download className="size-3 mr-1" />
+                      <IconFileTypeDocx className="size-5 mr-1" />
                       Download as DOCX
                     </button>
 
                     <button
                       onClick={handleOpenChatGPT}
-                      className="w-full flex items-center gap-2 text-left px-3 py-2 text-xs hover:bg-muted cursor-pointer"
+                      className="w-full flex items-center gap-2 font-bold text-left px-3 py-2 text-xs hover:bg-muted cursor-pointer"
                     >
-                      <Bot className="size-3 mr-1" />
+                      <Bot className="size-5 mr-1" />
                       Open in ChatGPT
                     </button>
                   </div>

@@ -132,7 +132,7 @@ export function HeroSection() {
   }, []);
 
   return (
-    <section className="pb-8 pt-6">
+    <section className="pb-8 sm:pt-1 md:pt-4 lg:pt-6">
       {/* Cover image */}
       <BlurFade delay={0.04} direction="down">
         <div className="relative h-32 w-full overflow-hidden rounded-xl bg-linear-to-br from-neutral-200 via-neutral-300 to-neutral-400 dark:from-neutral-700 dark:via-neutral-800 dark:to-neutral-900 sm:h-40">

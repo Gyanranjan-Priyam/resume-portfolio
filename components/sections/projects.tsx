@@ -9,6 +9,7 @@ import Link from "next/link";
 import projects from "@/data/projectsData";
 import { Badge } from "@/components/ui/badge";
 import { BlurFade } from "@/components/ui/blur-fade";
+import Image from "next/image";
 
 function ExpandedCard({
   active,
@@ -48,9 +49,11 @@ function ExpandedCard({
             <X className="h-4 w-4 text-black dark:text-white" />
           </motion.button>
           <motion.div layoutId={`image-${active.title}-${id}`}>
-            <img
+            <Image
               src={active.img}
               alt={active.title}
+              width={500}
+              height={320}
               className="w-full h-80 sm:rounded-tr-lg sm:rounded-tl-lg object-cover object-top"
             />
           </motion.div>
@@ -229,10 +232,12 @@ export function ProjectsSection() {
               <div className="flex p-4 justify-between items-center hover:bg-neutral-50 dark:hover:bg-neutral-800 rounded-xl">
                 <div className="flex gap-4 flex-row">
                   <motion.div layoutId={`image-${project.title}-${id}`}>
-                    <img
+                    <Image
                       src={project.img}
                       alt={project.title}
                       className="h-14 w-14 rounded-lg object-cover object-top"
+                      width={100}
+                      height={100}
                     />
                   </motion.div>
                   <div>

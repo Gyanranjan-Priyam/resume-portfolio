@@ -2,18 +2,13 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import {
-  ChevronRight,
-  ExternalLink,
-  Github,
-  Users,
-  Zap,
-} from "lucide-react";
+import { ChevronRight, ExternalLink, Github, Users, Zap } from "lucide-react";
 import projects from "@/data/projectsData";
 import { BlurFade } from "@/components/ui/blur-fade";
 import { ImageCarousel } from "@/components/ui/image-carousel";
 import { FolderStructure } from "@/components/ui/folder-structure";
 import { FeaturesAccordion } from "@/components/ui/features-accordion";
+import Image from "next/image";
 
 type Props = {
   params: Promise<{ id: string }>;
@@ -182,6 +177,22 @@ export default async function ProjectPage({ params }: Props) {
             </div>
           </div>
         </BlurFade>
+
+        {/*Image Section*/}
+        {project.img && (
+          <BlurFade delay={0.15}>
+            <div className="relative w-full aspect-video mb-5 overflow-hidden rounded-lg">
+              <Image
+                src={project.img}
+                alt={project.title}
+                fill
+                className="object-cover"
+                sizes="(max-width: 768px) 100vw, 672px"
+                priority
+              />
+            </div>
+          </BlurFade>
+        )}
 
         {/* Role */}
         {"role" in project && project.role && (
