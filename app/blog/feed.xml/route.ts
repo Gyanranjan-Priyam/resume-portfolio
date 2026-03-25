@@ -50,7 +50,7 @@ ${items}
   return new Response(rss, {
     headers: {
       "Content-Type": "application/xml; charset=utf-8",
-      "Cache-Control": "s-maxage=3600, stale-while-revalidate",
+      "Cache-Control": "no-store, no-cache, must-revalidate",
     },
   });
 }

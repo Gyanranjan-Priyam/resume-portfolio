@@ -55,13 +55,8 @@ async function getNextBlog(currentBlogId: string, currentBlogCreatedAt: Date) {
   return nextBlog;
 }
 
-export async function generateStaticParams() {
-  const blogs = await prisma.blog.findMany({
-    where: { published: true },
-    select: { slug: true },
-  });
-  return blogs.map((blog) => ({ slug: blog.slug }));
-}
+// Force dynamic rendering - no static generation caching
+export const dynamic = "force-dynamic";
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;

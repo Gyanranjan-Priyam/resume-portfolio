@@ -153,7 +153,7 @@ export function HeroSection() {
       <BlurFade delay={0.1} direction="up">
         <div className="flex items-end px-2 -mt-16 sm:-mt-20">
           <Avatar className="size-32 border-4 border-background shadow-md ring-1 ring-border sm:size-36">
-            <AvatarImage src="/profile/profile.png" alt="Gyanranjan Priyam" />
+            <AvatarImage src="/profile/profile.png" alt="Gyanranjan Priyam" fetchPriority="high" />
             <AvatarFallback className="text-3xl font-semibold">
               GP
             </AvatarFallback>

@@ -2,6 +2,9 @@ import type { Metadata } from "next";
 import { prisma } from "@/lib/db";
 import BlogPageClient, { type BlogListItem } from "./blog-client";
 
+// Force dynamic rendering - no caching
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = {
   title: "Blog",
   description:
