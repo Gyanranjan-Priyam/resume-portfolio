@@ -125,7 +125,10 @@ export function HeroSection() {
     const html = document.documentElement;
     html.style.transition = "background-color 0.5s ease, color 0.5s ease";
     html.classList.toggle("dark");
-    setIsDark(html.classList.contains("dark"));
+    const newIsDark = html.classList.contains("dark");
+    setIsDark(newIsDark);
+    // Save user preference to localStorage
+    localStorage.setItem("theme", newIsDark ? "dark" : "light");
     setTimeout(() => {
       html.style.transition = "";
     }, 500);
