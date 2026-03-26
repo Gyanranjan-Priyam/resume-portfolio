@@ -8,6 +8,18 @@ import { Home, LayoutGrid, List, Calendar, ArrowRight, Search, X } from "lucide-
 import { BlurFade } from "@/components/ui/blur-fade";
 import { Badge } from "@/components/ui/badge";
 import { motion, AnimatePresence } from "motion/react";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination";
+
+const PROJECTS_PER_PAGE_GRID = 6;
+const PROJECTS_PER_PAGE_LIST = 4;
 
 interface Project {
   id: string;
@@ -62,8 +74,62 @@ export function ProjectsClient({ projects }: ProjectsClientProps) {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [query, setQuery] = useState("");
   const [activeTech, setActiveTech] = useState<string | null>(null);
+  const [currentPage, setCurrentPage] = useState(1);
   const inputRef = useRef<HTMLInputElement>(null);
   const debouncedQuery = useDebounce(query, 150);
+
+  // Get projects per page based on view mode
+  const projectsPerPage = viewMode === "grid" ? PROJECTS_PER_PAGE_GRID : PROJECTS_PER_PAGE_LIST;
+
+  // Calculate total pages
+  const totalPages = Math.ceil(projects.length / projectsPerPage);
+
+  // Reset to page 1 when view mode changes if current page exceeds new total
+  useEffect(() => {
+    const newTotalPages = Math.ceil(projects.length / projectsPerPage);
+    if (currentPage > newTotalPages) {
+      setCurrentPage(1);
+    }
+  }, [viewMode, projects.length, projectsPerPage, currentPage]);
+
+  // Get paginated projects
+  const paginatedProjects = useMemo(() => {
+    const startIndex = (currentPage - 1) * projectsPerPage;
+    const endIndex = startIndex + projectsPerPage;
+    return projects.slice(startIndex, endIndex);
+  }, [projects, currentPage, projectsPerPage]);
+
+  // Generate page numbers for pagination
+  const getPageNumbers = useCallback(() => {
+    const pages: (number | "ellipsis")[] = [];
+    
+    if (totalPages <= 5) {
+      for (let i = 1; i <= totalPages; i++) {
+        pages.push(i);
+      }
+    } else {
+      pages.push(1);
+      
+      if (currentPage > 3) {
+        pages.push("ellipsis");
+      }
+      
+      const start = Math.max(2, currentPage - 1);
+      const end = Math.min(totalPages - 1, currentPage + 1);
+      
+      for (let i = start; i <= end; i++) {
+        pages.push(i);
+      }
+      
+      if (currentPage < totalPages - 2) {
+        pages.push("ellipsis");
+      }
+      
+      pages.push(totalPages);
+    }
+    
+    return pages;
+  }, [currentPage, totalPages]);
 
   // Extract all unique tech stacks from projects
   const allTechStacks = useMemo(
@@ -169,7 +235,7 @@ export function ProjectsClient({ projects }: ProjectsClientProps) {
               <button
                 onClick={() => setViewMode(viewMode === "grid" ? "list" : "grid")}
                 aria-label={viewMode === "grid" ? "Switch to list view" : "Switch to grid view"}
-                className="rounded-full border p-2 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+                className="rounded-full border p-2 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground cursor-pointer"
               >
                 {viewMode === "grid" ? (
                   <List className="size-4" />
@@ -190,7 +256,7 @@ export function ProjectsClient({ projects }: ProjectsClientProps) {
 
         {viewMode === "grid" ? (
           <div className="grid gap-4 sm:grid-cols-2">
-            {projects.map((project, i) => (
+            {paginatedProjects.map((project, i) => (
               <BlurFade key={project.id} delay={0.12 + i * 0.05} inView>
                 <Link
                   href={`/projects/${project.id}`}
@@ -233,7 +299,7 @@ export function ProjectsClient({ projects }: ProjectsClientProps) {
           </div>
         ) : (
           <div className="flex flex-col gap-4">
-            {projects.map((project, i) => (
+            {paginatedProjects.map((project, i) => (
               <BlurFade key={project.id} delay={0.12 + i * 0.05} inView>
                 <Link
                   href={`/projects/${project.id}`}
@@ -289,6 +355,74 @@ export function ProjectsClient({ projects }: ProjectsClientProps) {
               </BlurFade>
             ))}
           </div>
+        )}
+
+        {/* Pagination */}
+        {totalPages > 1 && (
+          <BlurFade delay={0.3} inView>
+            <div className="mt-8">
+              <Pagination>
+                <PaginationContent>
+                  <PaginationItem>
+                    <PaginationPrevious
+                      href="#"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        if (currentPage > 1) {
+                          setCurrentPage(currentPage - 1);
+                          window.scrollTo({ top: 0, behavior: "smooth" });
+                        }
+                      }}
+                      className={currentPage === 1 ? "pointer-events-none opacity-50" : "cursor-pointer"}
+                    />
+                  </PaginationItem>
+
+                  {getPageNumbers().map((page, index) =>
+                    page === "ellipsis" ? (
+                      <PaginationItem key={`ellipsis-${index}`}>
+                        <PaginationEllipsis />
+                      </PaginationItem>
+                    ) : (
+                      <PaginationItem key={page}>
+                        <PaginationLink
+                          href="#"
+                          isActive={currentPage === page}
+                          onClick={(e) => {
+                            e.preventDefault();
+                            setCurrentPage(page);
+                            window.scrollTo({ top: 0, behavior: "smooth" });
+                          }}
+                          className="cursor-pointer"
+                        >
+                          {page}
+                        </PaginationLink>
+                      </PaginationItem>
+                    )
+                  )}
+
+                  <PaginationItem>
+                    <PaginationNext
+                      href="#"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        if (currentPage < totalPages) {
+                          setCurrentPage(currentPage + 1);
+                          window.scrollTo({ top: 0, behavior: "smooth" });
+                        }
+                      }}
+                      className={currentPage === totalPages ? "pointer-events-none opacity-50" : "cursor-pointer"}
+                    />
+                  </PaginationItem>
+                </PaginationContent>
+              </Pagination>
+              <p
+                className="mt-3 text-center text-xs text-muted-foreground"
+                style={{ fontFamily: "var(--font-jetbrains-mono)" }}
+              >
+                Page {currentPage} of {totalPages} · {projects.length} projects
+              </p>
+            </div>
+          </BlurFade>
         )}
       </div>
 

@@ -28,14 +28,15 @@ import TiptapImage from "@tiptap/extension-image";
 import TiptapParagraph from "@tiptap/extension-paragraph";
 import TiptapHeading from "@tiptap/extension-heading";
 import { MonacoCodeBlock } from "@/components/ui/monaco-code-block";
+import { TableRenderer } from "@/components/ui/table-renderer";
 import { IconFileExport, IconFileTypeDocx, IconMarkdown } from "@tabler/icons-react";
 
 /* ── Types ── */
 export type BlogComponent = {
   id: string;
-  type: "richtext" | "imagetext" | "imageuploader" | "videoplayer" | "code";
+  type: "richtext" | "imagetext" | "imageuploader" | "videoplayer" | "code" | "table";
   order: number;
-  content?: unknown; // Tiptap JSON for richtext, or code object for code blocks
+  content?: unknown; // Tiptap JSON for richtext, code object for code blocks, or table data for tables
   text?: string | null; // Text for imagetext component
   imageKey?: string | null; // S3 key for images
   alignment?: string | null; // "left" | "right" for imagetext
@@ -551,7 +552,7 @@ function RichContentRenderer({ html }: { html: string }) {
         ) : (
           <div
             key={index}
-            className="tiptap-content prose prose-base max-w-none dark:prose-invert [&_p]:my-4 [&_p]:leading-8 [&_li]:my-1.5 [&_li]:leading-8"
+            className="tiptap-content prose prose-base max-w-none dark:prose-invert [&_p]:my-4 [&_p]:leading-8 [&_li]:my-1.5 [&_li]:leading-8 [&_table]:w-full [&_table]:border-collapse [&_th]:text-left [&_th]:p-3 [&_td]:p-3"
             style={{ fontFamily: "var(--font-jetbrains-mono)" }}
             dangerouslySetInnerHTML={{ __html: part.content }}
           />
@@ -1450,6 +1451,24 @@ export function BlogPostClient({
                             fileName={codeContent.fileName}
                             language={codeContent.language}
                           />
+                        );
+                      }
+                    }
+
+                    // Table component
+                    if (component.type === "table" && component.content) {
+                      const tableData = component.content as {
+                        rows?: string[][];
+                        headers?: string[];
+                        alignment?: ("left" | "center" | "right")[];
+                        bordered?: boolean;
+                        striped?: boolean;
+                      };
+                      if (tableData.rows) {
+                        return (
+                          <div key={component.id || index} className="w-full">
+                            <TableRenderer data={tableData} />
+                          </div>
                         );
                       }
                     }

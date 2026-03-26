@@ -176,7 +176,7 @@ const projects = [
         isRight: false,
       },
     ],
-    tech: ['Next.js 16', 'TypeScript', 'Prisma', 'TailwindCSS', 'TipTap', 'Socket.io'],
+    tech: ['Next.js 16', 'TypeScript', 'Prisma', 'TailwindCSS', 'TipTap', 'Socket.io' , 'AWS', 'Better Auth', 'Framer Motion', 'Arcjet'],
     desc: [
       'CodeBreakers Blog is a full-stack blogging platform built for the CodeBreakers college coding community — a space where developers learn, write, and share technical knowledge with each other. Built to replace scattered social media posts and informal notes with a single, purpose-built platform that handles publishing, discovery, and engagement.',
       'On the reader side, users can browse the latest blogs on the homepage feed, search by keywords, explore posts by tags, and engage with content through likes and comments. Every blog page features an auto-generated table of contents, syntax-highlighted code blocks, embedded images and videos, and a clean dark-mode reading experience optimized for technical content.',

@@ -7,6 +7,17 @@ import { Home, Search, X, Rss } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { BlurFade } from "@/components/ui/blur-fade";
 import { motion, AnimatePresence } from "motion/react";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination";
+
+const BLOGS_PER_PAGE = 4;
 
 /* ── Types ── */
 export type BlogListItem = {
@@ -70,8 +81,51 @@ export default function BlogPageClient({ blogs }: { blogs: BlogListItem[] }) {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [query, setQuery] = useState("");
   const [activeTag, setActiveTag] = useState<string | null>(null);
+  const [currentPage, setCurrentPage] = useState(1);
   const inputRef = useRef<HTMLInputElement>(null);
   const debouncedQuery = useDebounce(query, 150);
+
+  // Calculate total pages
+  const totalPages = Math.ceil(blogs.length / BLOGS_PER_PAGE);
+
+  // Get paginated blogs
+  const paginatedBlogs = useMemo(() => {
+    const startIndex = (currentPage - 1) * BLOGS_PER_PAGE;
+    const endIndex = startIndex + BLOGS_PER_PAGE;
+    return blogs.slice(startIndex, endIndex);
+  }, [blogs, currentPage]);
+
+  // Generate page numbers for pagination
+  const getPageNumbers = useCallback(() => {
+    const pages: (number | "ellipsis")[] = [];
+    
+    if (totalPages <= 5) {
+      for (let i = 1; i <= totalPages; i++) {
+        pages.push(i);
+      }
+    } else {
+      pages.push(1);
+      
+      if (currentPage > 3) {
+        pages.push("ellipsis");
+      }
+      
+      const start = Math.max(2, currentPage - 1);
+      const end = Math.min(totalPages - 1, currentPage + 1);
+      
+      for (let i = start; i <= end; i++) {
+        pages.push(i);
+      }
+      
+      if (currentPage < totalPages - 2) {
+        pages.push("ellipsis");
+      }
+      
+      pages.push(totalPages);
+    }
+    
+    return pages;
+  }, [currentPage, totalPages]);
 
   // Extract all unique tags from blogs
   const allTags = useMemo(
@@ -194,7 +248,7 @@ export default function BlogPageClient({ blogs }: { blogs: BlogListItem[] }) {
 
         {/* Blog listing */}
         <div className="space-y-4">
-          {blogs.map((blog, i) => (
+          {paginatedBlogs.map((blog, i) => (
             <BlurFade key={blog.id} delay={0.12 + i * 0.05} inView>
               <Link
                 href={`/blog/${blog.slug}`}
@@ -236,6 +290,74 @@ export default function BlogPageClient({ blogs }: { blogs: BlogListItem[] }) {
             </BlurFade>
           ))}
         </div>
+
+        {/* Pagination */}
+        {totalPages > 1 && (
+          <BlurFade delay={0.3} inView>
+            <div className="mt-8">
+              <Pagination>
+                <PaginationContent>
+                  <PaginationItem>
+                    <PaginationPrevious
+                      href="#"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        if (currentPage > 1) {
+                          setCurrentPage(currentPage - 1);
+                          window.scrollTo({ top: 0, behavior: "smooth" });
+                        }
+                      }}
+                      className={currentPage === 1 ? "pointer-events-none opacity-50" : "cursor-pointer"}
+                    />
+                  </PaginationItem>
+
+                  {getPageNumbers().map((page, index) =>
+                    page === "ellipsis" ? (
+                      <PaginationItem key={`ellipsis-${index}`}>
+                        <PaginationEllipsis />
+                      </PaginationItem>
+                    ) : (
+                      <PaginationItem key={page}>
+                        <PaginationLink
+                          href="#"
+                          isActive={currentPage === page}
+                          onClick={(e) => {
+                            e.preventDefault();
+                            setCurrentPage(page);
+                            window.scrollTo({ top: 0, behavior: "smooth" });
+                          }}
+                          className="cursor-pointer"
+                        >
+                          {page}
+                        </PaginationLink>
+                      </PaginationItem>
+                    )
+                  )}
+
+                  <PaginationItem>
+                    <PaginationNext
+                      href="#"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        if (currentPage < totalPages) {
+                          setCurrentPage(currentPage + 1);
+                          window.scrollTo({ top: 0, behavior: "smooth" });
+                        }
+                      }}
+                      className={currentPage === totalPages ? "pointer-events-none opacity-50" : "cursor-pointer"}
+                    />
+                  </PaginationItem>
+                </PaginationContent>
+              </Pagination>
+              <p
+                className="mt-3 text-center text-xs text-muted-foreground"
+                style={{ fontFamily: "var(--font-jetbrains-mono)" }}
+              >
+                Page {currentPage} of {totalPages} · {blogs.length} posts
+              </p>
+            </div>
+          </BlurFade>
+        )}
       </div>
 
       {/* Spotlight Search Overlay */}

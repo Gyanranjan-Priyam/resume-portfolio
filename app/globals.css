@@ -453,6 +453,107 @@ html:not(.dark) * {
   border-top-color: rgba(255, 255, 255, 0.2);
 }
 
+/* Table Styles for Blog Content */
+.tiptap-content table,
+.blog-content table,
+.prose table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+  font-size: 0.9rem;
+  overflow: hidden;
+  border-radius: 0.5rem;
+  border: 1px solid var(--border);
+}
+
+.tiptap-content table thead,
+.blog-content table thead,
+.prose table thead {
+  background-color: var(--muted);
+}
+
+.tiptap-content table th,
+.blog-content table th,
+.prose table th {
+  padding: 0.75rem 1rem;
+  text-align: left;
+  font-weight: 600;
+  border-bottom: 2px solid var(--border);
+  color: var(--foreground);
+}
+
+.tiptap-content table td,
+.blog-content table td,
+.prose table td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--border);
+  color: var(--foreground);
+}
+
+.tiptap-content table tbody tr:last-child td,
+.blog-content table tbody tr:last-child td,
+.prose table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.tiptap-content table tbody tr:hover,
+.blog-content table tbody tr:hover,
+.prose table tbody tr:hover {
+  background-color: var(--accent);
+}
+
+/* Dark mode table styles */
+.dark .tiptap-content table,
+.dark .blog-content table,
+.dark .prose table {
+  border-color: var(--border);
+}
+
+.dark .tiptap-content table thead,
+.dark .blog-content table thead,
+.dark .prose table thead {
+  background-color: var(--muted);
+}
+
+.dark .tiptap-content table th,
+.dark .blog-content table th,
+.dark .prose table th {
+  border-color: var(--border);
+}
+
+.dark .tiptap-content table td,
+.dark .blog-content table td,
+.dark .prose table td {
+  border-color: var(--border);
+}
+
+/* Responsive table wrapper */
+.tiptap-content .table-wrapper,
+.blog-content .table-wrapper,
+.prose .table-wrapper {
+  overflow-x: auto;
+  margin: 1.5rem 0;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Mobile table adjustments */
+@media (max-width: 640px) {
+  .tiptap-content table,
+  .blog-content table,
+  .prose table {
+    font-size: 0.8rem;
+  }
+
+  .tiptap-content table th,
+  .tiptap-content table td,
+  .blog-content table th,
+  .blog-content table td,
+  .prose table th,
+  .prose table td {
+    padding: 0.5rem 0.75rem;
+  }
+}
+
 /* Blog Content Heading Styles */
 .blog-content h1 {
   font-size: 2rem;

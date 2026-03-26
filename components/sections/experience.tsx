@@ -63,8 +63,8 @@ function ExpandedExperienceCard({
           <div className="flex items-start justify-between p-5">
             <div className="flex items-center gap-4">
               <motion.div layoutId={`avatar-${active.company}-${id}`}>
-                <Avatar className="size-12 border">
-                  <AvatarImage src={active.logo} alt={active.company} />
+                <Avatar className="size-14 border bg-black p-1.5">
+                  <AvatarImage src={active.logo} alt={active.company} className="object-contains" />
                   <AvatarFallback className="text-xs font-bold">
                     {active.initials}
                   </AvatarFallback>
