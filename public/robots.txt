@@ -2,8 +2,8 @@
 User-agent: *
 Allow: /
 
-# Host
-Host: https://www.gyanranjanpriyam.tech
+# Host (Primary domain)
+Host: https://www.priyam.tech
 
 # Sitemaps
-Sitemap: https://www.gyanranjanpriyam.tech/sitemap.xml
+Sitemap: https://www.priyam.tech/sitemap.xml

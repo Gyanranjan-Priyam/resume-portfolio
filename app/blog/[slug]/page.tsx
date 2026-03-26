@@ -1,9 +1,8 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { prisma } from "@/lib/db";
+import { SITE_URL } from "@/lib/config";
 import { BlogPostClient, type Blog, type NextBlog } from "@/components/sections/blog-post-client";
-
-const SITE_URL = "https://www.gyanranjanpriyam.tech";
 
 type Props = {
   params: Promise<{ slug: string }>;

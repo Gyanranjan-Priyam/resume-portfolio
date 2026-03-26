@@ -164,7 +164,7 @@ export async function GET(
             </div>
           </div>
           <span style={{ color: "#71717a", fontSize: "18px" }}>
-            gyanranjanpriyam.tech
+            priyam.tech
           </span>
         </div>
       </div>

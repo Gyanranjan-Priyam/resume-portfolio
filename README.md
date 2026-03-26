@@ -4,8 +4,8 @@
 
 A modern, performant personal portfolio built with **Next.js 16**, **React 19**, and **Tailwind CSS 4**.
 
-🔗 **[gyanranjanpriyam.tech](https://www.gyanranjanpriyam.tech)** 
-🔗 **[priyam.tech](https://www.priyam.tech)**
+🔗 **[priyam.tech](https://www.priyam.tech)** (Primary)
+🔗 **[gyanranjanpriyam.tech](https://www.gyanranjanpriyam.tech)** (Fallback)
 
 </div>
 
@@ -102,5 +102,5 @@ This project is open source and available under the [MIT License](LICENSE).
 ---
 
 <div align="center">
-  Built by <a href="https://www.gyanranjanpriyam.tech">Gyanranjan Priyam</a>
+  Built by <a href="https://www.priyam.tech">Gyanranjan Priyam</a>
 </div>

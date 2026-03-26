@@ -8,8 +8,8 @@ import { ContactSection } from "@/components/sections/contact";
 import { GitHubCalendarSection } from "@/components/sections/github-calendar";
 import { Separator } from "@/components/ui/separator";
 import { ExperienceSection } from "@/components/sections/experience";
+import { SITE_URL } from "@/lib/config";
 
-const SITE_URL = "https://www.gyanranjanpriyam.tech";
 const OG_IMAGE =
   "https://res.cloudinary.com/dw47ib0sh/image/upload/v1766402986/ls67mu0pkqalizjmvuyf.png";
 

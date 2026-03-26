@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { ChevronRight, ExternalLink, Github, Users, Zap } from "lucide-react";
 import projects from "@/data/projectsData";
+import { SITE_URL } from "@/lib/config";
 import { BlurFade } from "@/components/ui/blur-fade";
 import { ImageCarousel } from "@/components/ui/image-carousel";
 import { FolderStructure } from "@/components/ui/folder-structure";
@@ -17,8 +18,6 @@ type Props = {
 export async function generateStaticParams() {
   return projects.map((p) => ({ id: p.id }));
 }
-
-const SITE_URL = "https://www.gyanranjanpriyam.tech";
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { id } = await params;
@@ -64,7 +63,6 @@ export default async function ProjectPage({ params }: Props) {
   const project = projects.find((p) => p.id === id);
   if (!project) notFound();
 
-  const SITE_URL = "https://www.gyanranjanpriyam.tech";
   const projectSchema = {
     "@context": "https://schema.org",
     "@type": "CreativeWork",

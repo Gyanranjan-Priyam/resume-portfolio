@@ -1,7 +1,7 @@
 import { ImageResponse } from "next/og";
-import blogs from "@/data/blogsData";
+import { prisma } from "@/lib/db";
 
-export const runtime = "edge";
+export const runtime = "nodejs";
 
 export const alt = "Blog Post";
 export const size = { width: 1200, height: 630 };
@@ -12,10 +12,19 @@ export async function GET(
   { params }: { params: Promise<{ slug: string }> }
 ) {
   const { slug } = await params;
-  const blog = blogs.find((b) => b.id === slug);
+  
+  const blog = await prisma.blog.findUnique({
+    where: { slug },
+    select: {
+      title: true,
+      shortDescription: true,
+    },
+  });
 
   const title = blog?.title || "Blog Post";
-  const excerpt = blog?.excerpt ? blog.excerpt.slice(0, 120) + "..." : "";
+  const excerpt = blog?.shortDescription 
+    ? blog.shortDescription.slice(0, 120) + (blog.shortDescription.length > 120 ? "..." : "") 
+    : "";
 
   return new ImageResponse(
     (
@@ -135,7 +144,7 @@ export async function GET(
             </div>
           </div>
           <span style={{ color: "#71717a", fontSize: "18px" }}>
-            gyanranjanpriyam.tech
+            priyam.tech
           </span>
         </div>
       </div>

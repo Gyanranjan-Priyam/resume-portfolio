@@ -1,13 +1,23 @@
 import type { MetadataRoute } from "next";
-import blogs from "@/data/blogsData";
+import { prisma } from "@/lib/db";
+import { SITE_URL } from "@/lib/config";
 import projects from "@/data/projectsData";
 
-const SITE_URL = "https://www.gyanranjanpriyam.tech";
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  // Fetch all published blogs from database
+  const blogs = await prisma.blog.findMany({
+    where: { published: true },
+    select: {
+      slug: true,
+      updatedAt: true,
+      createdAt: true,
+    },
+    orderBy: { createdAt: "desc" },
+  });
 
-export default function sitemap(): MetadataRoute.Sitemap {
   const blogEntries = blogs.map((blog) => ({
-    url: `${SITE_URL}/blog/${blog.id}`,
-    lastModified: new Date(blog.updatedAt ?? blog.date),
+    url: `${SITE_URL}/blog/${blog.slug}`,
+    lastModified: blog.updatedAt ?? blog.createdAt,
     changeFrequency: "monthly" as const,
     priority: 0.7,
   }));

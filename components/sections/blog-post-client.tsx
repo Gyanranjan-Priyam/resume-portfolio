@@ -1464,10 +1464,18 @@ export function BlogPostClient({
                         bordered?: boolean;
                         striped?: boolean;
                       };
-                      if (tableData.rows) {
+                      if (tableData.rows && tableData.rows.length > 0) {
                         return (
                           <div key={component.id || index} className="w-full">
-                            <TableRenderer data={tableData} />
+                            <TableRenderer 
+                              data={{
+                                rows: tableData.rows,
+                                headers: tableData.headers,
+                                alignment: tableData.alignment,
+                                bordered: tableData.bordered,
+                                striped: tableData.striped,
+                              }} 
+                            />
                           </div>
                         );
                       }

@@ -1,6 +1,5 @@
-import blogs from "@/data/blogsData";
-
-const SITE_URL = "https://www.gyanranjanpriyam.tech";
+import { prisma } from "@/lib/db";
+import { SITE_URL } from "@/lib/config";
 
 function escapeXml(text: string): string {
   return text
@@ -11,25 +10,32 @@ function escapeXml(text: string): string {
     .replace(/'/g, "&apos;");
 }
 
-function toRFC822Date(dateStr: string): string {
-  return new Date(dateStr).toUTCString();
+function toRFC822Date(date: Date): string {
+  return date.toUTCString();
 }
 
 export async function GET() {
-  const sortedBlogs = [...blogs].sort(
-    (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
-  );
+  const blogs = await prisma.blog.findMany({
+    where: { published: true },
+    select: {
+      slug: true,
+      title: true,
+      shortDescription: true,
+      createdAt: true,
+    },
+    orderBy: { createdAt: "desc" },
+  });
 
-  const latestDate = sortedBlogs[0]?.date ?? new Date().toISOString();
+  const latestDate = blogs[0]?.createdAt ?? new Date();
 
-  const items = sortedBlogs
+  const items = blogs
     .map(
       (blog) => `    <item>
       <title>${escapeXml(blog.title)}</title>
-      <link>${SITE_URL}/blog/${blog.id}</link>
-      <description>${escapeXml(blog.excerpt)}</description>
-      <pubDate>${toRFC822Date(blog.date)}</pubDate>
-      <guid isPermaLink="true">${SITE_URL}/blog/${blog.id}</guid>
+      <link>${SITE_URL}/blog/${blog.slug}</link>
+      <description>${escapeXml(blog.shortDescription)}</description>
+      <pubDate>${toRFC822Date(blog.createdAt)}</pubDate>
+      <guid isPermaLink="true">${SITE_URL}/blog/${blog.slug}</guid>
     </item>`
     )
     .join("\n");
