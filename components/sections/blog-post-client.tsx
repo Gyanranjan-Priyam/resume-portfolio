@@ -1363,32 +1363,25 @@ export function BlogPostClient({
                     if (component.type === "imagetext") {
                       const isLeftAligned = component.alignment !== "right";
                       return (
-                        <div
-                          key={component.id || index}
-                          className={`flex flex-col ${isLeftAligned ? "md:flex-row" : "md:flex-row-reverse"} gap-6 items-start`}
-                        >
-                          {component.imageKey && (
-                            <div className="w-full md:w-1/2 shrink-0">
+                        <div key={component.id || index} className="overflow-hidden">
+                          <p
+                            className="text-sm leading-7 text-foreground/90"
+                            style={{
+                              fontFamily: "var(--font-jetbrains-mono)",
+                            }}
+                          >
+                            {component.imageKey && (
                               <img
                                 src={getImageUrl(component.imageKey)}
                                 alt=""
-                                className="w-full h-auto rounded-lg object-cover"
+                                className={`w-[45%] h-auto rounded-lg object-cover mt-1 mb-2 ${
+                                  isLeftAligned ? "float-left mr-6" : "float-right ml-6"
+                                }`}
                                 loading="lazy"
                               />
-                            </div>
-                          )}
-                          {component.text && (
-                            <div className="w-full md:w-1/2">
-                              <p
-                                className="text-sm leading-7 text-foreground/90"
-                                style={{
-                                  fontFamily: "var(--font-jetbrains-mono)",
-                                }}
-                              >
-                                {component.text}
-                              </p>
-                            </div>
-                          )}
+                            )}
+                            {component.text}
+                          </p>
                         </div>
                       );
                     }

@@ -1,45 +1,11 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
-import { codeToTokens, type BundledLanguage } from "shiki";
-
-const languageMap: Record<string, { id: BundledLanguage; label: string }> = {
-  typescript: { id: "tsx", label: "TYPESCRIPT" },
-  javascript: { id: "javascript", label: "JAVASCRIPT" },
-  tsx: { id: "tsx", label: "TSX" },
-  jsx: { id: "jsx", label: "JSX" },
-  python: { id: "python", label: "PYTHON" },
-  rust: { id: "rust", label: "RUST" },
-  go: { id: "go", label: "GO" },
-  java: { id: "java", label: "JAVA" },
-  c: { id: "c", label: "C" },
-  cpp: { id: "cpp", label: "C++" },
-  csharp: { id: "csharp", label: "C#" },
-  html: { id: "html", label: "HTML" },
-  css: { id: "css", label: "CSS" },
-  json: { id: "json", label: "JSON" },
-  yaml: { id: "yaml", label: "YAML" },
-  markdown: { id: "markdown", label: "MARKDOWN" },
-  sql: { id: "sql", label: "SQL" },
-  bash: { id: "bash", label: "BASH" },
-  shell: { id: "shellscript", label: "SHELL" },
-};
-
-function detectLanguage(code: string): { id: BundledLanguage; label: string } {
-  if (
-    /^["']use client["'];?/.test(code.trim()) ||
-    /\bimport\b.*\bfrom\b/.test(code) ||
-    /\bexport\s+(default\s+)?(function|async|const)\b/.test(code)
-  )
-    return { id: "tsx", label: "TYPESCRIPT" };
-  if (/\bdef\b|\bimport\b.*\bas\b|\bprint\(/.test(code))
-    return { id: "python", label: "PYTHON" };
-  if (/\bfn\b|\blet\s+mut\b|\b->\b/.test(code))
-    return { id: "rust", label: "RUST" };
-  return { id: "tsx", label: "JAVASCRIPT" };
-}
-
-type Token = { content: string; color: string | undefined };
+import { useState } from "react";
+import { Copy, Check } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+import { oneDark } from "react-syntax-highlighter/dist/esm/styles/prism";
 
 interface MonacoCodeBlockProps {
   code: string;
@@ -47,96 +13,158 @@ interface MonacoCodeBlockProps {
   language?: string;
 }
 
+const LANGUAGE_LABELS: Record<string, string> = {
+  javascript: "JAVASCRIPT",
+  typescript: "TYPESCRIPT",
+  tsx: "TSX",
+  jsx: "JSX",
+  python: "PYTHON",
+  java: "JAVA",
+  cpp: "C++",
+  c: "C",
+  csharp: "C#",
+  php: "PHP",
+  ruby: "RUBY",
+  go: "GO",
+  rust: "RUST",
+  swift: "SWIFT",
+  kotlin: "KOTLIN",
+  sql: "SQL",
+  html: "HTML",
+  css: "CSS",
+  json: "JSON",
+  yaml: "YAML",
+  markdown: "MARKDOWN",
+  bash: "BASH",
+  shell: "SHELL",
+  plaintext: "PLAIN TEXT",
+};
+
+// Map our language codes to Prism language codes
+const PRISM_LANGUAGE_MAP: Record<string, string> = {
+  javascript: "javascript",
+  typescript: "typescript",
+  tsx: "tsx",
+  jsx: "jsx",
+  python: "python",
+  java: "java",
+  cpp: "cpp",
+  c: "c",
+  csharp: "csharp",
+  php: "php",
+  ruby: "ruby",
+  go: "go",
+  rust: "rust",
+  swift: "swift",
+  kotlin: "kotlin",
+  sql: "sql",
+  html: "markup",
+  css: "css",
+  json: "json",
+  yaml: "yaml",
+  markdown: "markdown",
+  bash: "bash",
+  shell: "bash",
+  plaintext: "text",
+};
+
+function detectLanguage(code: string): string {
+  if (
+    /^["']use client["'];?/.test(code.trim()) ||
+    /\bimport\b.*\bfrom\b/.test(code) ||
+    /\bexport\s+(default\s+)?(function|async|const)\b/.test(code)
+  )
+    return "typescript";
+  if (/\bdef\b|\bimport\b.*\bas\b|\bprint\(/.test(code))
+    return "python";
+  if (/\bfn\b|\blet\s+mut\b|\b->\b/.test(code))
+    return "rust";
+  if (/\bfunc\b.*\{|\bpackage\s+main\b/.test(code))
+    return "go";
+  return "javascript";
+}
+
 export function MonacoCodeBlock({ code, fileName, language }: MonacoCodeBlockProps) {
-  const [tokens, setTokens] = useState<Token[][] | null>(null);
   const [copied, setCopied] = useState(false);
-  
+
+  if (!code) {
+    return (
+      <div className="text-center py-8 text-muted-foreground">
+        No code available
+      </div>
+    );
+  }
+
   // Use provided language or detect from code
-  const lang = language && languageMap[language.toLowerCase()] 
-    ? languageMap[language.toLowerCase()] 
-    : detectLanguage(code);
+  const detectedLang = language?.toLowerCase() || detectLanguage(code);
+  const prismLanguage = PRISM_LANGUAGE_MAP[detectedLang] || "text";
+  const languageLabel = LANGUAGE_LABELS[detectedLang] || detectedLang.toUpperCase();
 
-  useEffect(() => {
-    codeToTokens(code, {
-      lang: lang.id,
-      theme: "github-dark",
-    }).then((result) => {
-      const mapped = result.tokens.map((line) =>
-        line.map((t) => ({
-          content: t.content,
-          color: t.color,
-        }))
-      );
-      setTokens(mapped);
-    });
-  }, [code, lang.id]);
-
-  const handleCopy = useCallback(() => {
-    navigator.clipboard.writeText(code).then(() => {
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    });
-  }, [code]);
-
-  const lines = code.split("\n");
+  const handleCopy = async () => {
+    await navigator.clipboard.writeText(code);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
 
   // Build header label: "LANGUAGE · filename" or just "LANGUAGE"
-  const headerLabel = fileName ? `${lang.label} · ${fileName}` : lang.label;
+  const headerLabel = fileName ? `${languageLabel} · ${fileName}` : languageLabel;
 
   return (
-    <div className="my-4 overflow-hidden rounded-lg border border-border bg-[#0d1117] dark:bg-[#0d1117]">
-      {/* Header bar */}
-      <div className="flex items-center justify-between border-b border-white/10 px-4 py-2">
-        <span className="text-xs font-medium tracking-wider text-neutral-400">
+    <div className={cn("monaco-code-block my-4 rounded-lg overflow-hidden border border-border bg-[#0d1117]")}>
+      {/* Header */}
+      <div className="flex items-center justify-between px-4 py-2 bg-[#161b22] border-b border-white/10">
+        <span className="text-xs font-medium text-neutral-400 uppercase tracking-wider">
           {headerLabel}
         </span>
-        <button
-          type="button"
+        <Button
+          variant="ghost"
+          size="sm"
           onClick={handleCopy}
-          className="inline-flex items-center gap-1.5 text-xs text-neutral-400 transition-colors hover:text-neutral-200"
+          className="h-7 text-xs text-neutral-400 hover:text-neutral-200 hover:bg-white/10"
         >
           {copied ? (
             <>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="size-3.5">
-                <path d="M20 6 9 17l-5-5" />
-              </svg>
-              Copied!
+              <Check className="h-3.5 w-3.5 mr-1.5" />
+              Copied
             </>
           ) : (
             <>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="size-3.5">
-                <rect width="14" height="14" x="8" y="8" rx="2" />
-                <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" />
-              </svg>
+              <Copy className="h-3.5 w-3.5 mr-1.5" />
               Copy
             </>
           )}
-        </button>
+        </Button>
       </div>
 
-      {/* Code area */}
-      <div className="overflow-x-auto p-4">
-        <table className="border-collapse" style={{ fontFamily: "'JetBrains Mono', 'Fira Code', 'Cascadia Code', Menlo, Monaco, monospace" }}>
-          <tbody>
-            {lines.map((line, i) => (
-              <tr key={i} className="leading-6">
-                <td className="select-none pr-4 text-right text-[13px] text-neutral-600" style={{ minWidth: "2rem" }}>
-                  {i + 1}
-                </td>
-                <td className="text-[13px] whitespace-pre">
-                  {tokens && tokens[i]
-                    ? tokens[i].map((token, j) => (
-                        <span key={j} style={{ color: token.color }}>
-                          {token.content}
-                        </span>
-                      ))
-                    : <span className="text-neutral-300">{line}</span>
-                  }
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+      {/* Code Block with Syntax Highlighting */}
+      <div className="relative overflow-x-auto">
+        <SyntaxHighlighter
+          language={prismLanguage}
+          style={oneDark}
+          showLineNumbers={true}
+          customStyle={{
+            margin: 0,
+            borderRadius: 0,
+            background: "#0d1117",
+            fontSize: "0.8125rem",
+            lineHeight: "1.5rem",
+            padding: "1rem",
+          }}
+          lineNumberStyle={{
+            minWidth: "2.5rem",
+            paddingRight: "1rem",
+            color: "#6e7681",
+            textAlign: "right",
+            userSelect: "none",
+          }}
+          codeTagProps={{
+            style: {
+              fontFamily: "'JetBrains Mono', 'Fira Code', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace",
+            },
+          }}
+        >
+          {code}
+        </SyntaxHighlighter>
       </div>
     </div>
   );
