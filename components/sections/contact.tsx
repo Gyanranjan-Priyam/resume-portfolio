@@ -27,7 +27,7 @@ export function ContactSection() {
           </a>{" "}
           or you can contact me through{" "}
           <Link
-            href="https://linkedin.com/in/gyanrajanjan-priyam"
+            href="https://linkedin.com/in/gyanranjan-priyam"
             className="font-medium text-foreground underline underline-offset-4"
           >
             LinkedIn
@@ -41,7 +41,7 @@ export function ContactSection() {
           </Link>
           , or{" "}
           <Link
-            href="https://github.com/gyanrajanjan-priyam"
+            href="https://github.com/gyanranjan-priyam"
             className="font-medium text-foreground underline underline-offset-4"
           >
             GitHub
