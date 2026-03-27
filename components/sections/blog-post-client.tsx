@@ -4,7 +4,7 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
-import { Bot, ChevronRight, Clock, Copy, Download } from "lucide-react";
+import { Bot, ChevronRight, Clock } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { BlurFade } from "@/components/ui/blur-fade";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -29,12 +29,24 @@ import TiptapParagraph from "@tiptap/extension-paragraph";
 import TiptapHeading from "@tiptap/extension-heading";
 import { MonacoCodeBlock } from "@/components/ui/monaco-code-block";
 import { TableRenderer } from "@/components/ui/table-renderer";
-import { IconFileExport, IconFileTypeDocx, IconMarkdown } from "@tabler/icons-react";
+import {
+  IconCopy,
+  IconFileTypeDocx,
+  IconMarkdown,
+  IconShare2,
+  IconExclamationCircleFilled,
+} from "@tabler/icons-react";
 
 /* ── Types ── */
 export type BlogComponent = {
   id: string;
-  type: "richtext" | "imagetext" | "imageuploader" | "videoplayer" | "code" | "table";
+  type:
+    | "richtext"
+    | "imagetext"
+    | "imageuploader"
+    | "videoplayer"
+    | "code"
+    | "table";
   order: number;
   content?: unknown; // Tiptap JSON for richtext, code object for code blocks, or table data for tables
   text?: string | null; // Text for imagetext component
@@ -514,15 +526,23 @@ function getShareUrl(platform: string, url: string, title: string) {
 function RichContentRenderer({ html }: { html: string }) {
   // Split HTML by code blocks and render them with MonacoCodeBlock
   const parts = useMemo(() => {
-    const codeBlockRegex = /<pre><code(?:\s+class="language-(\w+)")?>([\s\S]*?)<\/code><\/pre>/gi;
-    const result: Array<{ type: "html" | "code"; content: string; language?: string }> = [];
+    const codeBlockRegex =
+      /<pre><code(?:\s+class="language-(\w+)")?>([\s\S]*?)<\/code><\/pre>/gi;
+    const result: Array<{
+      type: "html" | "code";
+      content: string;
+      language?: string;
+    }> = [];
     let lastIndex = 0;
     let match;
 
     while ((match = codeBlockRegex.exec(html)) !== null) {
       // Add HTML before the code block
       if (match.index > lastIndex) {
-        result.push({ type: "html", content: html.slice(lastIndex, match.index) });
+        result.push({
+          type: "html",
+          content: html.slice(lastIndex, match.index),
+        });
       }
       // Decode HTML entities in code content
       const codeContent = match[2]
@@ -556,28 +576,24 @@ function RichContentRenderer({ html }: { html: string }) {
             style={{ fontFamily: "var(--font-jetbrains-mono)" }}
             dangerouslySetInnerHTML={{ __html: part.content }}
           />
-        )
+        ),
       )}
     </>
   );
 }
 
 /* ── Code Block Renderer ── */
-function CodeBlockRenderer({ 
-  code, 
-  fileName, 
-  language 
-}: { 
-  code: string; 
-  fileName?: string; 
+function CodeBlockRenderer({
+  code,
+  fileName,
+  language,
+}: {
+  code: string;
+  fileName?: string;
   language?: string;
 }) {
   return (
-    <MonacoCodeBlock 
-      code={code} 
-      fileName={fileName} 
-      language={language} 
-    />
+    <MonacoCodeBlock code={code} fileName={fileName} language={language} />
   );
 }
 
@@ -632,8 +648,23 @@ function StopIcon() {
   );
 }
 
+function HeartIcon({ filled = false }: { filled?: boolean }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill={filled ? "currentColor" : "none"}
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="size-[20px]"
+    >
+      <path d="M12 21C12 21 3 14.5 3 8.5C3 5.42 5.42 3 8.5 3C10.24 3 11.91 3.81 13 5.08C14.09 3.81 15.76 3 17.5 3C20.58 3 23 5.42 23 8.5C23 14.5 14 21 12 21Z" />
+    </svg>
+  );
+}
+
 export type NextBlog = {
-  [x: string]: string;
   id: string;
   slug: string;
   title: string;
@@ -643,13 +674,25 @@ export type NextBlog = {
 /* ── Main Component ── */
 export function BlogPostClient({
   blog,
-  nextBlog,
+  nextBlogs,
 }: {
   blog: Blog;
-  nextBlog: NextBlog;
+  nextBlogs: NextBlog[];
 }) {
   const [isReading, setIsReading] = useState(false);
   const [shareOpen, setShareOpen] = useState(false);
+
+  // Lazy initialization for likes from localStorage
+  const [likeCount, setLikeCount] = useState(() => {
+    if (typeof window === "undefined") return 0;
+    const stored = localStorage.getItem(`blog-likes-${blog.id}`);
+    return stored ? parseInt(stored, 10) : 0;
+  });
+  const [hasLiked, setHasLiked] = useState(() => {
+    if (typeof window === "undefined") return false;
+    return localStorage.getItem(`blog-liked-${blog.id}`) === "true";
+  });
+
   const utteranceRef = useRef<SpeechSynthesisUtterance | null>(null);
   const shareRef = useRef<HTMLDivElement>(null);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -665,7 +708,10 @@ export function BlogPostClient({
     const flatHeadings: { id: string; text: string; level: number }[] = [];
     const displayComponents = blog.components.map((comp) => {
       if (comp.type === "richtext" && comp.content) {
-        const entries = extractTocEntriesFromTiptap(comp.content, headingCounter);
+        const entries = extractTocEntriesFromTiptap(
+          comp.content,
+          headingCounter,
+        );
         flatHeadings.push(...entries);
         const newContent =
           entries.length > 0
@@ -867,6 +913,32 @@ export function BlogPostClient({
     if (shareOpen) document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [shareOpen]);
+
+  const handleLike = useCallback(() => {
+    if (typeof window === "undefined") return;
+    const likesKey = `blog-likes-${blog.id}`;
+    const likedKey = `blog-liked-${blog.id}`;
+
+    if (hasLiked) {
+      // Unlike
+      const newCount = Math.max(0, likeCount - 1);
+      setLikeCount(newCount);
+      setHasLiked(false);
+      localStorage.setItem(likesKey, newCount.toString());
+      localStorage.removeItem(likedKey);
+    } else {
+      // Like
+      const newCount = likeCount + 1;
+      setLikeCount(newCount);
+      setHasLiked(true);
+      localStorage.setItem(likesKey, newCount.toString());
+      localStorage.setItem(likedKey, "true");
+    }
+  }, [blog.id, hasLiked, likeCount]);
+
+  const handleReport = useCallback(() => {
+    toast.info("Report feature coming soon!");
+  }, []);
 
   // Fallback IDs for semantic headings when not injected in TipTap JSON
   useEffect(() => {
@@ -1266,7 +1338,7 @@ export function BlogPostClient({
             </BlurFade>
 
             {/* Mobile actions row */}
-            <div className="flex items-center gap-4 mb-6 lg:hidden">
+            <div className="flex items-center gap-3 mb-6 lg:hidden flex-wrap">
               {/* Listen */}
               <button
                 type="button"
@@ -1277,54 +1349,113 @@ export function BlogPostClient({
                 {isReading ? "Stop" : "Listen"}
               </button>
 
-              {/* NEW Dropdown */}
+              {/* Export Dropdown */}
               <div className="relative" ref={menuRef}>
                 <button
                   onClick={() => setMenuOpen((p) => !p)}
                   className="inline-flex items-center gap-1.5 rounded-md border px-2.5 py-1.5 text-xs"
                 >
-                  <IconFileExport size={18} />
-                  Export
+                  <IconCopy size={18} />
                 </button>
 
                 {menuOpen && (
                   <div className="absolute left-0 mt-2 w-44 rounded-md border bg-background shadow-md z-50">
                     <button
                       onClick={handleCopyMarkdown}
-                      className="flex items-center gap-2 w-full text-left font-bold px-3 py-2 text-xs hover:bg-muted"
+                      className="flex items-center gap-2 w-full text-left px-3 py-2 text-xs hover:bg-muted"
                     >
-                      <IconMarkdown className="size-4 mr-1" />
+                      <IconMarkdown className="size-4" />
                       Copy as Markdown
                     </button>
 
                     <button
                       onClick={handleDownloadDocx}
-                      className="flex items-center gap-2 font-bold w-full text-left px-3 py-2 text-xs hover:bg-muted"
+                      className="flex items-center gap-2 w-full text-left px-3 py-2 text-xs hover:bg-muted"
                     >
-                      <IconFileTypeDocx className="size-4 mr-1" />
+                      <IconFileTypeDocx className="size-4" />
                       Download as DOCX
                     </button>
 
                     <button
                       onClick={handleOpenChatGPT}
-                      className="flex items-center gap-2 font-bold w-full text-left px-3 py-2 text-xs hover:bg-muted"
+                      className="flex items-center gap-2 w-full text-left px-3 py-2 text-xs hover:bg-muted"
                     >
-                      <Bot className="size-4 mr-1" />
+                      <Bot className="size-4" />
                       Open in ChatGPT
                     </button>
                   </div>
                 )}
               </div>
 
-              {/* Share buttons */}
-              <button onClick={() => handleShare("whatsapp")} className="...">
-                <WhatsAppIcon />
+              {/* Share Dropdown */}
+              <div className="relative" ref={shareRef}>
+                <button
+                  type="button"
+                  onClick={() => setShareOpen((p) => !p)}
+                  className="inline-flex items-center gap-1.5 rounded-md border px-2.5 py-1.5 text-xs"
+                >
+                  <IconShare2 size={18} />
+                </button>
+
+                {shareOpen && (
+                  <div className="absolute left-0 mt-2 w-36 rounded-md border bg-background shadow-md z-50">
+                    <button
+                      type="button"
+                      onClick={() => handleShare("whatsapp")}
+                      className="w-full flex items-center gap-2 px-3 py-2 text-xs hover:bg-muted cursor-pointer"
+                    >
+                      <WhatsAppIcon />
+                      WhatsApp
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => handleShare("linkedin")}
+                      className="w-full flex items-center gap-2 px-3 py-2 text-xs hover:bg-muted cursor-pointer"
+                    >
+                      <LinkedInIcon />
+                      LinkedIn
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => handleShare("twitter")}
+                      className="w-full flex items-center gap-2 px-3 py-2 text-xs hover:bg-muted cursor-pointer"
+                    >
+                      <TwitterIcon />
+                      Twitter / X
+                    </button>
+                  </div>
+                )}
+              </div>
+
+              {/* Report Button */}
+              <button
+                type="button"
+                onClick={handleReport}
+                aria-label="Report this post"
+                className="inline-flex items-center gap-1.5 rounded-md border px-2.5 py-1.5 text-xs text-muted-foreground transition-colors hover:text-foreground hover:border-foreground"
+              >
+                <IconExclamationCircleFilled size={18} />
               </button>
-              <button onClick={() => handleShare("linkedin")} className="...">
-                <LinkedInIcon />
-              </button>
-              <button onClick={() => handleShare("twitter")} className="...">
-                <TwitterIcon />
+
+              {/* Like Button - Clap style */}
+              <button
+                type="button"
+                onClick={handleLike}
+                aria-label={hasLiked ? "Unlike this post" : "Like this post"}
+                className={`inline-flex items-center gap-1.5 border rounded-md px-2 py-1.5 text-sm transition-colors ${
+                  hasLiked
+                    ? "text-foreground"
+                    : "text-muted-foreground hover:text-foreground"
+                }`}
+              >
+                <HeartIcon filled={hasLiked} />
+                <span style={{ fontFamily: "var(--font-jetbrains-mono)" }}>
+                  {likeCount > 0
+                    ? likeCount >= 1000
+                      ? `${(likeCount / 1000).toFixed(1)}K`
+                      : likeCount
+                    : ""}
+                </span>
               </button>
             </div>
 
@@ -1363,7 +1494,10 @@ export function BlogPostClient({
                     if (component.type === "imagetext") {
                       const isLeftAligned = component.alignment !== "right";
                       return (
-                        <div key={component.id || index} className="overflow-hidden">
+                        <div
+                          key={component.id || index}
+                          className="overflow-hidden"
+                        >
                           <p
                             className="text-sm leading-7 text-foreground/90"
                             style={{
@@ -1375,7 +1509,9 @@ export function BlogPostClient({
                                 src={getImageUrl(component.imageKey)}
                                 alt=""
                                 className={`w-[45%] h-auto rounded-lg object-cover mt-1 mb-2 ${
-                                  isLeftAligned ? "float-left mr-6" : "float-right ml-6"
+                                  isLeftAligned
+                                    ? "float-left mr-6"
+                                    : "float-right ml-6"
                                 }`}
                                 loading="lazy"
                               />
@@ -1460,14 +1596,14 @@ export function BlogPostClient({
                       if (tableData.rows && tableData.rows.length > 0) {
                         return (
                           <div key={component.id || index} className="w-full">
-                            <TableRenderer 
+                            <TableRenderer
                               data={{
                                 rows: tableData.rows,
                                 headers: tableData.headers,
                                 alignment: tableData.alignment,
                                 bordered: tableData.bordered,
                                 striped: tableData.striped,
-                              }} 
+                              }}
                             />
                           </div>
                         );
@@ -1525,31 +1661,36 @@ export function BlogPostClient({
           {/* ── Right Sidebar: Next Blog + Actions ── */}
           <aside className="hidden lg:block">
             <div className="sticky top-12 space-y-6">
-              {/* Next blog card */}
+              {/* Next posts */}
               <div>
                 <span
                   className="mb-2 block text-xs font-semibold uppercase tracking-wider text-muted-foreground"
                   style={{ fontFamily: "var(--font-jetbrains-mono)" }}
                 >
-                  Next Post
+                  Next Posts
                 </span>
-                <Link
-                  href={`/blog/${nextBlog.slug}`}
-                  className="group block rounded-lg border bg-card p-3 transition-colors hover:bg-muted/50"
-                >
-                  <h4
-                    className="text-sm font-medium leading-snug group-hover:underline line-clamp-3"
-                    style={{ fontFamily: "var(--font-jetbrains-mono)" }}
-                  >
-                    {nextBlog.title}
-                  </h4>
-                  <span
-                    className="mt-1.5 block text-[10px] text-muted-foreground"
-                    style={{ fontFamily: "var(--font-jetbrains-mono)" }}
-                  >
-                    {formatDate(nextBlog.createdAt)}
-                  </span>
-                </Link>
+                <div className="space-y-3">
+                  {nextBlogs.map((nextBlog) => (
+                    <Link
+                      key={nextBlog.id}
+                      href={`/blog/${nextBlog.slug}`}
+                      className="group block rounded-lg border bg-card p-3 transition-colors hover:bg-muted/50"
+                    >
+                      <h4
+                        className="text-sm font-medium leading-snug group-hover:underline line-clamp-2"
+                        style={{ fontFamily: "var(--font-jetbrains-mono)" }}
+                      >
+                        {nextBlog.title}
+                      </h4>
+                      <span
+                        className="mt-1.5 block text-[10px] text-muted-foreground"
+                        style={{ fontFamily: "var(--font-jetbrains-mono)" }}
+                      >
+                        {formatDate(nextBlog.createdAt)}
+                      </span>
+                    </Link>
+                  ))}
+                </div>
               </div>
 
               {/* Read aloud */}
@@ -1570,86 +1711,136 @@ export function BlogPostClient({
                 </button>
               </div>
 
-              {/* Share */}
+              {/* Actions: Like, Share, Report, Export */}
               <div>
                 <span
                   className="mb-2 block text-xs font-bold uppercase tracking-wider text-muted-foreground"
                   style={{ fontFamily: "var(--font-jetbrains-mono)" }}
                 >
-                  Share
+                  Actions
                 </span>
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-3">
+                  {/* Like Button - Clap style */}
                   <button
                     type="button"
-                    onClick={() => handleShare("whatsapp")}
-                    aria-label="Share on WhatsApp"
-                    className="rounded-md border border-border p-1.5 text-muted-foreground transition-colors hover:text-foreground hover:border-foreground"
+                    onClick={handleLike}
+                    aria-label={
+                      hasLiked ? "Unlike this post" : "Like this post"
+                    }
+                    className={`inline-flex items-center gap-1 transition-colors cursor-pointer ${
+                      hasLiked
+                        ? "text-foreground"
+                        : "text-muted-foreground hover:text-foreground cursor-pointer"
+                    }`}
                   >
-                    <WhatsAppIcon />
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => handleShare("linkedin")}
-                    aria-label="Share on LinkedIn"
-                    className="rounded-md border border-border p-1.5 text-muted-foreground transition-colors hover:text-foreground hover:border-foreground"
-                  >
-                    <LinkedInIcon />
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => handleShare("twitter")}
-                    aria-label="Share on Twitter / X"
-                    className="rounded-md border border-border p-1.5 text-muted-foreground transition-colors hover:text-foreground hover:border-foreground"
-                  >
-                    <TwitterIcon />
-                  </button>
-                </div>
-              </div>
-
-              {/* Export */}
-              <div ref={menuRef} className="relative">
-                <span
-                  className="mb-2 block text-xs font-bold uppercase tracking-wider text-muted-foreground"
-                  style={{ fontFamily: "var(--font-jetbrains-mono)" }}
-                >
-                  Export
-                </span>
-
-                <button
-                  onClick={() => setMenuOpen((p) => !p)}
-                  className="inline-flex w-full items-center justify-center rounded-md border border-border px-3 py-2 text-xs font-medium text-muted-foreground transition-colors hover:text-foreground hover:border-foreground cursor-pointer"
-                  style={{ fontFamily: "var(--font-jetbrains-mono)" }}
-                >
-                  Options
-                </button>
-
-                {menuOpen && (
-                  <div className="absolute right-0 mt-2 w-52 rounded-md border bg-background shadow-md z-50">
-                    <button
-                      onClick={handleCopyMarkdown}
-                      className="w-full flex items-center gap-2 font-bold text-left px-3 py-2 text-xs hover:bg-muted cursor-pointer"
+                    <HeartIcon filled={hasLiked} />
+                    <span
+                      className="text-xs"
+                      style={{ fontFamily: "var(--font-jetbrains-mono)" }}
                     >
-                      <IconMarkdown className="size-5 mr-1" />
-                      Copy as Markdown
+                      {likeCount > 0
+                        ? likeCount >= 1000
+                          ? `${(likeCount / 1000).toFixed(1)}K`
+                          : likeCount
+                        : ""}
+                    </span>
+                  </button>
+
+                  {/* Share Dropdown */}
+                  <div
+                    ref={shareRef}
+                    className="relative flex flex-col items-center"
+                  >
+                    <button
+                      type="button"
+                      onClick={() => setShareOpen((p) => !p)}
+                      aria-label="Share this post"
+                      className="rounded-md border border-border p-1.5 text-muted-foreground transition-colors hover:text-foreground hover:border-foreground cursor-pointer"
+                    >
+                      <IconShare2 size={18} />
                     </button>
+                    {shareOpen && (
+                      <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-40 rounded-md border bg-background shadow-md z-50">
+                        <button
+                          type="button"
+                          onClick={() => handleShare("whatsapp")}
+                          className="w-full flex items-center gap-2 px-3 py-2 text-xs hover:bg-muted cursor-pointer"
+                        >
+                          <WhatsAppIcon />
+                          WhatsApp
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => handleShare("linkedin")}
+                          className="w-full flex items-center gap-2 px-3 py-2 text-xs hover:bg-muted cursor-pointer"
+                        >
+                          <LinkedInIcon />
+                          LinkedIn
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => handleShare("twitter")}
+                          className="w-full flex items-center gap-2 px-3 py-2 text-xs hover:bg-muted cursor-pointer"
+                        >
+                          <TwitterIcon />
+                          Twitter / X
+                        </button>
+                      </div>
+                    )}
+                  </div>
 
+                  {/* Report Button */}
+                  <div className="flex flex-col items-center">
                     <button
-                      onClick={handleDownloadDocx}
-                      className="w-full flex items-center gap-2 font-bold text-left px-3 py-2 text-xs hover:bg-muted cursor-pointer"
+                      type="button"
+                      onClick={handleReport}
+                      aria-label="Report this post"
+                      className="rounded-md border border-border p-1.5 text-muted-foreground transition-colors hover:text-foreground hover:border-foreground cursor-pointer"
                     >
-                      <IconFileTypeDocx className="size-5 mr-1" />
-                      Download as DOCX
-                    </button>
-
-                    <button
-                      onClick={handleOpenChatGPT}
-                      className="w-full flex items-center gap-2 font-bold text-left px-3 py-2 text-xs hover:bg-muted cursor-pointer"
-                    >
-                      <Bot className="size-5 mr-1" />
-                      Open in ChatGPT
+                      <IconExclamationCircleFilled size={18} />
                     </button>
                   </div>
-                )}
+
+                  {/* Export Dropdown */}
+                  <div
+                    ref={menuRef}
+                    className="relative flex flex-col items-center"
+                  >
+                    <button
+                      type="button"
+                      onClick={() => setMenuOpen((p) => !p)}
+                      aria-label="Export options"
+                      className="rounded-md border border-border p-1.5 text-muted-foreground transition-colors hover:text-foreground hover:border-foreground cursor-pointer"
+                    >
+                      <IconCopy size={18} />
+                    </button>
+                    {menuOpen && (
+                      <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-48 rounded-md border bg-background shadow-md z-50">
+                        <button
+                          onClick={handleCopyMarkdown}
+                          className="w-full flex items-center gap-2 text-left px-3 py-2 text-xs hover:bg-muted cursor-pointer"
+                        >
+                          <IconMarkdown className="size-4" />
+                          Copy as Markdown
+                        </button>
+                        <button
+                          onClick={handleDownloadDocx}
+                          className="w-full flex items-center gap-2 text-left px-3 py-2 text-xs hover:bg-muted cursor-pointer"
+                        >
+                          <IconFileTypeDocx className="size-4" />
+                          Download as DOCX
+                        </button>
+                        <button
+                          onClick={handleOpenChatGPT}
+                          className="w-full flex items-center gap-2 text-left px-3 py-2 text-xs hover:bg-muted cursor-pointer"
+                        >
+                          <Bot className="size-4" />
+                          Open in ChatGPT
+                        </button>
+                      </div>
+                    )}
+                  </div>
+                </div>
               </div>
             </div>
           </aside>

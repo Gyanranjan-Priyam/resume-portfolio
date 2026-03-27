@@ -28,30 +28,35 @@ async function getBlogBySlug(slug: string) {
   return blog;
 }
 
-async function getNextBlog(currentBlogId: string, currentBlogCreatedAt: Date) {
-  // Get the next blog (older than current) or wrap to newest if at the end
-  let nextBlog = await prisma.blog.findFirst({
+async function getNextBlogs(currentBlogId: string, currentBlogCreatedAt: Date) {
+  // Get the next 2 blogs (older than current)
+  const nextBlogs = await prisma.blog.findMany({
     where: {
       published: true,
       createdAt: { lt: currentBlogCreatedAt },
     },
     orderBy: { createdAt: "desc" },
+    take: 2,
     select: { id: true, slug: true, title: true, createdAt: true },
   });
 
-  // If no older blog, get the newest one (wrap around)
-  if (!nextBlog) {
-    nextBlog = await prisma.blog.findFirst({
+  // If we have less than 2, wrap around to get more from the newest
+  if (nextBlogs.length < 2) {
+    const needed = 2 - nextBlogs.length;
+    const existingIds = [currentBlogId, ...nextBlogs.map((b) => b.id)];
+    const moreBlogs = await prisma.blog.findMany({
       where: {
         published: true,
-        id: { not: currentBlogId },
+        id: { notIn: existingIds },
       },
       orderBy: { createdAt: "desc" },
+      take: needed,
       select: { id: true, slug: true, title: true, createdAt: true },
     });
+    nextBlogs.push(...moreBlogs);
   }
 
-  return nextBlog;
+  return nextBlogs;
 }
 
 // Force dynamic rendering - no static generation caching
@@ -101,7 +106,7 @@ export default async function BlogPostPage({ params }: Props) {
 
   if (!blog) notFound();
 
-  const nextBlogData = await getNextBlog(blog.id, blog.createdAt);
+  const nextBlogsData = await getNextBlogs(blog.id, blog.createdAt);
 
   // Transform dates to strings for client component
   const blogForClient: Blog = {
@@ -134,20 +139,23 @@ export default async function BlogPostPage({ params }: Props) {
       : undefined,
   };
 
-  // Use the current blog as next if no other blog exists
-  const nextBlog: NextBlog = nextBlogData
-    ? {
-        id: nextBlogData.id,
-        slug: nextBlogData.slug,
-        title: nextBlogData.title,
-        createdAt: nextBlogData.createdAt.toISOString(),
-      }
-    : {
-        id: blog.id,
-        slug: blog.slug,
-        title: blog.title,
-        createdAt: blog.createdAt.toISOString(),
-      };
+  // Map next blogs to client format
+  const nextBlogs: NextBlog[] = nextBlogsData.map((b) => ({
+    id: b.id,
+    slug: b.slug,
+    title: b.title,
+    createdAt: b.createdAt.toISOString(),
+  }));
+
+  // If no blogs found, use current blog as fallback
+  if (nextBlogs.length === 0) {
+    nextBlogs.push({
+      id: blog.id,
+      slug: blog.slug,
+      title: blog.title,
+      createdAt: blog.createdAt.toISOString(),
+    });
+  }
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -179,7 +187,7 @@ export default async function BlogPostPage({ params }: Props) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <BlogPostClient blog={blogForClient} nextBlog={nextBlog} />
+      <BlogPostClient blog={blogForClient} nextBlogs={nextBlogs} />
     </>
   );
 }
