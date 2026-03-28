@@ -7,8 +7,8 @@ import { BlurFade } from "@/components/ui/blur-fade";
 import Image from "next/image";
 
 const navLinks = [
-  { label: "About", href: "/about" },
-  { label: "Skills", href: "/skills" },
+  { label: "About", href: "/#about" },
+  { label: "Skills", href: "/#skills" },
   { label: "Projects", href: "/projects" },
   { label: "Blog", href: "/blog" },
   { label: "Contact", href: "/#contact" },
