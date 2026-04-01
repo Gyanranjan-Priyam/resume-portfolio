@@ -4,6 +4,7 @@ import {
   IBM_Plex_Mono,
   JetBrains_Mono,
   Josefin_Sans,
+  Comic_Neue,
 } from "next/font/google";
 import { SmoothScroll } from "@/components/smooth-scroll";
 import { ThemeSync } from "@/components/theme-sync";
@@ -27,6 +28,13 @@ const OG_IMAGE =
 const dmSans = DM_Sans({
   variable: "--font-sans",
   subsets: ["latin"],
+});
+
+const comicNeue = Comic_Neue({
+  variable: "--font-comic",
+  subsets: ["latin"],
+  weight: ["400", "700"],
+  style: ["normal", "italic"],
 });
 
 const josefinSans = Josefin_Sans({
@@ -162,7 +170,7 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${dmSans.variable} ${josefinSans.variable} ${ibmMono.variable} ${jetbrainsMono.variable} ${mokoto.variable} ${gta.variable} font-sans antialiased`}
+        className={`${dmSans.variable} ${josefinSans.variable} ${ibmMono.variable} ${jetbrainsMono.variable} ${comicNeue.variable} ${mokoto.variable} ${gta.variable} font-sans antialiased`}
       >
         <ThemeSync />
         <PwaRegister />
