@@ -375,6 +375,13 @@ html:not(.dark) * {
   /* Preserve the inline font-family from TipTap */
 }
 
+.tiptap [style*="font-family: Comic Sans MS"],
+.tiptap [style*="font-family:Comic Sans MS"],
+.blog-content [style*="font-family: Comic Sans MS"],   /* ← add rendered view too */
+.tiptap-content [style*="font-family: Comic Sans MS"] {
+  font-family: "Comic Sans MS", "Comic Sans", var(--font-comic), "Chalkboard SE", cursive !important;
+}
+
 /* Monospace font - with and without spaces around colon */
 .tiptap [style*="font-family: monospace"],
 .tiptap [style*='font-family: monospace'],
