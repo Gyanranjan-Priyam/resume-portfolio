@@ -174,7 +174,7 @@ function formatDate(dateStr: string) {
 function getImageUrl(key: string | null | undefined): string {
   if (!key) return "";
   const bucketName = process.env.NEXT_PUBLIC_S3_BUCKET_NAME_IMAGES || "blogs";
-  return `https://${bucketName}.t3.storage.dev/${key}`;
+  return `https://assets.priyam.tech/${key}`;
 }
 
 function extractTextFromTiptap(content: unknown): string {
