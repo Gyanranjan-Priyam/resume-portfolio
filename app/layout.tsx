@@ -21,6 +21,7 @@ import { ScrollToTopButton } from "@/components/ui/scroll-to-top-button";
 import { Toaster } from "@/components/ui/sonner";
 import { NavigationDock } from "@/components/sections/NavigationDock";
 import { SITE_URL } from "@/lib/config";
+import { Analytics } from "@vercel/analytics/next";
 
 const OG_IMAGE =
   "https://res.cloudinary.com/dw47ib0sh/image/upload/v1766402986/ls67mu0pkqalizjmvuyf.png";
@@ -190,6 +191,7 @@ export default function RootLayout({
             </main>
           </ClickSpark>
         </SmoothScroll>
+        <Analytics />
       </body>
     </html>
   );
