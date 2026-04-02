@@ -271,8 +271,7 @@ export function HeroSection() {
               ))}
             </TooltipProvider>
             <Link
-              href="/resume/resume.pdf"
-              download
+              href="https://assets.priyam.tech/resume/resume.pdf"
               className="inline-flex items-center gap-1.5 rounded-full border px-4 py-1.5 text-xs font-semibold transition-colors hover:bg-muted"
             >
               <svg
