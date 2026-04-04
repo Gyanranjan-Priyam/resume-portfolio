@@ -31,7 +31,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   }));
 
   const templatesEntries = templates.map((template) => ({
-    url: `${SITE_URL}/templates/${project.id}`,
+    url: `${SITE_URL}/templates/${template.id}`,
     lastModified: new Date(),
     changeFrequency: "monthly" as const,
     priority: 0.7,
