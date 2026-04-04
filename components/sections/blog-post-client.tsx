@@ -1186,60 +1186,10 @@ export function BlogPostClient({
 
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <div className="mx-auto max-w-6xl px-4 py-12">
-        <div className="grid grid-cols-1 gap-8 lg:grid-cols-[200px_1fr_200px]">
-          {/* ── Left Sidebar: Table of Contents ── */}
-          {headings.length > 0 && (
-            <aside className="hidden lg:block">
-              <div className="sticky top-12">
-                <Card
-                  className="overflow-hidden"
-                  onWheel={(e) => {
-                    const target = e.currentTarget.querySelector("nav");
-                    if (target) {
-                      const { scrollTop, scrollHeight, clientHeight } = target;
-                      const isAtTop = scrollTop === 0;
-                      const isAtBottom =
-                        scrollTop + clientHeight >= scrollHeight - 1;
-
-                      if (
-                        (e.deltaY < 0 && isAtTop) ||
-                        (e.deltaY > 0 && isAtBottom)
-                      ) {
-                        return;
-                      }
-                      e.stopPropagation();
-                    }
-                  }}
-                >
-                  <CardHeader className="pb-2 px-4 pt-4">
-                    <CardTitle
-                      className="text-xs font-semibold uppercase tracking-wider text-muted-foreground"
-                      style={{ fontFamily: "var(--font-jetbrains-mono)" }}
-                    >
-                      On This Page
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent className="px-4 pb-4 pt-0">
-                    <nav
-                      ref={tocNavRef}
-                      className="max-h-[60vh] overflow-y-auto pr-2 toc-scrollbar"
-                    >
-                      <ul className="space-y-1">
-                        {headings.map((heading) => renderTOCItem(heading))}
-                      </ul>
-                    </nav>
-                  </CardContent>
-                </Card>
-              </div>
-            </aside>
-          )}
-
-          {/* Empty placeholder when no headings to maintain grid */}
-          {headings.length === 0 && <aside className="hidden lg:block" />}
-
+      <div className="mx-auto max-w-7xl px-8 sm:px-12 lg:px-16 xl:px-20 py-12">
+        <div className="grid grid-cols-1 gap-12 lg:grid-cols-[1fr_300px]">
           {/* ── Main Content ── */}
-          <article className="mx-auto w-full max-w-2xl" ref={contentRef}>
+          <article className="w-full lg:ml-8" ref={contentRef}>
             {/* Breadcrumb */}
             <BlurFade delay={0.04}>
               <nav
@@ -1658,9 +1608,52 @@ export function BlogPostClient({
             </nav>
           </article>
 
-          {/* ── Right Sidebar: Next Blog + Actions ── */}
-          <aside className="hidden lg:block">
-            <div className="sticky top-12 space-y-6">
+          {/* ── Right Sidebar: TOC + Next Blog + Actions ── */}
+          <aside className="hidden lg:block max-w-xs">
+            <div className="sticky top-24 space-y-6">
+              {/* Table of Contents */}
+              {headings.length > 0 && (
+                <Card
+                  className="overflow-hidden"
+                  onWheel={(e) => {
+                    const target = e.currentTarget.querySelector("nav");
+                    if (target) {
+                      const { scrollTop, scrollHeight, clientHeight } = target;
+                      const isAtTop = scrollTop === 0;
+                      const isAtBottom =
+                        scrollTop + clientHeight >= scrollHeight - 1;
+
+                      if (
+                        (e.deltaY < 0 && isAtTop) ||
+                        (e.deltaY > 0 && isAtBottom)
+                      ) {
+                        return;
+                      }
+                      e.stopPropagation();
+                    }
+                  }}
+                >
+                  <CardHeader className="pb-2 px-4 pt-4">
+                    <CardTitle
+                      className="text-xs font-semibold uppercase tracking-wider text-muted-foreground"
+                      style={{ fontFamily: "var(--font-jetbrains-mono)" }}
+                    >
+                      On This Page
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="px-4 pb-4 pt-0">
+                    <nav
+                      ref={tocNavRef}
+                      className="max-h-[40vh] overflow-y-auto pr-2 toc-scrollbar"
+                    >
+                      <ul className="space-y-1">
+                        {headings.map((heading) => renderTOCItem(heading))}
+                      </ul>
+                    </nav>
+                  </CardContent>
+                </Card>
+              )}
+
               {/* Next posts */}
               <div>
                 <span

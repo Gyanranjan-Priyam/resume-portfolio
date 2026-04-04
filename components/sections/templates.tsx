@@ -6,7 +6,7 @@ import { AnimatePresence, motion } from "motion/react";
 import { useOutsideClick } from "@/hooks/use-outside-click";
 import { ArrowRight, Globe, Github, X } from "lucide-react";
 import Link from "next/link";
-import projects from "@/data/projectsData";
+import templates from "@/data/templateData";
 import { Badge } from "@/components/ui/badge";
 import { BlurFade } from "@/components/ui/blur-fade";
 import Image from "next/image";
@@ -16,7 +16,7 @@ function ExpandedCard({
   id,
   onClose,
 }: {
-  active: (typeof projects)[number];
+  active: (typeof templates)[number];
   id: string;
   onClose: () => void;
 }) {
@@ -29,7 +29,7 @@ function ExpandedCard({
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        className="fixed inset-0 bg-black/50 h-full w-full z-10"
+        className="fixed inset-0 bg-black/50 h-full w-full z-10 touch-none"
         onClick={onClose}
       />
       <div className="fixed inset-0 grid place-items-center z-100 pointer-events-none p-4">
@@ -82,7 +82,7 @@ function ExpandedCard({
               <motion.a
                 layoutId={`button-${active.title}-${id}`}
                 href={active.link}
-                className="px-4 py-3 text-sm rounded-full font-bold bg-green-500 text-white hover:bg-green-600 transition-colors flex-shrink-0"
+                className="px-4 py-3 text-sm rounded-full font-bold bg-amber-500 text-white hover:bg-amber-600 transition-colors flex-shrink-0"
                 style={{ fontFamily: "var(--font-jetbrains-mono)" }}
               >
                 Details
@@ -118,7 +118,7 @@ function ExpandedCard({
                       href={active.liveLink}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 px-4 py-2 text-sm font-bold rounded-full bg-green-500 hover:bg-green-600 text-white transition-colors"
+                      className="inline-flex items-center gap-1.5 px-4 py-2 text-sm font-bold rounded-full bg-amber-500 hover:bg-amber-600 text-white transition-colors"
                     >
                       <Globe className="size-3.5" />{" "}
                       <span className="text-white">Live Demo</span>
@@ -145,29 +145,41 @@ function ExpandedCard({
   );
 }
 
-export function ProjectsSection() {
-  const [active, setActive] = useState<(typeof projects)[number] | null>(null);
+export function TemplatesSection() {
+  const [active, setActive] = useState<(typeof templates)[number] | null>(null);
   const id = useId();
 
   useEffect(() => {
     function onKeyDown(event: KeyboardEvent) {
       if (event.key === "Escape") setActive(null);
     }
-    document.body.style.overflow = active ? "hidden" : "auto";
+    
+    if (active) {
+      document.body.style.overflow = "hidden";
+      document.body.style.paddingRight = "0px"; // Prevent layout shift
+    } else {
+      document.body.style.overflow = "";
+      document.body.style.paddingRight = "";
+    }
+    
     window.addEventListener("keydown", onKeyDown);
-    return () => window.removeEventListener("keydown", onKeyDown);
+    return () => {
+      window.removeEventListener("keydown", onKeyDown);
+      document.body.style.overflow = "";
+      document.body.style.paddingRight = "";
+    };
   }, [active]);
 
-  const displayProjects = projects.slice(0, 4);
+  const displayTemplates = templates.slice(0, 4);
 
   return (
-    <section id="projects" className="py-8">
+    <section id="templates" className="py-8">
       <BlurFade delay={0.04} inView>
         <h2
           className="mb-6 text-3xl font-bold"
           style={{ fontFamily: "var(--font-ibm)" }}
         >
-          Projects
+          Templates
         </h2>
       </BlurFade>
 
@@ -182,37 +194,37 @@ export function ProjectsSection() {
       </AnimatePresence>
 
       <ul className="max-w-2xl mx-auto w-full gap-4">
-        {displayProjects.map((project, i) => (
+        {displayTemplates.map((template, i) => (
           <BlurFade
-            key={`card-${project.title}-${id}`}
+            key={`card-${template.title}-${id}`}
             delay={0.04 + i * 0.05}
             inView
           >
-            {/* Mobile layout – links directly to project page */}
-            <Link href={project.link} className="block md:hidden">
+            {/* Mobile layout – links directly to template page */}
+            <Link href={template.link} className="block md:hidden">
               <div className="group rounded-lg border bg-card p-4 mb-4 transition-colors hover:bg-muted/50">
                 <div className="flex items-start justify-between gap-4">
                   <h3
                     className="text-sm font-semibold group-hover:underline"
                     style={{ fontFamily: "var(--font-jetbrains-mono)" }}
                   >
-                    {project.title}
+                    {template.title}
                   </h3>
                   <span
                     className="shrink-0 text-sm text-muted-foreground whitespace-nowrap"
                     style={{ fontFamily: "var(--font-jetbrains-mono)" }}
                   >
-                    {project.date}
+                    {template.date}
                   </span>
                 </div>
                 <p
                   className="mt-1.5 text-sm leading-relaxed text-muted-foreground line-clamp-2"
                   style={{ fontFamily: "var(--font-jetbrains-mono)" }}
                 >
-                  {project.desc[0]}
+                  {template.desc[0]}
                 </p>
                 <div className="mt-2 flex flex-wrap gap-1">
-                  {project.tech?.map((t: string) => (
+                  {template.tech?.map((t: string) => (
                     <Badge
                       key={t}
                       variant="secondary"
@@ -228,16 +240,16 @@ export function ProjectsSection() {
 
             {/* Desktop layout – expandable card */}
             <motion.div
-              layoutId={`card-${project.title}-${id}`}
-              onClick={() => setActive(project)}
+              layoutId={`card-${template.title}-${id}`}
+              onClick={() => setActive(template)}
               className="cursor-pointer hidden md:block"
             >
               <div className="flex p-4 justify-between items-center hover:bg-neutral-50 dark:hover:bg-neutral-800 rounded-xl">
                 <div className="flex gap-4 flex-row">
-                  <motion.div layoutId={`image-${project.title}-${id}`}>
+                  <motion.div layoutId={`image-${template.title}-${id}`}>
                     <Image
-                      src={project.img}
-                      alt={project.title}
+                      src={template.img}
+                      alt={template.title}
                       className="h-14 w-14 rounded-lg object-cover object-top"
                       width={100}
                       height={100}
@@ -245,24 +257,24 @@ export function ProjectsSection() {
                   </motion.div>
                   <div>
                     <motion.h3
-                      layoutId={`title-${project.title}-${id}`}
+                      layoutId={`title-${template.title}-${id}`}
                       className="font-medium text-neutral-800 dark:text-neutral-200 text-left"
                       style={{ fontFamily: "var(--font-jetbrains-mono)" }}
                     >
-                      {project.title}
+                      {template.title}
                     </motion.h3>
                     <motion.p
-                      layoutId={`description-${project.title}-${id}`}
+                      layoutId={`description-${template.title}-${id}`}
                       className="text-neutral-600 dark:text-neutral-400 text-left"
                       style={{ fontFamily: "var(--font-jetbrains-mono)" }}
                     >
-                      {project.company}
+                      {template.company}
                     </motion.p>
                   </div>
                 </div>
                 <motion.button
-                  layoutId={`button-${project.title}-${id}`}
-                  className="px-4 py-2 text-sm rounded-full font-bold bg-gray-100 hover:bg-green-500 hover:text-white text-black"
+                  layoutId={`button-${template.title}-${id}`}
+                  className="px-4 py-2 text-sm rounded-full font-bold bg-gray-100 hover:bg-amber-500 hover:text-white text-black"
                   style={{ fontFamily: "var(--font-jetbrains-mono)" }}
                 >
                   Details
@@ -275,7 +287,7 @@ export function ProjectsSection() {
 
       <BlurFade delay={0.3} inView>
         <Link
-          href="/projects"
+          href="/templates"
           className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
           style={{ fontFamily: "var(--font-jetbrains-mono)" }}
         >
