@@ -2,6 +2,7 @@ import type { MetadataRoute } from "next";
 import { prisma } from "@/lib/db";
 import { SITE_URL } from "@/lib/config";
 import projects from "@/data/projectsData";
+import templates from "@/data/templateData";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Fetch all published blogs from database
@@ -29,6 +30,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.7,
   }));
 
+  const templatesEntries = templates.map((template) => ({
+    url: `${SITE_URL}/templates/${project.id}`,
+    lastModified: new Date(),
+    changeFrequency: "monthly" as const,
+    priority: 0.7,
+  }));
+
   return [
     {
       url: SITE_URL,
@@ -50,5 +58,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.8,
     },
     ...blogEntries,
+    {
+      url: `${SITE_URL}/templates`,
+      lastModified: new Date(),
+      changeFrequency: "weekly",
+      priority: 0.8,
+    },
+    ...templatesEntries,
   ];
 }
