@@ -159,7 +159,7 @@ const templates: Template[] = [
   ],
   category: 'Portfolio',
   desktopImage: 'https://res.cloudinary.com/df2x3ampe/image/upload/v1775314663/Screenshot_2026-04-04_at_8.25.43_PM_vlzwdm.png',
-  mobileImage: '/templates/portfolio-2/mobile.png',
+  mobileImage: 'https://res.cloudinary.com/df2x3ampe/image/upload/v1775316051/portfolio_vf2jzw.png',
   desc: [
     'A visually immersive personal portfolio built from scratch with Next.js 14, layering three distinct rendering layers — a persistent WebGL 3D background, a GSAP-animated DOM content layer, and a real-time fluid simulation overlay — all composited together in the browser.',
     'The 3D background is powered by React Three Fiber, Three.js, Drei, and the Rapier physics engine, creating a living, depth-rich backdrop that responds to scroll and viewport state. "Window" cutouts in the DOM layer let the 3D scene bleed through for a dimensional, layered effect.',
