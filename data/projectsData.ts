@@ -4,8 +4,6 @@ export interface FileNode {
   children?: FileNode[];
 }
 
-const BASE_URL = 'https://images.priyam.tech';
-
 const projects = [
   {
     id: 'techfest-platform',
@@ -25,12 +23,12 @@ const projects = [
     fluidColor: '#0028FF',
     images: [
       {
-        src: `${BASE_URL}/projects/project3/1a.webp`,
+        src: '/projects/project3/1a.webp',
         tag: 'big',
         isRight: false,
       },
       {
-        src: `${BASE_URL}/projects/project3/2a.webp`,
+        src: '/projects/project3/2a.webp',
         tag: 'big',
         isRight: false,
       },
@@ -342,17 +340,17 @@ const projects = [
     fluidColor: '#A3A714',
     images: [
       {
-        src: `${BASE_URL}/projects/project4/1a.webp`,
+        src: '/projects/project4/1a.webp',
         tag: 'big',
         isRight: false,
       },
       {
-        src: `${BASE_URL}/projects/project4/2a.webp`,
+        src: '/projects/project4/2a.webp',
         tag: 'big',
         isRight: false,
       },
       {
-        src: `${BASE_URL}/projects/project4/5a.webp`,
+        src: '/projects/project4/5a.webp',
         tag: 'big',
         isRight: false,
       },
@@ -497,27 +495,27 @@ const projects = [
     fluidColor: '#FF573E',
     images: [
       {
-        src: `${BASE_URL}/projects/project1/1a.webp`,
+        src: '/projects/project1/1a.webp',
         tag: 'big',
         isRight: false,
       },
       {
-        src: `${BASE_URL}/projects/project1/2a.webp`,
+        src: '/projects/project1/2a.webp',
         tag: 'big',
         isRight: false,
       },
       {
-        src: `${BASE_URL}/projects/project1/3a.webp`,
+        src: '/projects/project1/3a.webp',
         tag: 'big',
         isRight: false,
       },
       {
-        src: `${BASE_URL}/projects/project1/4a.webp`,
+        src: '/projects/project1/4a.webp',
         tag: 'big',
         isRight: false,
       },
       {
-        src: `${BASE_URL}/projects/project1/5a.webp`,
+        src: '/projects/project1/5a.webp',
         tag: 'big',
         isRight: false,
       },
@@ -656,22 +654,22 @@ const projects = [
     fluidColor: '#E8FFC8',
     images: [
       {
-        src: `${BASE_URL}/projects/project2/1a.webp`,
+        src: '/projects/project2/1a.webp',
         tag: 'big',
         isRight: false,
       },
       {
-        src: `${BASE_URL}/projects/project2/2a.webp`,
+        src: '/projects/project2/2a.webp',
         tag: 'big',
         isRight: false,
       },
       {
-        src: `${BASE_URL}/projects/project2/3a.webp`,
+        src: '/projects/project2/3a.webp',
         tag: 'big',
         isRight: false,
       },
       {
-        src: `${BASE_URL}/projects/project2/4a.webp`,
+        src: '/projects/project2/4a.webp',
         tag: 'big',
         isRight: false,
       },
@@ -792,7 +790,7 @@ const projects = [
   {
     id: 'codebreakers-club',
     title: 'CODEBREAKERS WEBSITE',
-    img: `${BASE_URL}/projects/project6/1.webp`,
+    img: '/projects/project6/1.webp',
     link: '/projects/codebreakers-club',
     date: '2025',
     liveLink: 'https://www.codebreakersgcek.tech/',
@@ -807,17 +805,17 @@ const projects = [
     fluidColor: '#00FF7F',
     images: [
       {
-        src: `${BASE_URL}/projects/project6/video.mp4`,
+        src: '/projects/project6/video.mp4',
         tag: 'video',
         isRight: false,
       },
       {
-        src: `${BASE_URL}/projects/project6/1.webp`,
+        src: '/projects/project6/1.webp',
         tag: 'medium',
         isRight: false,
       },
       {
-        src: `${BASE_URL}/projects/project6/3.webp`,
+        src: '/projects/project6/3.webp',
         tag: 'big',
         isRight: false,
       },
