@@ -1187,7 +1187,7 @@ export function BlogPostClient({
   return (
     <div className="min-h-screen bg-background text-foreground">
       <div className="mx-auto max-w-7xl px-8 sm:px-12 lg:px-16 xl:px-20 py-12">
-        <div className="grid grid-cols-1 gap-12 lg:grid-cols-[1fr_300px]">
+        <div className="grid grid-cols-1 gap-12 lg:grid-cols-[1fr_200px]">
           {/* ── Main Content ── */}
           <article className="w-full lg:ml-8" ref={contentRef}>
             {/* Breadcrumb */}
@@ -1610,7 +1610,7 @@ export function BlogPostClient({
 
           {/* ── Right Sidebar: TOC + Next Blog + Actions ── */}
           <aside className="hidden lg:block max-w-xs">
-            <div className="sticky top-24 space-y-6">
+            <div className="sticky top-12 space-y-6">
               {/* Table of Contents */}
               {headings.length > 0 && (
                 <Card

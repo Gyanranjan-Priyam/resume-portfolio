@@ -4,24 +4,7 @@ import { Github, Globe, Instagram, Linkedin, Mail, Twitter } from "lucide-react"
 import Image from "next/image";
 import { Card } from "../ui/card";
 
-/**
- * <AuthorBio />
- *
- * Props:
- *  name        string   – Author's display name
- *  initials    string   – 2-char fallback when no avatarSrc
- *  avatarSrc   string?  – Optional avatar image URL
- *  college     string   – College / institution name
- *  tagline     string?  – Overrides the default role line
- *  bio         string   – 2–3 sentence author paragraph
- *  github      string?  – GitHub profile URL
- *  linkedin    string?  – LinkedIn profile URL
- *  twitter     string?  – Twitter/X profile URL
- *  articles    number?  – Article count stat
- *  readers     string?  – Reader count stat e.g. "3.2k"
- *  yearsActive number?  – Years writing stat
- *  badge       string?  – Badge label (default: "GFG Campus Mantri")
- */
+
 
 type AuthorBioProps = {
   name: string;
@@ -56,7 +39,7 @@ export default function AuthorBio( {name, initials, avatarSrc, college, tagline,
   return (
     <div className="py-8 font-sans">
       {/* Section label */}
-      <p className="text-[11px] uppercase tracking-[0.18em] text-gray-400 font-medium mb-4">
+      <p className="text-[15px] flex flex-col justify-center items-center uppercase tracking-[0.18em] text-gray-400 font-medium mb-4">
         Written by
       </p>
 
@@ -68,6 +51,7 @@ export default function AuthorBio( {name, initials, avatarSrc, college, tagline,
           flex flex-col items-center text-center
           md:flex-row md:items-start md:text-left
           gap-6
+          max-w-2xl mx-auto
         "
       >
         {/* ── Avatar column ── */}
