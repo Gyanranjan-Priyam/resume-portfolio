@@ -19,9 +19,9 @@ export interface Template {
 const templates: Template[] = [
 {
   id: 'new-portfolio',
-  title: 'New Portfolio',
-  img: '/templates/new-portfolio-preview.png',
-  link: '/templates/new-portfolio',
+  title: 'GSAP Portfolio',
+  img: 'https://res.cloudinary.com/df2x3ampe/image/upload/v1775313469/Screenshot_2026-04-04_at_8.04.47_PM_tzulli.png',
+  link: '/templates/gsap-portfolio',
   date: '2025',
   liveLink: 'https://gsap.portfolio.gyanranjanpriyam.tech',
   github: 'https://github.com/Gyanranjan-Priyam/new-portfolio',
@@ -40,8 +40,8 @@ const templates: Template[] = [
     'Nodemailer',
   ],
   category: 'Portfolio',
-  desktopImage: '/templates/new-portfolio/desktop.png',
-  mobileImage: '/templates/new-portfolio/mobile.png',
+  desktopImage: 'https://res.cloudinary.com/df2x3ampe/image/upload/v1775313469/Screenshot_2026-04-04_at_8.04.47_PM_tzulli.png',
+  mobileImage: 'https://res.cloudinary.com/df2x3ampe/image/upload/v1775313480/mobile_syfpwv.png',
   desc: [
     'A modern, high-performance personal portfolio website built with Next.js 16 and React 19, featuring immersive animations, interactive 3D visuals, and AI-powered capabilities — deployed on Cloudflare Pages.',
     'Powered by GSAP, Framer Motion, and Lenis for buttery-smooth scroll and transition effects. Three.js brings interactive 3D elements to life, creating an immersive and memorable visual experience for visitors.',
@@ -71,7 +71,7 @@ const templates: Template[] = [
 {
   id: 'saas-ui',
   title: 'SaaS UI',
-  img: '/templates/saas-ui-preview.png',
+  img: 'https://res.cloudinary.com/df2x3ampe/image/upload/v1775314273/Screenshot_2026-04-04_at_8.19.26_PM_ytopo6.png',
   link: '/templates/saas-ui',
   date: '2025',
   liveLink: 'https://saas-ui.gyanranjanpriyam.tech',
@@ -99,8 +99,8 @@ const templates: Template[] = [
     'dnd kit',
   ],
   category: 'SaaS',
-  desktopImage: '/templates/saas-ui/desktop.png',
-  mobileImage: '/templates/saas-ui/mobile.png',
+  desktopImage: 'https://res.cloudinary.com/df2x3ampe/image/upload/v1775314273/Screenshot_2026-04-04_at_8.19.26_PM_ytopo6.png',
+  mobileImage: 'https://res.cloudinary.com/df2x3ampe/image/upload/v1775314244/streak_x5dabb.png',
   desc: [
     'A feature-rich SaaS application UI built with Next.js 16 and React 19, combining a robust backend stack (Prisma + PostgreSQL + Upstash Redis) with a polished, production-ready frontend experience.',
     'Authentication is handled via Better Auth, with full form validation through Zod and server-side email support via Nodemailer. Google APIs integration enables calendar and productivity features including iCal event generation.',
@@ -134,9 +134,9 @@ const templates: Template[] = [
   ],
 },
 {
-  id: 'portfolio-2',
-  title: 'Portfolio 2.0',
-  img: '/templates/portfolio-2-preview.png',
+  id: 'animated-portfolio',
+  title: 'Animated Portfolio',
+  img: 'https://res.cloudinary.com/df2x3ampe/image/upload/v1775314663/Screenshot_2026-04-04_at_8.25.43_PM_vlzwdm.png',
   link: '/templates/portfolio-2',
   date: '2024',
   liveLink: 'https://animated.portfolio.gyanranjanpriyam.tech',
@@ -158,7 +158,7 @@ const templates: Template[] = [
     'react-transition-group',
   ],
   category: 'Portfolio',
-  desktopImage: '/templates/portfolio-2/desktop.png',
+  desktopImage: 'https://res.cloudinary.com/df2x3ampe/image/upload/v1775314663/Screenshot_2026-04-04_at_8.25.43_PM_vlzwdm.png',
   mobileImage: '/templates/portfolio-2/mobile.png',
   desc: [
     'A visually immersive personal portfolio built from scratch with Next.js 14, layering three distinct rendering layers — a persistent WebGL 3D background, a GSAP-animated DOM content layer, and a real-time fluid simulation overlay — all composited together in the browser.',
