@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import templates from "@/data/templateData";
 import { TemplatesClient } from "./templates-client";
+import { SITE_URL } from "@/lib/config";
 
 export const metadata: Metadata = {
   title: "Templates - Gyanranjan Priyam",
