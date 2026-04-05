@@ -22,37 +22,68 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { id } = await params;
   const project = projects.find((p) => p.id === id);
-  if (!project) return {};
+  if (!project) return {
+    title: "Project Not Found - Gyanranjan Priyam",
+    description: "The project you're looking for doesn't exist.",
+  };
 
   const ogImageUrl = `${SITE_URL}/projects/${project.id}/opengraph-image`;
 
   return {
-    title: `${project.title} Project`,
-    description: `Check out my work on the ${project.title} project, collaborating with ${project.company}, where I enhanced full stack development with responsive design and optimized user interactions.`,
+    title: `${project.title} - Gyanranjan Priyam`,
+    description: `${project.desc[0]} Built with ${project.tech.slice(0, 4).join(", ")} and more. A project by Gyanranjan Priyam.`,
     keywords: [
+      project.title,
       `${project.title} project`,
+      `${project.title} web app`,
+      `${project.title} case study`,
       `${project.title} development`,
-      `${project.company} collaboration`,
-      `Priyam ${project.title}`,
-      `Full Stack development ${project.title}`,
+      ...(project.company
+        ? [
+            `${project.company} project`,
+            `${project.company} web development`,
+            `${project.title} ${project.company}`,
+          ]
+        : []),
+
+      ...project.tech,
+      ...project.tech.map((t) => `${t} project`),
+      ...project.tech.map((t) => `${t} web app`),
+
+      `Gyanranjan Priyam ${project.title}`,
+      "Gyanranjan Priyam portfolio",
+      "Gyanranjan Priyam projects",
+      "Gyanranjan Priyam developer",
+
+      "full stack project",
+      "web development case study",
+      "developer portfolio India",
+      "Next.js project showcase",
+      "React project showcase",
+      "web app development 2025",
     ],
-    alternates: { canonical: `/projects/${project.id}` },
+    alternates: {
+      canonical: `/projects/${project.id}`,
+    },
     openGraph: {
       title: `${project.title} — Gyanranjan Priyam`,
-      description: project.desc[0],
+      description: `${project.desc[0]} Built with ${project.tech.slice(0, 4).join(", ")}.`,
+      url: `${SITE_URL}/projects/${project.id}`,
+      siteName: "Gyanranjan Priyam",
+      type: "article",
       images: [
         {
           url: ogImageUrl,
           width: 1200,
           height: 630,
-          alt: project.title,
+          alt: `${project.title} — Gyanranjan Priyam`,
         },
       ],
     },
     twitter: {
       card: "summary_large_image",
       title: `${project.title} — Gyanranjan Priyam`,
-      description: project.desc[0],
+      description: `${project.desc[0]} Built with ${project.tech.slice(0, 4).join(", ")}.`,
       images: [ogImageUrl],
     },
   };
@@ -64,20 +95,28 @@ export default async function ProjectPage({ params }: Props) {
   if (!project) notFound();
 
   const projectSchema = {
-    "@context": "https://schema.org",
-    "@type": "CreativeWork",
-    name: project.title,
-    description: project.desc[0],
-    url: project.liveLink || `${SITE_URL}${project.link}`,
-    image: project.img,
-    dateCreated: project.date,
-    creator: {
-      "@type": "Person",
-      name: "Gyanranjan Priyam",
-      url: SITE_URL,
-    },
-    ...(project.github && { codeRepository: project.github }),
-  };
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",      
+  name: project.title,
+  description: project.desc[0],
+  url: project.liveLink || `${SITE_URL}${project.link}`,
+  image: project.img,
+  dateCreated: project.date,
+  applicationCategory: "WebApplication",
+  operatingSystem: "Web Browser",
+  creator: {
+    "@type": "Person",
+    name: "Gyanranjan Priyam",
+    url: SITE_URL,
+    sameAs: [
+      "https://github.com/gyanranjan-priyam",   
+      "https://linkedin.com/in/gyanranjan-priyam",
+    ],
+  },
+  keywords: project.tech.join(", "),
+  ...(project.github && { codeRepository: project.github }),
+  ...(project.liveLink && { installUrl: project.liveLink }),
+};
 
   const mediaItems = project.images;
   const hasRichContent =
