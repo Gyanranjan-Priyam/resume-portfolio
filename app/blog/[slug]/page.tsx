@@ -65,18 +65,54 @@ export const dynamic = "force-dynamic";
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const blog = await getBlogBySlug(slug);
-  if (!blog) return {};
+
+  if (!blog) return {
+    title: "Blog Post Not Found - Gyanranjan Priyam",
+    description: "The blog post you're looking for doesn't exist.",
+  };
 
   const ogImageUrl = `${SITE_URL}/blog/${blog.slug}/opengraph-image`;
 
   return {
-    title: blog.title,
+    title: `${blog.title} - Gyanranjan Priyam`,
     description: blog.shortDescription,
-    keywords: blog.tags,
-    alternates: { canonical: `/blog/${blog.slug}` },
+    keywords: [
+      // Dynamic from blog data
+      ...blog.tags,
+      ...blog.tags.map((tag) => `${tag} tutorial`),
+      ...blog.tags.map((tag) => `${tag} guide`),
+      ...blog.tags.map((tag) => `${tag} tips`),
+
+      // Article-type keywords
+      blog.title,
+      `${blog.title} guide`,
+      `${blog.title} tutorial`,
+      `how to ${blog.title.toLowerCase()}`,
+
+      // Personal brand
+      "Gyanranjan Priyam blog",
+      "Gyanranjan Priyam article",
+      "Gyanranjan Priyam tutorial",
+      `Gyanranjan Priyam ${blog.tags[0] ?? ""}`.trim(),
+
+      // Broader intent
+      "web development blog",
+      "frontend development article",
+      "developer blog India",
+      "React developer insights",
+      "Next.js developer blog",
+    ],
+    authors: [{ name: "Gyanranjan Priyam", url: SITE_URL }],
+    creator: "Gyanranjan Priyam",
+    publisher: "Gyanranjan Priyam",
+    alternates: {
+      canonical: `/blog/${blog.slug}`,
+    },
     openGraph: {
       title: `${blog.title} — Gyanranjan Priyam`,
       description: blog.shortDescription,
+      url: `${SITE_URL}/blog/${blog.slug}`,
+      siteName: "Gyanranjan Priyam",
       type: "article",
       publishedTime: blog.createdAt.toISOString(),
       modifiedTime: blog.updatedAt.toISOString(),
@@ -87,7 +123,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
           url: ogImageUrl,
           width: 1200,
           height: 630,
-          alt: blog.title,
+          alt: `${blog.title} — Gyanranjan Priyam`,
         },
       ],
     },
@@ -96,6 +132,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title: `${blog.title} — Gyanranjan Priyam`,
       description: blog.shortDescription,
       images: [ogImageUrl],
+      creator: "@gyanranjanpriyam", // ← add your Twitter handle
     },
   };
 }
@@ -158,28 +195,70 @@ export default async function BlogPostPage({ params }: Props) {
   }
 
   const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "BlogPosting",
-    headline: blog.title,
-    description: blog.shortDescription,
-    datePublished: blog.createdAt.toISOString(),
-    dateModified: blog.updatedAt.toISOString(),
-    author: {
-      "@type": "Person",
-      name: "Gyanranjan Priyam",
-      url: SITE_URL,
-    },
-    publisher: {
-      "@type": "Person",
-      name: "Gyanranjan Priyam",
-      url: SITE_URL,
-    },
-    mainEntityOfPage: {
-      "@type": "WebPage",
-      "@id": `${SITE_URL}/blog/${blog.slug}`,
-    },
-    keywords: blog.tags.join(", "),
-  };
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  headline: blog.title,
+  description: blog.shortDescription,
+  datePublished: blog.createdAt.toISOString(),
+  dateModified: blog.updatedAt.toISOString(),
+  keywords: blog.tags.join(", "),
+  url: `${SITE_URL}/blog/${blog.slug}`,
+
+  // Thumbnail image — important for rich result eligibility
+  image: {
+    "@type": "ImageObject",
+    url: `${SITE_URL}/blog/${blog.slug}/opengraph-image`,
+    width: 1200,
+    height: 630,
+  },
+
+  author: {
+    "@type": "Person",
+    name: "Gyanranjan Priyam",
+    url: SITE_URL,
+    sameAs: [
+      "https://github.com/gyanranjan-priyam",       // ← your actual GitHub
+      "https://linkedin.com/in/gyanranjan-priyam",  // ← your actual LinkedIn
+      "https://twitter.com/gr_priyam",      // ← your actual Twitter
+    ],
+  },
+
+  publisher: {
+    "@type": "Person",
+    name: "Gyanranjan Priyam",
+    url: SITE_URL,
+  },
+
+  mainEntityOfPage: {
+    "@type": "WebPage",
+    "@id": `${SITE_URL}/blog/${blog.slug}`,
+  },
+
+  // Breadcrumb — helps Google understand site structure
+  breadcrumb: {
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Home",
+        item: SITE_URL,
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "Blog",
+        item: `${SITE_URL}/blog`,
+      },
+      {
+        "@type": "ListItem",
+        position: 3,
+        name: blog.title,
+        item: `${SITE_URL}/blog/${blog.slug}`,
+      },
+    ],
+  },
+};
 
   return (
     <>
