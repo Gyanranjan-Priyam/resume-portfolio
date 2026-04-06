@@ -18,7 +18,7 @@ export interface Template {
 
 const templates: Template[] = [
 {
-  id: 'new-portfolio',
+  id: 'gsap-portfolio',
   title: 'GSAP Portfolio',
   img: 'https://res.cloudinary.com/df2x3ampe/image/upload/v1775313469/Screenshot_2026-04-04_at_8.04.47_PM_tzulli.png',
   link: '/templates/gsap-portfolio',
@@ -137,7 +137,7 @@ const templates: Template[] = [
   id: 'animated-portfolio',
   title: 'Animated Portfolio',
   img: 'https://res.cloudinary.com/df2x3ampe/image/upload/v1775314663/Screenshot_2026-04-04_at_8.25.43_PM_vlzwdm.png',
-  link: '/templates/portfolio-2',
+  link: '/templates/animated-portfolio',
   date: '2024',
   liveLink: 'https://animated.portfolio.gyanranjanpriyam.tech',
   github: 'https://github.com/Gyanranjan-Priyam/portfolio-2.0',
