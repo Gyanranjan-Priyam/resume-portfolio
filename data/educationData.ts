@@ -26,6 +26,8 @@ export const education = [
 ];
 
 export const certifications = [
+  { name: "Managing Machine Learning Projects", issuer: "Duke University ( Coursera )", year: "2026" },
+  { name: "Introduction to Machine Learning", issuer: "Duke University ( Coursera )", year: "2026" },
   { name: "MongoDB Certified Developer, Associate (C100DEV)", issuer: "MongoDB", year: "2026" },
   { name: "Introduction to Programming Using Python", issuer: "Coursera", year: "2025" },
 ];
