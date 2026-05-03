@@ -50,15 +50,22 @@ Open to internships, freelance projects, and full-time roles. If you're building
 
 ## Work Experience
 
-- Full Stack Developer Intern — building and shipping production features
-- (Click any experience on the website for detailed description)
-- Full experience list: ${SITE_URL}/#experience
+${experiences
+  .map((e) => `- **${e.title}** at ${e.company} (${e.period})`)
+  .join("\n")}
 
 ## Education
 
-- B.Tech in Electrical Engineering — Government College of Engineering Kalahandi (GCE Kalahandi)
-- Full education details: ${SITE_URL}/#education
+${education
+  .map((e) => `- **${e.degree}** — ${e.school} (${e.period}) ${e.marks ? `| ${e.marks}` : ""}`)
+  .join("\n")}
 
+## Certifications
+
+${certifications
+  .map((c) => `- ${c.name} — ${c.issuer} (${c.year})`)
+  .join("\n")}
+  
 ## Skills & Stack
 
 - Frontend: React, Next.js, TypeScript, Tailwind CSS, GSAP Animations, Framer Motion
@@ -89,24 +96,6 @@ ${templates
   .map((t) => `- [${t.title}](${SITE_URL}/templates/${t.id}): ${formatDescription(t.desc)}`)
   .join("\n")}
 
-## Work Experience
-
-${experiences
-  .map((e) => `- **${e.title}** at ${e.company} (${e.period})`)
-  .join("\n")}
-
-// Replace the static Education section with:
-## Education
-
-${education
-  .map((e) => `- **${e.degree}** — ${e.school} (${e.period}) ${e.marks ? `| ${e.marks}` : ""}`)
-  .join("\n")}
-
-## Certifications
-
-${certifications
-  .map((c) => `- ${c.name} — ${c.issuer} (${c.year})`)
-  .join("\n")}
 
 ## Pages
 
