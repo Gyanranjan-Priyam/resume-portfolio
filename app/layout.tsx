@@ -169,6 +169,7 @@ export default function RootLayout({
             __html: `html.loader-active main{opacity:0!important;pointer-events:none}`,
           }}
         />
+        <link rel="alternate" type="text/plain" href="/llms.txt" title="LLMs.txt" />
       </head>
       <body
         className={`${dmSans.variable} ${josefinSans.variable} ${ibmMono.variable} ${jetbrainsMono.variable} ${comicNeue.variable} ${mokoto.variable} ${gta.variable} font-sans antialiased`}
